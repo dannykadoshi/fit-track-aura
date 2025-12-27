@@ -19,6 +19,27 @@
     <link rel="apple-touch-icon" sizes="180x180" href="{% static 'images/apple-touch-icon.png' %}">
     <link rel="icon" type="image/png" sizes="512x512" href="{% static 'images/fittrack-icon-512.png' %}">
     
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://yourwebsite.com/">
+    <meta property="og:title" content="FitTrack Aura - Track Your Fitness Journey">
+    <meta property="og:description" content="Set goals, log workouts, and track your fitness progress with FitTrack Aura. Your complete fitness tracking solution.">
+    <meta property="og:image" content="{% static 'images/og-image.png' %}">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://yourwebsite.com/">
+    <meta name="twitter:title" content="FitTrack Aura - Track Your Fitness Journey">
+    <meta name="twitter:description" content="Set goals, log workouts, and track your fitness progress with FitTrack Aura.">
+    <meta name="twitter:image" content="{% static 'images/og-image.png' %}">
+
+    <!-- Additional Meta Tags -->
+    <meta name="description" content="Track your fitness journey with FitTrack Aura. Set goals, log workouts, and monitor your progress.">
+    <meta name="keywords" content="fitness tracker, workout log, fitness goals, exercise tracking, fitness app">
+    <meta name="author" content="FitTrack Aura">
+
     {% block extra_css %}{% endblock %}
 </head>
 <body class="bg-dark text-light">
