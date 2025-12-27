@@ -61,3 +61,95 @@ class GoalViewTest(TestCase):
         response = self.client.get(reverse('goal_list'))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'goals/goal_list.html')
+        
+class GoalCompleteTest(TestCase):
+    """Test cases for completing goals"""
+    
+    def setUp(self):
+        self.client = Client()
+        self.user = User.objects.create_user(
+            username='testuser',
+            password='testpass123'
+        )
+        self.goal = Goal.objects.create(
+            user=self.user,
+            title='Run 100km',
+            target_value='100km',
+            target_date=date.today() + timedelta(days=30)
+        )
+        
+    def test_complete_goal(self):
+        """Test completing a goal"""
+        self.client.login(username='testuser', password='testpass123')
+        response = self.client.post(
+            reverse('goal_complete', args=[self.goal.pk])
+        )
+        
+        # Should redirect
+        self.assertEqual(response.status_code, 302)
+        
+        # Goal should be marked complete
+        self.goal.refresh_from_db()
+        self.assertTrue(self.goal.is_completed)
+        self.assertIsNotNone(self.goal.completed_date)
+        
+    def test_user_cannot_complete_other_users_goal(self):
+        """Test users can't complete goals they don't own"""
+        other_user = User.objects.create_user(
+            username='otheruser',
+            password='testpass123'
+        )
+        
+        self.client.login(username='otheruser', password='testpass123')
+        response = self.client.post(
+            reverse('goal_complete', args=[self.goal.pk])
+        )
+        
+        # Should get 404 or redirect
+        self.assertIn(response.status_code, [302, 404])
+        
+        # Goal should not be completed
+        self.goal.refresh_from_db()
+        self.assertFalse(self.goal.is_completed)
+
+
+class GoalUpdateTest(TestCase):
+    """Test cases for updating goals"""
+    
+    def setUp(self):
+        self.client = Client()
+        self.user = User.objects.create_user(
+            username='testuser',
+            password='testpass123'
+        )
+        self.goal = Goal.objects.create(
+            user=self.user,
+            title='Run 100km',
+            target_value='100km',
+            current_value='0km',
+            target_date=date.today() + timedelta(days=30)
+        )
+        
+    def test_update_goal_progress(self):
+        """Test updating goal progress"""
+        self.client.login(username='testuser', password='testpass123')
+        
+        updated_data = {
+            'title': 'Run 100km',
+            'category': 'endurance',
+            'target_value': '100km',
+            'current_value': '50km',  # Updated progress
+            'target_date': self.goal.target_date
+        }
+        
+        response = self.client.post(
+            reverse('goal_update', args=[self.goal.pk]),
+            data=updated_data
+        )
+        
+        # Should redirect
+        self.assertEqual(response.status_code, 302)
+        
+        # Progress should be updated
+        self.goal.refresh_from_db()
+        self.assertEqual(self.goal.current_value, '50km')       
