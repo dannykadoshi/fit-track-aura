@@ -23,8 +23,17 @@ from workouts import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
+    
+    # Homepage & Dashboard
     path('', views.home, name='home'),
     path('dashboard/', views.dashboard, name='dashboard'),
+    
+    # Workout URLs
+    path('workouts/', views.workout_list, name='workout_list'),
+    path('workouts/<int:pk>/', views.workout_detail, name='workout_detail'),
+    path('workouts/new/', views.workout_create, name='workout_create'),
+    path('workouts/<int:pk>/edit/', views.workout_update, name='workout_update'),
+    path('workouts/<int:pk>/delete/', views.workout_delete, name='workout_delete'),
 ]
 
 # Serve media files in development

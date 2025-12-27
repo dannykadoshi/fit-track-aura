@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}My Workouts - FitTrack{% endblock %}
+
+{% block extra_css %}
+<style>
+    body {
+        background: linear-gradient(135deg, #0f172a 0%, #581c87 50%, #0f172a 100%) !important;
+    }
+    
+    h1, h2, h3, h4, h5, h6 {
+        color: #ffffff !important;
+    }
+    
+    p, .text-muted, small {
+        color: #e2e8f0 !important;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <!-- Header -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center flex-wrap">
+                <div class="mb-3 mb-md-0">
+                    <h1 class="display-5 fw-bold text-white">My Workouts</h1>
+                    <p class="text-muted">Track and manage your training sessions</p>
+                </div>
+                <a href="{% url 'workout_create' %}" class="btn btn-gradient-purple btn-lg">
+                    ➕ Log New Workout
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Search Bar -->
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <form method="get" class="d-flex gap-2">
+                <input 
+                    type="text" 
+                    name="search" 
+                    class="form-control" 
+                    placeholder="Search workouts..." 
+                    value="{{ search_query }}"
+                >
+                <button type="submit" class="btn btn-gradient-purple">Search</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Workouts List -->
+    {% if workouts %}
+        <div class="row">
+            {% for workout in workouts %}
+                <div class="col-12 mb-3">
+                    <div class="workout-card">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div class="d-flex align-items-start gap-3 flex-grow-1">
+                                <div class="stat-icon" style="width: 50px; height: 50px; font-size: 1.5rem;">
+                                    🏋️
+                                </div>
+                                <div class="flex-grow-1">
+                                    <h4 class="fw-bold text-white mb-2">{{ workout.title }}</h4>
+                                    <p class="text-muted mb-2">
+                                        📅 {{ workout.date|date:"M d, Y" }} 
+                                        {% if workout.duration %}
+                                            • ⏱️ {{ workout.duration }} min
+                                        {% endif %}
+                                        • 💪 {{ workout.total_exercises }} exercise{{ workout.total_exercises|pluralize }}
+                                    </p>
+                                    {% if workout.notes %}
+                                        <p class="text-muted small mb-0">{{ workout.notes|truncatewords:20 }}</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="d-flex gap-2">
+                                <a href="{% url 'workout_detail' workout.pk %}" class="btn btn-sm btn-outline-light">
+                                    View
+                                </a>
+                                <a href="{% url 'workout_update' workout.pk %}" class="btn btn-sm btn-outline-light">
+                                    Edit
+                                </a>
+                                <a href="{% url 'workout_delete' workout.pk %}" class="btn btn-sm btn-outline-danger">
+                                    Delete
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="text-center py-5">
+            <div class="card-custom p-5">
+                <div class="stat-icon mx-auto mb-4" style="width: 80px; height: 80px; font-size: 2.5rem;">
+                    🏋️
+                </div>
+                <h3 class="text-white mb-3">No workouts yet</h3>
+                <p class="text-muted mb-4">Start tracking your fitness journey today!</p>
+                <a href="{% url 'workout_create' %}" class="btn btn-gradient-purple btn-lg">
+                    Log Your First Workout
+                </a>
+            </div>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
