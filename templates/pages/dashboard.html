@@ -74,7 +74,7 @@
             <div class="card-custom p-4">
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <h3 class="fw-bold mb-0">Recent Workouts</h3>
-                    <a href="#" class="btn btn-sm btn-gradient-purple">
+                    <a href="{% url 'workout_create' %}" class="btn btn-sm btn-gradient-purple">
                         <span>➕</span> Log Workout
                     </a>
                 </div>
@@ -98,7 +98,7 @@
                                         </div>
                                     </div>
                                     <div class="d-flex gap-2">
-                                        <a href="#" class="btn btn-sm btn-outline-light">Edit</a>
+                                        <a href="{% url 'workout_update' workout.pk %}" class="btn btn-sm btn-outline-light">Edit</a>
                                     </div>
                                 </div>
                             </div>
@@ -109,7 +109,7 @@
                         <div class="stat-icon mx-auto mb-3" style="width: 64px; height: 64px; font-size: 2rem;">🏋️</div>
                         <h5 class="text-white mb-2">No workouts yet</h5>
                         <p class="text-muted mb-4">Start tracking your fitness journey today!</p>
-                        <a href="#" class="btn btn-gradient-purple">Log Your First Workout</a>
+                        <a href="{% url 'workout_create' %}" class="btn btn-gradient-purple">Log Your First Workout</a>
                     </div>
                 {% endif %}
             </div>
@@ -120,7 +120,7 @@
             <div class="card-custom p-4">
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <h3 class="fw-bold mb-0">Active Goals</h3>
-                    <a href="#" class="text-purple-400 text-decoration-none small fw-semibold">Manage →</a>
+                    <a href="{% url 'goal_list' %}" class="text-purple-400 text-decoration-none small fw-semibold">Manage →</a>
                 </div>
 
                 {% if active_goals %}
@@ -151,7 +151,7 @@
                         <div class="stat-icon mx-auto mb-3" style="width: 48px; height: 48px;">🎯</div>
                         <h6 class="text-white mb-2">No goals set</h6>
                         <p class="text-muted small mb-3">Set goals to stay motivated!</p>
-                        <a href="#" class="btn btn-sm btn-gradient-purple">Create Goal</a>
+                        <a href="{% url 'goal_create' %}" class="btn btn-sm btn-gradient-purple">Create Goal</a>
                     </div>
                 {% endif %}
             </div>
