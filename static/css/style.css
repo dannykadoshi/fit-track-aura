@@ -94,12 +94,26 @@ body {
     font-size: 3.5rem;
     font-weight: bold;
     margin-bottom: 1rem;
+    color: #ffffff !important;
 }
 
 .hero-subtitle {
     font-size: 1.25rem;
-    color: #cbd5e1;
+    color: #e2e8f0 !important;
     margin-bottom: 2rem;
+}
+
+/* Text Colors - IMPORTANT FIX */
+p, .text-muted, small {
+    color: #cbd5e1 !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: #ffffff !important;
+}
+
+.text-white {
+    color: #ffffff !important;
 }
 
 /* Forms */
@@ -151,6 +165,14 @@ body {
     padding: 0.5rem 1rem;
     border-radius: 2rem;
     font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Features Section Text */
+.lead {
+    color: #cbd5e1 !important;
 }
 
 /* Responsive */
@@ -178,4 +200,42 @@ body {
 
 .fade-in {
     animation: fadeIn 0.5s ease-in;
+}
+
+/* Navbar fixes */
+.navbar-dark .navbar-nav .nav-link {
+    color: rgba(255, 255, 255, 0.85) !important;
+}
+
+.navbar-dark .navbar-nav .nav-link:hover {
+    color: #ffffff !important;
+}
+
+/* Dropdown menu */
+.dropdown-menu-dark {
+    background-color: rgba(30, 41, 59, 0.95);
+    backdrop-filter: blur(10px);
+}
+
+.dropdown-item {
+    color: #e2e8f0 !important;
+}
+
+.dropdown-item:hover {
+    background-color: rgba(168, 85, 247, 0.2);
+    color: #ffffff !important;
+}
+
+/* Footer */
+footer p {
+    color: #94a3b8 !important;
+}
+
+/* Stats section on homepage */
+.row h3 {
+    color: #ffffff !important;
+}
+
+.row .text-muted {
+    color: #94a3b8 !important;
 }

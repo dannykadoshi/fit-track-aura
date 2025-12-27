@@ -1,0 +1,178 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Dashboard - FitTrack{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <!-- Welcome Section -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center flex-wrap">
+                <div class="mb-3 mb-md-0">
+                    <h1 class="display-5 fw-bold text-white">Welcome back, {{ user.username }}! 👋</h1>
+                    <p class="text-muted">Here's your fitness summary for today</p>
+                </div>
+                <div class="badge badge-custom">
+                    <span style="font-size: 1.5rem;">🔥</span>
+                    <div class="ms-2">
+                        <div class="fw-bold">7 Days</div>
+                        <small>Current Streak</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stats Overview -->
+    <div class="dashboard-grid mb-5">
+        <!-- Stat 1 -->
+        <div class="stat-card">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <div class="stat-icon">🏋️</div>
+                <span class="text-success fw-semibold">+12%</span>
+            </div>
+            <h3 class="fw-bold mb-1">{{ workouts_count }}</h3>
+            <p class="text-muted mb-0">Workouts This Month</p>
+        </div>
+
+        <!-- Stat 2 -->
+        <div class="stat-card">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <div class="stat-icon" style="background: linear-gradient(135deg, #3b82f6, #06b6d4);">⏱️</div>
+                <span class="text-success fw-semibold">+8%</span>
+            </div>
+            <h3 class="fw-bold mb-1">42h</h3>
+            <p class="text-muted mb-0">Total Training Time</p>
+        </div>
+
+        <!-- Stat 3 -->
+        <div class="stat-card">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <div class="stat-icon" style="background: linear-gradient(135deg, #10b981, #059669);">📈</div>
+                <span class="text-success fw-semibold">+15%</span>
+            </div>
+            <h3 class="fw-bold mb-1">3.2k</h3>
+            <p class="text-muted mb-0">Calories Burned</p>
+        </div>
+
+        <!-- Stat 4 -->
+        <div class="stat-card">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <div class="stat-icon" style="background: linear-gradient(135deg, #f59e0b, #dc2626);">🎯</div>
+                <span class="text-warning fw-semibold">{{ active_goals.count }} Active</span>
+            </div>
+            <h3 class="fw-bold mb-1">73%</h3>
+            <p class="text-muted mb-0">Goals Progress</p>
+        </div>
+    </div>
+
+    <!-- Main Content Grid -->
+    <div class="row g-4">
+        <!-- Recent Workouts -->
+        <div class="col-lg-8">
+            <div class="card-custom p-4">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h3 class="fw-bold mb-0">Recent Workouts</h3>
+                    <a href="#" class="btn btn-sm btn-gradient-purple">
+                        <span>➕</span> Log Workout
+                    </a>
+                </div>
+
+                {% if recent_workouts %}
+                    <div class="space-y-3">
+                        {% for workout in recent_workouts %}
+                            <div class="workout-card">
+                                <div class="d-flex justify-content-between align-items-start">
+                                    <div class="d-flex align-items-start gap-3">
+                                        <div class="stat-icon" style="width: 40px; height: 40px; font-size: 1.2rem;">
+                                            🏋️
+                                        </div>
+                                        <div>
+                                            <h5 class="fw-semibold text-white mb-1">{{ workout.title }}</h5>
+                                            <p class="text-muted mb-0 small">
+                                                {{ workout.date|date:"M d, Y" }} • 
+                                                {% if workout.duration %}{{ workout.duration }} min{% endif %}
+                                                {% if workout.total_exercises %} • {{ workout.total_exercises }} exercises{% endif %}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex gap-2">
+                                        <a href="#" class="btn btn-sm btn-outline-light">Edit</a>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="text-center py-5">
+                        <div class="stat-icon mx-auto mb-3" style="width: 64px; height: 64px; font-size: 2rem;">🏋️</div>
+                        <h5 class="text-white mb-2">No workouts yet</h5>
+                        <p class="text-muted mb-4">Start tracking your fitness journey today!</p>
+                        <a href="#" class="btn btn-gradient-purple">Log Your First Workout</a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Active Goals -->
+        <div class="col-lg-4">
+            <div class="card-custom p-4">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h3 class="fw-bold mb-0">Active Goals</h3>
+                    <a href="#" class="text-purple-400 text-decoration-none small fw-semibold">Manage →</a>
+                </div>
+
+                {% if active_goals %}
+                    <div class="space-y-3">
+                        {% for goal in active_goals %}
+                            <div class="card-custom p-3">
+                                <div class="d-flex align-items-start justify-content-between mb-2">
+                                    <div class="flex-grow-1">
+                                        <div class="d-flex align-items-center gap-2 mb-2">
+                                            <span style="color: var(--purple-500);">⭕</span>
+                                            <h6 class="fw-semibold text-white mb-0 small">{{ goal.title }}</h6>
+                                        </div>
+                                        <p class="text-muted mb-2 small">
+                                            {{ goal.current_value }} / {{ goal.target_value }} • 
+                                            Due {{ goal.target_date|date:"M d" }}
+                                        </p>
+                                    </div>
+                                    <span class="text-success fw-bold">65%</span>
+                                </div>
+                                <div class="progress-custom">
+                                    <div class="progress-bar-custom" style="width: 65%;"></div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="text-center py-4">
+                        <div class="stat-icon mx-auto mb-3" style="width: 48px; height: 48px;">🎯</div>
+                        <h6 class="text-white mb-2">No goals set</h6>
+                        <p class="text-muted small mb-3">Set goals to stay motivated!</p>
+                        <a href="#" class="btn btn-sm btn-gradient-purple">Create Goal</a>
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Quick Stats -->
+            <div class="card-custom p-4 mt-4">
+                <h5 class="fw-bold mb-3">This Week</h5>
+                <div class="d-flex justify-content-between align-items-center mb-3 pb-3 border-bottom border-secondary">
+                    <span class="text-muted">Workouts</span>
+                    <span class="fw-bold text-white">7</span>
+                </div>
+                <div class="d-flex justify-content-between align-items-center mb-3 pb-3 border-bottom border-secondary">
+                    <span class="text-muted">Total Time</span>
+                    <span class="fw-bold text-white">310 min</span>
+                </div>
+                <div class="d-flex justify-content-between align-items-center">
+                    <span class="text-muted">Exercises</span>
+                    <span class="fw-bold text-white">52</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
