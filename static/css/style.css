@@ -239,3 +239,8 @@ footer p {
 .row .text-muted {
     color: #94a3b8 !important;
 }
+
+/* Orange Gradient for Streak Card */
+.bg-gradient-orange {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
