@@ -1,0 +1,181 @@
+/* Color Variables */
+:root {
+    --purple-500: #a855f7;
+    --pink-500: #ec4899;
+    --slate-900: #0f172a;
+    --slate-800: #1e293b;
+}
+
+/* Body & General Styles */
+body {
+    background: linear-gradient(135deg, var(--slate-900) 0%, #581c87 50%, var(--slate-900) 100%);
+    min-height: 100vh;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Gradient Text */
+.gradient-text {
+    background: linear-gradient(135deg, var(--purple-500), var(--pink-500));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Gradient Background */
+.bg-gradient-purple {
+    background: linear-gradient(135deg, rgba(168, 85, 247, 0.1), rgba(236, 72, 153, 0.1));
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(168, 85, 247, 0.2);
+}
+
+/* Buttons */
+.btn-gradient-purple {
+    background: linear-gradient(135deg, var(--purple-500), var(--pink-500));
+    border: none;
+    color: white;
+    padding: 0.5rem 1.5rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.btn-gradient-purple:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 30px rgba(168, 85, 247, 0.5);
+    color: white;
+}
+
+/* Cards */
+.card-custom {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 1rem;
+    transition: all 0.3s ease;
+}
+
+.card-custom:hover {
+    border-color: rgba(168, 85, 247, 0.5);
+    transform: translateY(-5px);
+}
+
+/* Stat Cards */
+.stat-card {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.stat-card:hover {
+    border-color: rgba(168, 85, 247, 0.5);
+}
+
+.stat-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    background: linear-gradient(135deg, var(--purple-500), var(--pink-500));
+}
+
+/* Hero Section */
+.hero-section {
+    padding: 5rem 0;
+    text-align: center;
+}
+
+.hero-title {
+    font-size: 3.5rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.hero-subtitle {
+    font-size: 1.25rem;
+    color: #cbd5e1;
+    margin-bottom: 2rem;
+}
+
+/* Forms */
+.form-control:focus {
+    border-color: var(--purple-500);
+    box-shadow: 0 0 0 0.2rem rgba(168, 85, 247, 0.25);
+}
+
+/* Dashboard Grid */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+/* Workout Card */
+.workout-card {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    transition: all 0.3s ease;
+}
+
+.workout-card:hover {
+    border-color: rgba(168, 85, 247, 0.5);
+    transform: translateX(5px);
+}
+
+/* Progress Bar */
+.progress-custom {
+    height: 0.5rem;
+    border-radius: 1rem;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.progress-bar-custom {
+    background: linear-gradient(90deg, var(--purple-500), var(--pink-500));
+    border-radius: 1rem;
+}
+
+/* Badge */
+.badge-custom {
+    background: linear-gradient(135deg, var(--purple-500), var(--pink-500));
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 2rem;
+    font-weight: 600;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 2rem;
+    }
+    
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Loading Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in {
+    animation: fadeIn 0.5s ease-in;
+}
