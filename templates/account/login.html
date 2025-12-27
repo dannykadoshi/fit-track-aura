@@ -1,0 +1,154 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Sign In - FitTrack{% endblock %}
+
+{% block extra_css %}
+<style>
+    body {
+        background: linear-gradient(135deg, #0f172a 0%, #581c87 50%, #0f172a 100%) !important;
+    }
+    
+    h1, h2, h3, h4, h5, h6, label {
+        color: #ffffff !important;
+    }
+    
+    p, .text-muted, small, a {
+        color: #e2e8f0 !important;
+    }
+    
+    .form-control, .form-select {
+        background: rgba(255, 255, 255, 0.05) !important;
+        border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        color: #ffffff !important;
+    }
+    
+    .form-control:focus, .form-select:focus {
+        background: rgba(255, 255, 255, 0.08) !important;
+        border-color: #a855f7 !important;
+        color: #ffffff !important;
+    }
+    
+    .form-control::placeholder {
+        color: #94a3b8 !important;
+    }
+    
+    .form-check-input {
+        background-color: rgba(255, 255, 255, 0.1);
+        border-color: rgba(255, 255, 255, 0.3);
+    }
+    
+    .form-check-input:checked {
+        background-color: #a855f7;
+        border-color: #a855f7;
+    }
+    
+    .form-check-label {
+        color: #e2e8f0 !important;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
+            <!-- Header -->
+            <div class="text-center mb-5">
+                <div class="stat-icon mx-auto mb-4" style="width: 80px; height: 80px; font-size: 2.5rem;">
+                    🔐
+                </div>
+                <h1 class="display-5 fw-bold text-white mb-2">Welcome Back!</h1>
+                <p class="text-muted">Sign in to continue your fitness journey</p>
+            </div>
+
+            <!-- Login Form -->
+            <div class="card-custom p-5">
+                <form method="post" action="{% url 'account_login' %}">
+                    {% csrf_token %}
+                    
+                    {% if form.non_field_errors %}
+                        <div class="alert alert-danger" role="alert">
+                            {{ form.non_field_errors }}
+                        </div>
+                    {% endif %}
+
+                    <!-- Login Field -->
+                    <div class="mb-4">
+                        <label for="id_login" class="form-label">Username or Email</label>
+                        <input 
+                            type="text" 
+                            name="login" 
+                            class="form-control form-control-lg" 
+                            id="id_login"
+                            placeholder="Enter your username or email"
+                            required
+                        >
+                        {% if form.login.errors %}
+                            <div class="text-danger small mt-1">{{ form.login.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Password Field -->
+                    <div class="mb-4">
+                        <label for="id_password" class="form-label">Password</label>
+                        <input 
+                            type="password" 
+                            name="password" 
+                            class="form-control form-control-lg" 
+                            id="id_password"
+                            placeholder="Enter your password"
+                            required
+                        >
+                        {% if form.password.errors %}
+                            <div class="text-danger small mt-1">{{ form.password.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Remember Me -->
+                    <div class="form-check mb-4">
+                        <input 
+                            type="checkbox" 
+                            name="remember" 
+                            class="form-check-input" 
+                            id="id_remember"
+                        >
+                        <label class="form-check-label" for="id_remember">
+                            Remember me
+                        </label>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="btn btn-gradient-purple btn-lg w-100 mb-3">
+                        🚀 Sign In
+                    </button>
+
+                    <!-- Forgot Password -->
+                    <div class="text-center mb-3">
+                        <a href="{% url 'account_reset_password' %}" class="text-purple-400 text-decoration-none small">
+                            Forgot your password?
+                        </a>
+                    </div>
+
+                    <!-- Sign Up Link -->
+                    <div class="text-center">
+                        <p class="text-muted mb-0">
+                            Don't have an account? 
+                            <a href="{% url 'account_signup' %}" class="text-purple-400 text-decoration-none fw-semibold">
+                                Sign Up
+                            </a>
+                        </p>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Back to Home -->
+            <div class="text-center mt-4">
+                <a href="{% url 'home' %}" class="text-muted text-decoration-none">
+                    ← Back to Homepage
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
