@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}FitTrack - Track Your Fitness Journey{% endblock %}
+{% block title %}FitTrack Aura - Track Your Fitness Journey{% endblock %}
 
 {% block content %}
 <section class="hero-section">
@@ -150,7 +150,7 @@
             <div class="stat-icon mx-auto mb-4" style="width: 64px; height: 64px; font-size: 2rem;">🏆</div>
             <h2 class="display-6 fw-bold mb-3">Ready to Start Your Journey?</h2>
             <p class="lead text-muted mb-4">
-                Join thousands of fitness enthusiasts tracking their progress and achieving their goals with FitTrack.
+                Join thousands of fitness enthusiasts tracking their progress and achieving their goals with FitTrack Aura.
             </p>
             {% if not user.is_authenticated %}
                 <a href="{% url 'account_signup' %}" class="btn btn-gradient-purple btn-lg">
