@@ -1,0 +1,271 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{% if workout %}Edit Workout{% else %}Log New Workout{% endif %} - FitTrack{% endblock %}
+
+{% block extra_css %}
+<style>
+    body {
+        background: linear-gradient(135deg, #0f172a 0%, #581c87 50%, #0f172a 100%) !important;
+    }
+    
+    h1, h2, h3, h4, h5, h6, label {
+        color: #ffffff !important;
+    }
+    
+    p, .text-muted, small {
+        color: #e2e8f0 !important;
+    }
+    
+    .form-control, .form-select {
+        background: rgba(255, 255, 255, 0.05) !important;
+        border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        color: #ffffff !important;
+    }
+    
+    .form-control:focus, .form-select:focus {
+        background: rgba(255, 255, 255, 0.08) !important;
+        border-color: #a855f7 !important;
+        color: #ffffff !important;
+    }
+    
+    .form-control::placeholder {
+        color: #94a3b8 !important;
+    }
+    
+    option {
+        background: #1e293b !important;
+        color: #ffffff !important;
+    }
+    
+    .exercise-row {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 1rem;
+        padding: 1.5rem;
+        margin-bottom: 1rem;
+    }
+    
+    .btn-remove {
+        background: rgba(239, 68, 68, 0.1);
+        border: 1px solid rgba(239, 68, 68, 0.3);
+        color: #ef4444;
+    }
+    
+    .btn-remove:hover {
+        background: rgba(239, 68, 68, 0.2);
+        border-color: #ef4444;
+        color: #ef4444;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <!-- Header -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="d-flex align-items-center gap-3 mb-2">
+                <a href="{% url 'workout_list' %}" class="text-white text-decoration-none">
+                    ← Back
+                </a>
+                <h1 class="display-5 fw-bold text-white mb-0">
+                    {% if workout %}Edit Workout{% else %}Log New Workout{% endif %}
+                </h1>
+            </div>
+            <p class="text-muted">Record your training session and track your progress</p>
+        </div>
+    </div>
+
+    <form method="post">
+        {% csrf_token %}
+        
+        <div class="row">
+            <!-- Main Form Column -->
+            <div class="col-lg-8">
+                <!-- Workout Details Card -->
+                <div class="card-custom p-4 mb-4">
+                    <h3 class="fw-bold text-white mb-4">
+                        🏋️ Workout Details
+                    </h3>
+
+                    <!-- Title -->
+                    <div class="mb-3">
+                        <label class="form-label">Workout Title *</label>
+                        {{ workout_form.title }}
+                        {% if workout_form.title.errors %}
+                            <div class="text-danger small mt-1">{{ workout_form.title.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Date and Duration -->
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">📅 Date *</label>
+                            {{ workout_form.date }}
+                            {% if workout_form.date.errors %}
+                                <div class="text-danger small mt-1">{{ workout_form.date.errors }}</div>
+                            {% endif %}
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">⏱️ Duration (minutes)</label>
+                            {{ workout_form.duration }}
+                            {% if workout_form.duration.errors %}
+                                <div class="text-danger small mt-1">{{ workout_form.duration.errors }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <!-- Notes -->
+                    <div class="mb-3">
+                        <label class="form-label">Notes (Optional)</label>
+                        {{ workout_form.notes }}
+                        {% if workout_form.notes.errors %}
+                            <div class="text-danger small mt-1">{{ workout_form.notes.errors }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Exercises Card -->
+                <div class="card-custom p-4 mb-4">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h3 class="fw-bold text-white mb-0">
+                            💪 Exercises
+                        </h3>
+                        <button type="button" class="btn btn-gradient-purple btn-sm" onclick="addExerciseRow()">
+                            ➕ Add Exercise
+                        </button>
+                    </div>
+
+                    <!-- Formset Management Form -->
+                    {{ formset.management_form }}
+
+                    <!-- Exercise Rows Container -->
+                    <div id="exercise-forms">
+                        {% for form in formset %}
+                            <div class="exercise-row" data-form-index="{{ forloop.counter0 }}">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <h5 class="text-purple-400 mb-0">Exercise {{ forloop.counter }}</h5>
+                                    {% if not forloop.first %}
+                                        <button type="button" class="btn btn-sm btn-remove" onclick="removeExerciseRow(this)">
+                                            🗑️ Remove
+                                        </button>
+                                    {% endif %}
+                                </div>
+
+                                <!-- Hidden delete field -->
+                                <div style="display: none;">
+                                    {{ form.id }}
+                                    {{ form.DELETE }}
+                                </div>
+
+                                <!-- Exercise Name -->
+                                <div class="mb-3">
+                                    <label class="form-label">Exercise *</label>
+                                    {{ form.exercise }}
+                                    {% if form.exercise.errors %}
+                                        <div class="text-danger small mt-1">{{ form.exercise.errors }}</div>
+                                    {% endif %}
+                                </div>
+
+                                <!-- Sets, Reps, Weight -->
+                                <div class="row">
+                                    <div class="col-md-3 mb-3">
+                                        <label class="form-label">Sets</label>
+                                        {{ form.sets }}
+                                    </div>
+                                    <div class="col-md-3 mb-3">
+                                        <label class="form-label">Reps</label>
+                                        {{ form.reps }}
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label">Weight</label>
+                                        {{ form.weight }}
+                                    </div>
+                                    <div class="col-md-2 mb-3">
+                                        <label class="form-label">Unit</label>
+                                        {{ form.unit }}
+                                    </div>
+                                </div>
+
+                                <!-- Distance and Duration (for cardio) -->
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Distance (km)</label>
+                                        {{ form.distance }}
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Duration (min)</label>
+                                        {{ form.duration }}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="d-flex gap-3">
+                    <button type="submit" class="btn btn-gradient-purple btn-lg flex-grow-1">
+                        💾 Save Workout
+                    </button>
+                    <a href="{% url 'workout_list' %}" class="btn btn-outline-light btn-lg">
+                        Cancel
+                    </a>
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <div class="col-lg-4">
+                <!-- Tips Card -->
+                <div class="card-custom p-4 mb-4">
+                    <h5 class="fw-bold text-white mb-3">
+                        💡 Pro Tips
+                    </h5>
+                    <ul class="text-muted small mb-0" style="list-style: none; padding: 0;">
+                        <li class="mb-2">• Track sets, reps, and weight for strength training</li>
+                        <li class="mb-2">• Use distance and duration for cardio exercises</li>
+                        <li class="mb-2">• Add notes to remember how you felt</li>
+                        <li class="mb-2">• Be consistent with your logging</li>
+                    </ul>
+                </div>
+
+                <!-- This Week Stats -->
+                <div class="card-custom p-4">
+                    <h5 class="fw-bold text-white mb-3">This Week</h5>
+                    <div class="d-flex justify-content-between align-items-center mb-3 pb-3 border-bottom border-secondary">
+                        <span class="text-muted">Workouts</span>
+                        <span class="fw-bold text-white">7</span>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center mb-3 pb-3 border-bottom border-secondary">
+                        <span class="text-muted">Total Time</span>
+                        <span class="fw-bold text-white">310 min</span>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="text-muted">Exercises</span>
+                        <span class="fw-bold text-white">52</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!-- JavaScript for Dynamic Forms -->
+<script>
+    function removeExerciseRow(button) {
+        const row = button.closest('.exercise-row');
+        const deleteCheckbox = row.querySelector('input[name$="-DELETE"]');
+        if (deleteCheckbox) {
+            deleteCheckbox.checked = true;
+            row.style.display = 'none';
+        }
+    }
+
+    // Note: Adding new forms dynamically requires more complex JavaScript
+    // For now, users can add forms by saving and editing
+    function addExerciseRow() {
+        alert('To add more exercises, please save this workout first, then edit it to add more exercises.');
+    }
+</script>
+{% endblock %}

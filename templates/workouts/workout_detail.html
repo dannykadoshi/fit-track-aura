@@ -1,0 +1,157 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ workout.title }} - FitTrack{% endblock %}
+
+{% block extra_css %}
+<style>
+    body {
+        background: linear-gradient(135deg, #0f172a 0%, #581c87 50%, #0f172a 100%) !important;
+    }
+    
+    h1, h2, h3, h4, h5, h6 {
+        color: #ffffff !important;
+    }
+    
+    p, .text-muted, small, td, th {
+        color: #e2e8f0 !important;
+    }
+    
+    .table {
+        color: #e2e8f0 !important;
+    }
+    
+    .table-dark {
+        --bs-table-bg: rgba(255, 255, 255, 0.05);
+        --bs-table-border-color: rgba(255, 255, 255, 0.1);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <!-- Header -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-start flex-wrap gap-3">
+                <div>
+                    <a href="{% url 'workout_list' %}" class="text-white text-decoration-none d-block mb-2">
+                        ← Back to Workouts
+                    </a>
+                    <h1 class="display-5 fw-bold text-white mb-2">{{ workout.title }}</h1>
+                    <p class="text-muted mb-0">
+                        📅 {{ workout.date|date:"F d, Y" }} 
+                        {% if workout.duration %}
+                            • ⏱️ {{ workout.duration }} minutes
+                        {% endif %}
+                    </p>
+                </div>
+                <div class="d-flex gap-2">
+                    <a href="{% url 'workout_update' workout.pk %}" class="btn btn-gradient-purple">
+                        ✏️ Edit
+                    </a>
+                    <a href="{% url 'workout_delete' workout.pk %}" class="btn btn-outline-danger">
+                        🗑️ Delete
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Main Content -->
+        <div class="col-lg-8">
+            <!-- Exercises List -->
+            <div class="card-custom p-4 mb-4">
+                <h3 class="fw-bold text-white mb-4">💪 Exercises</h3>
+                
+                {% if workout.workout_exercises.all %}
+                    <div class="table-responsive">
+                        <table class="table table-dark">
+                            <thead>
+                                <tr>
+                                    <th>Exercise</th>
+                                    <th>Sets</th>
+                                    <th>Reps</th>
+                                    <th>Weight</th>
+                                    <th>Distance</th>
+                                    <th>Duration</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for exercise in workout.workout_exercises.all %}
+                                    <tr>
+                                        <td class="fw-semibold">{{ exercise.exercise.name }}</td>
+                                        <td>{% if exercise.sets %}{{ exercise.sets }}{% else %}-{% endif %}</td>
+                                        <td>{% if exercise.reps %}{{ exercise.reps }}{% else %}-{% endif %}</td>
+                                        <td>
+                                            {% if exercise.weight %}
+                                                {{ exercise.weight }} {{ exercise.unit }}
+                                            {% else %}
+                                                -
+                                            {% endif %}
+                                        </td>
+                                        <td>{% if exercise.distance %}{{ exercise.distance }} km{% else %}-{% endif %}</td>
+                                        <td>{% if exercise.duration %}{{ exercise.duration }} min{% else %}-{% endif %}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% else %}
+                    <p class="text-muted text-center py-4">No exercises recorded for this workout.</p>
+                {% endif %}
+            </div>
+
+            <!-- Notes -->
+            {% if workout.notes %}
+                <div class="card-custom p-4">
+                    <h5 class="fw-bold text-white mb-3">📝 Notes</h5>
+                    <p class="text-muted mb-0">{{ workout.notes }}</p>
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- Sidebar -->
+        <div class="col-lg-4">
+            <!-- Quick Stats -->
+            <div class="card-custom p-4 mb-4">
+                <h5 class="fw-bold text-white mb-3">Workout Summary</h5>
+                
+                <div class="mb-3 pb-3 border-bottom border-secondary">
+                    <div class="text-muted small">Total Exercises</div>
+                    <div class="h4 text-white mb-0">{{ workout.total_exercises }}</div>
+                </div>
+                
+                {% if workout.duration %}
+                    <div class="mb-3 pb-3 border-bottom border-secondary">
+                        <div class="text-muted small">Duration</div>
+                        <div class="h4 text-white mb-0">{{ workout.duration }} min</div>
+                    </div>
+                {% endif %}
+                
+                <div>
+                    <div class="text-muted small">Created</div>
+                    <div class="text-white">{{ workout.created_at|date:"M d, Y" }}</div>
+                </div>
+            </div>
+
+            <!-- Actions -->
+            <div class="card-custom p-4">
+                <h5 class="fw-bold text-white mb-3">Actions</h5>
+                <div class="d-grid gap-2">
+                    <a href="{% url 'workout_update' workout.pk %}" class="btn btn-outline-light">
+                        ✏️ Edit Workout
+                    </a>
+                    <a href="{% url 'workout_list' %}" class="btn btn-outline-light">
+                        📋 View All Workouts
+                    </a>
+                    <a href="{% url 'workout_create' %}" class="btn btn-gradient-purple">
+                        ➕ Log New Workout
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
