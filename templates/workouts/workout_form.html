@@ -4,6 +4,9 @@
 {% block title %}{% if workout %}Edit Workout{% else %}Log New Workout{% endif %} - FitTrack{% endblock %}
 
 {% block extra_css %}
+<!-- Select2 CSS -->
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
 <style>
     body {
         background: linear-gradient(135deg, #0f172a 0%, #581c87 50%, #0f172a 100%) !important;
@@ -56,6 +59,66 @@
         background: rgba(239, 68, 68, 0.2);
         border-color: #ef4444;
         color: #ef4444;
+    }
+
+    /* Select2 Custom Styling */
+    .select2-container--default .select2-selection--single {
+        background-color: rgba(255, 255, 255, 0.05) !important;
+        border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        border-radius: 0.5rem !important;
+        height: 42px !important;
+        padding: 6px 12px !important;
+        color: #ffffff !important;
+    }
+    
+    .select2-container--default .select2-selection--single .select2-selection__rendered {
+        color: #ffffff !important;
+        line-height: 28px !important;
+        padding-left: 0 !important;
+    }
+    
+    .select2-container--default .select2-selection--single .select2-selection__arrow {
+        height: 40px !important;
+    }
+    
+    .select2-dropdown {
+        background-color: #1e293b !important;
+        border: 1px solid rgba(168, 85, 247, 0.3) !important;
+        border-radius: 0.5rem !important;
+    }
+    
+    .select2-container--default .select2-results__option {
+        color: #ffffff !important;
+        padding: 10px 12px !important;
+    }
+    
+    .select2-container--default .select2-results__option--highlighted[aria-selected] {
+        background-color: rgba(168, 85, 247, 0.3) !important;
+    }
+    
+    .select2-container--default .select2-results__option[aria-selected=true] {
+        background-color: rgba(168, 85, 247, 0.5) !important;
+    }
+    
+    .select2-search--dropdown .select2-search__field {
+        background-color: rgba(255, 255, 255, 0.05) !important;
+        border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        color: #ffffff !important;
+        border-radius: 0.5rem !important;
+        padding: 8px 12px !important;
+    }
+    
+    .select2-search--dropdown .select2-search__field:focus {
+        border-color: #a855f7 !important;
+        outline: none !important;
+    }
+    
+    .select2-search--dropdown .select2-search__field::placeholder {
+        color: #94a3b8 !important;
+    }
+    
+    .select2-container {
+        width: 100% !important;
     }
 </style>
 {% endblock %}
@@ -250,9 +313,31 @@
         </div>
     </form>
 </div>
+{% endblock %}
 
-<!-- JavaScript for Dynamic Forms -->
+{% block extra_js %}
+<!-- jQuery (required for Select2) -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Select2 JS -->
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+<!-- JavaScript for Dynamic Forms and Select2 -->
 <script>
+    $(document).ready(function() {
+        // Initialize Select2 on all exercise select dropdowns
+        initializeSelect2();
+    });
+
+    function initializeSelect2() {
+        $('select[name*="exercise"]').select2({
+            placeholder: "🔍 Search for an exercise...",
+            allowClear: true,
+            theme: 'default',
+            width: '100%'
+        });
+    }
+
     function removeExerciseRow(button) {
         const row = button.closest('.exercise-row');
         const deleteCheckbox = row.querySelector('input[name$="-DELETE"]');
@@ -262,8 +347,6 @@
         }
     }
 
-    // Note: Adding new forms dynamically requires more complex JavaScript
-    // For now, users can add forms by saving and editing
     function addExerciseRow() {
         alert('To add more exercises, please save this workout first, then edit it to add more exercises.');
     }
