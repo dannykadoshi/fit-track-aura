@@ -1,0 +1,156 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}My Goals - FitTrack{% endblock %}
+
+{% block extra_css %}
+<style>
+    body {
+        background: linear-gradient(135deg, #0f172a 0%, #581c87 50%, #0f172a 100%) !important;
+    }
+    
+    h1, h2, h3, h4, h5, h6 {
+        color: #ffffff !important;
+    }
+    
+    p, .text-muted, small {
+        color: #e2e8f0 !important;
+    }
+    
+    .goal-card {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 1rem;
+        padding: 1.5rem;
+        margin-bottom: 1rem;
+        transition: all 0.3s ease;
+    }
+    
+    .goal-card:hover {
+        border-color: rgba(168, 85, 247, 0.5);
+        transform: translateY(-2px);
+    }
+    
+    .goal-card.completed {
+        opacity: 0.7;
+        border-color: rgba(34, 197, 94, 0.3);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <!-- Header -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center flex-wrap">
+                <div class="mb-3 mb-md-0">
+                    <h1 class="display-5 fw-bold text-white">My Goals</h1>
+                    <p class="text-muted">Set targets and track your progress</p>
+                </div>
+                <a href="{% url 'goal_create' %}" class="btn btn-gradient-purple btn-lg">
+                    🎯 Create New Goal
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Active Goals -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <h3 class="text-white mb-4">🔥 Active Goals</h3>
+            
+            {% if active_goals %}
+                {% for goal in active_goals %}
+                    <div class="goal-card">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <div class="flex-grow-1">
+                                <div class="d-flex align-items-center gap-2 mb-2">
+                                    <span class="text-purple-400" style="font-size: 1.5rem;">⭕</span>
+                                    <h4 class="fw-bold text-white mb-0">{{ goal.title }}</h4>
+                                    <span class="badge bg-secondary">{{ goal.get_category_display }}</span>
+                                </div>
+                                {% if goal.description %}
+                                    <p class="text-muted mb-2">{{ goal.description }}</p>
+                                {% endif %}
+                                <p class="text-muted small mb-0">
+                                    📅 Target: {{ goal.target_date|date:"M d, Y" }} • 
+                                    🎯 Goal: {{ goal.target_value }}
+                                </p>
+                            </div>
+                            <div class="d-flex gap-2">
+                                <a href="{% url 'goal_update' goal.pk %}" class="btn btn-sm btn-outline-light">
+                                    Edit
+                                </a>
+                                <form method="post" action="{% url 'goal_complete' goal.pk %}" style="display: inline;">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-sm btn-success">
+                                        ✓ Complete
+                                    </button>
+                                </form>
+                                <a href="{% url 'goal_delete' goal.pk %}" class="btn btn-sm btn-outline-danger">
+                                    Delete
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <!-- Progress Bar -->
+                        <div class="mb-2">
+                            <div class="d-flex justify-content-between text-sm mb-1">
+                                <span class="text-muted small">Progress: {{ goal.current_value }}</span>
+                                <span class="text-white small fw-bold">Target: {{ goal.target_value }}</span>
+                            </div>
+                            <div class="progress-custom">
+                                <div class="progress-bar-custom" style="width: 50%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="text-center py-5">
+                    <div class="card-custom p-5">
+                        <div class="stat-icon mx-auto mb-4" style="width: 80px; height: 80px; font-size: 2.5rem;">
+                            🎯
+                        </div>
+                        <h3 class="text-white mb-3">No active goals</h3>
+                        <p class="text-muted mb-4">Set your first goal and start tracking your progress!</p>
+                        <a href="{% url 'goal_create' %}" class="btn btn-gradient-purple btn-lg">
+                            Create Your First Goal
+                        </a>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Completed Goals -->
+    {% if completed_goals %}
+        <div class="row">
+            <div class="col-12">
+                <h3 class="text-white mb-4">✅ Completed Goals</h3>
+                
+                {% for goal in completed_goals %}
+                    <div class="goal-card completed">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div class="flex-grow-1">
+                                <div class="d-flex align-items-center gap-2 mb-2">
+                                    <span style="font-size: 1.5rem;">✅</span>
+                                    <h5 class="fw-bold text-white mb-0">{{ goal.title }}</h5>
+                                    <span class="badge bg-success">Completed</span>
+                                </div>
+                                <p class="text-muted small mb-0">
+                                    🎉 Completed on {{ goal.completed_date|date:"M d, Y" }}
+                                </p>
+                            </div>
+                            <a href="{% url 'goal_delete' goal.pk %}" class="btn btn-sm btn-outline-danger">
+                                Delete
+                            </a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
