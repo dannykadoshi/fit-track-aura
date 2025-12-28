@@ -6,113 +6,113 @@ django.setup()
 
 from workouts.models import Exercise
 
-exercises = [
+# Map ALL exercises with their correct categories
+exercise_categories = {
     # Strength - Upper Body
-    ('Bench Press', 'strength'),
-    ('Incline Bench Press', 'strength'),
-    ('Decline Bench Press', 'strength'),
-    ('Dumbbell Press', 'strength'),
-    ('Dumbbell Flyes', 'strength'),
-    ('Push-Ups', 'strength'),
-    ('Dips', 'strength'),
-    ('Tricep Dips', 'strength'),
-    ('Overhead Press', 'strength'),
-    ('Arnold Press', 'strength'),
-    ('Lateral Raises', 'strength'),
-    ('Front Raises', 'strength'),
-    ('Shrugs', 'strength'),
-    ('Bicep Curls', 'strength'),
-    ('Hammer Curls', 'strength'),
-    ('Skull Crushers', 'strength'),
-    ('Cable Crossovers', 'strength'),
-    ('Chest Press Machine', 'strength'),
-    
-    # Strength - Back
-    ('Pull-Ups', 'strength'),
-    ('Chin-Ups', 'strength'),
-    ('Lat Pulldown', 'strength'),
-    ('Barbell Row', 'strength'),
-    ('Dumbbell Row', 'strength'),
-    ('T-Bar Row', 'strength'),
-    ('Cable Rows', 'strength'),
-    ('Face Pulls', 'strength'),
-    ('Reverse Flyes', 'strength'),
-    ('Deadlift', 'strength'),
-    ('Romanian Deadlift', 'strength'),
-    
-    # Strength - Legs
-    ('Squats', 'strength'),
-    ('Front Squats', 'strength'),
-    ('Leg Press', 'strength'),
-    ('Lunges', 'strength'),
-    ('Walking Lunges', 'strength'),
-    ('Bulgarian Split Squats', 'strength'),
-    ('Leg Extensions', 'strength'),
-    ('Leg Curls', 'strength'),
-    ('Calf Raises', 'strength'),
-    ('Hip Thrusts', 'strength'),
-    ('Glute Bridges', 'strength'),
-    ('Step-Ups', 'strength'),
-    
-    # Strength - Core
-    ('Plank', 'strength'),
-    ('Side Plank', 'strength'),
-    ('Crunches', 'strength'),
-    ('Bicycle Crunches', 'strength'),
-    ('Russian Twists', 'strength'),
-    ('Leg Raises', 'strength'),
-    ('Hanging Knee Raises', 'strength'),
-    ('Ab Wheel', 'strength'),
-    ('Mountain Climbers', 'strength'),
-    ('Flutter Kicks', 'strength'),
-    ('Dead Bug', 'strength'),
-    
-    # Cardio
-    ('Treadmill', 'cardio'),
-    ('Running', 'cardio'),
-    ('Cycling', 'cardio'),
-    ('Stationary Bike', 'cardio'),
-    ('Rowing Machine', 'cardio'),
-    ('Elliptical', 'cardio'),
-    ('Stair Climber', 'cardio'),
-    ('Jump Rope', 'cardio'),
-    ('Jumping Jacks', 'cardio'),
-    ('Burpees', 'cardio'),
-    ('High Knees', 'cardio'),
-    ('Box Jumps', 'cardio'),
-    ('Battle Ropes', 'cardio'),
-    ('Swimming', 'cardio'),
-    
-    # Flexibility
-    ('Stretching', 'flexibility'),
-    ('Yoga', 'flexibility'),
-    ('Pilates', 'flexibility'),
-    
-    # Sports
-    ('Basketball', 'sports'),
-    ('Soccer', 'sports'),
-    ('Tennis', 'sports'),
-]
+    'Ab Wheel': 'strength',
+    'Arnold Press': 'strength',
+    'Barbell Row': 'strength',
+    'Battle Ropes': 'cardio',
+    'Bench Press': 'strength',
+    'Bicep Curls': 'strength',
+    'Bicycle Crunches': 'strength',
+    'Box Jumps': 'cardio',
+    'Bulgarian Split Squats': 'strength',
+    'Burpees': 'cardio',
+    'Cable Crossovers': 'strength',
+    'Cable Rows': 'strength',
+    'Calf Raises': 'strength',
+    'Chest Press Machine': 'strength',
+    'Chin-Ups': 'strength',
+    'Crunches': 'strength',
+    'Cycling': 'cardio',
+    'Dead Bug': 'strength',
+    'Deadlift': 'strength',
+    'Decline Bench Press': 'strength',
+    'Dips': 'strength',
+    'Dumbbell Flyes': 'strength',
+    'Dumbbell Press': 'strength',
+    'Dumbbell Row': 'strength',
+    'Elliptical': 'cardio',
+    'Face Pulls': 'strength',
+    'Flutter Kicks': 'strength',
+    'Front Raises': 'strength',
+    'Front Squats': 'strength',
+    'Glute Bridges': 'strength',
+    'Hammer Curls': 'strength',
+    'Hanging Knee Raises': 'strength',
+    'High Knees': 'cardio',
+    'Hip Thrusts': 'strength',
+    'Incline Bench Press': 'strength',
+    'Jump Rope': 'cardio',
+    'Jumping Jacks': 'cardio',
+    'Lat Pulldown': 'strength',
+    'Lateral Raises': 'strength',
+    'Leg Curls': 'strength',
+    'Leg Extensions': 'strength',
+    'Leg Press': 'strength',
+    'Leg Raises': 'strength',
+    'Lunges': 'strength',
+    'Mountain Climbers': 'strength',
+    'Overhead Press': 'strength',
+    'Pilates': 'flexibility',
+    'Plank': 'strength',
+    'Pull-Ups': 'strength',
+    'Push-Ups': 'strength',
+    'Reverse Flyes': 'strength',
+    'Romanian Deadlift': 'strength',
+    'Rowing Machine': 'cardio',
+    'Running': 'cardio',
+    'Russian Twists': 'strength',
+    'Shrugs': 'strength',
+    'Side Plank': 'strength',
+    'Skull Crushers': 'strength',
+    'Squats': 'strength',
+    'Stair Climber': 'cardio',
+    'Stationary Bike': 'cardio',
+    'Step-Ups': 'strength',
+    'Stretching': 'flexibility',
+    'Swimming': 'cardio',
+    'T-Bar Row': 'strength',
+    'Tennis': 'sports',
+    'Basketball': 'sports',
+    'Soccer': 'sports',
+    'Treadmill': 'cardio',
+    'Tricep Dips': 'strength',
+    'Walking Lunges': 'strength',
+    'Yoga': 'flexibility',
+}
 
-print("Adding/updating exercises...")
+print("Fixing ALL exercise categories...")
 updated_count = 0
-added_count = 0
+created_count = 0
+skipped_count = 0
 
-for name, category in exercises:
-    obj, created = Exercise.objects.get_or_create(name=name, defaults={'category': category})
-    if created:
-        print(f"✅ Added {name} ({category})")
-        added_count += 1
-    else:
-        # ALWAYS update if category is blank OR different
-        if not obj.category or obj.category != category:
-            obj.category = category
-            obj.save()
-            print(f"🔄 Updated {name} → {category}")
+# First, update ALL existing exercises
+for exercise in Exercise.objects.all():
+    if exercise.name in exercise_categories:
+        correct_category = exercise_categories[exercise.name]
+        if exercise.category != correct_category:
+            exercise.category = correct_category
+            exercise.save()
+            print(f"🔄 FIXED: {exercise.name} → {correct_category}")
             updated_count += 1
         else:
-            print(f"⏭️  Skipped {name} (already correct)")
+            print(f"✅ OK: {exercise.name} ({correct_category})")
+            skipped_count += 1
+    else:
+        print(f"⚠️  Unknown exercise (not in list): {exercise.name}")
 
-print(f"\n✅ Added: {added_count}")
+# Then, create any missing exercises
+for name, category in exercise_categories.items():
+    obj, created = Exercise.objects.get_or_create(name=name, defaults={'category': category})
+    if created:
+        print(f"➕ CREATED: {name} ({category})")
+        created_count += 1
+
+print(f"\n" + "="*50)
 print(f"🔄 Updated: {updated_count}")
-print(f"🎉 Total exercises in database: {Exercise.objects.count()}")
+print(f"➕ Created: {created_count}")
+print(f"✅ Already OK: {skipped_count}")
+print(f"🎉 Total exercises: {Exercise.objects.count()}")
+print("="*50)
