@@ -213,6 +213,7 @@ The goals list wireframe displays active goals with progress indicators and acti
 - **Loading States:** Visual feedback during data operations
 - **Error Handling:** Custom 404 and 500 error pages
 
+![Mobile Responsiveness](docs/screenshots/mobile-homepage.png)
 ![404 Error Page](docs/screenshots/10-404-error.png)
 
 #### 7. Security Features
