@@ -95,17 +95,24 @@ exercises = [
 ]
 
 print("Adding/updating exercises...")
+updated_count = 0
+added_count = 0
+
 for name, category in exercises:
     obj, created = Exercise.objects.get_or_create(name=name, defaults={'category': category})
     if created:
         print(f"✅ Added {name} ({category})")
+        added_count += 1
     else:
-        # Update category if it's different
-        if obj.category != category:
+        # ALWAYS update if category is blank OR different
+        if not obj.category or obj.category != category:
             obj.category = category
             obj.save()
             print(f"🔄 Updated {name} → {category}")
+            updated_count += 1
         else:
             print(f"⏭️  Skipped {name} (already correct)")
 
-print(f"\n🎉 Total exercises in database: {Exercise.objects.count()}")
+print(f"\n✅ Added: {added_count}")
+print(f"🔄 Updated: {updated_count}")
+print(f"🎉 Total exercises in database: {Exercise.objects.count()}")
