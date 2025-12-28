@@ -2,9 +2,9 @@
 
 ![FitTrack Aura Logo](static/images/og-image.png)
 
-**Live Site:** [Coming Soon - Deployment URL Here]
+**Live Site:** [FitTrack Aura](https://fit-track-aura.onrender.com)
 
-**GitHub Repository:** [https://github.com/dannykadoshi/fit-track-aura](https://github.com/dannykadoshi/fit-track-aura)
+**GitHub Repository:** [GitHub - FitTrack Aura](https://github.com/dannykadoshi/fit-track-aura)
 
 ---
 
@@ -20,6 +20,7 @@
 - [Technologies Used](#technologies-used)
 - [Testing](#testing)
 - [Deployment](#deployment)
+- [Admin Access](#admin-access)
 - [Credits](#credits)
 
 ---
@@ -360,21 +361,22 @@ class Goal(models.Model):
 
 #### Backend
 - **Django 6.0** - Python web framework
-- **Django Allauth** - User authentication
-- **Python Decouple** - Environment variable management
-- **Whitenoise** - Static file serving
-- **Gunicorn** - WSGI HTTP Server (production)
+- **Django Allauth 65.13.1** - User authentication
+- **Python Decouple 3.8** - Environment variable management
+- **dj-database-url 3.0.1** - Database configuration
+- **Whitenoise 6.11.0** - Static file serving
+- **Gunicorn 23.0.0** - WSGI HTTP Server (production)
+- **psycopg2-binary 2.9.11** - PostgreSQL adapter
 
 #### Frontend
 - **Bootstrap 5.3** - Responsive CSS framework
 - **Select2 4.1** - Searchable dropdown component
 - **jQuery 3.6** - JavaScript library (for Select2)
-- **Font Awesome** - Icon library (via CDN)
 
 ### Database
 
 - **SQLite** - Development database
-- **PostgreSQL** - Production database (recommended for deployment)
+- **PostgreSQL 17** - Production database (Render)
 
 ### Tools & Services
 
@@ -382,19 +384,24 @@ class Goal(models.Model):
 - **GitHub** - Code repository and project management
 - **VS Code** - Code editor
 - **Chrome DevTools** - Testing and debugging
-- **Heroku/Railway/Render** - Cloud deployment platform
-- **Cloudinary** - Image hosting (optional)
+- **Render** - Cloud deployment platform
+- **Coverage.py 7.13.0** - Code coverage analysis
 
 ### Python Packages
 
 ```txt
+asgiref==3.11.0
+coverage==7.13.0
+dj-database-url==3.0.1
 Django==6.0
-django-allauth>=0.50.0
-python-decouple>=3.8
-whitenoise>=6.0
-gunicorn>=20.1
-psycopg2-binary>=2.9  # For PostgreSQL
-Pillow>=10.0  # For image processing
+django-allauth==65.13.1
+gunicorn==23.0.0
+packaging==25.0
+pillow==12.0.0
+psycopg2-binary==2.9.11
+python-decouple==3.8
+sqlparse==0.5.5
+whitenoise==6.11.0
 ```
 
 ---
@@ -532,6 +539,11 @@ No known bugs at the time of submission. All identified issues during testing we
 
 ## Deployment
 
+### Live Deployment
+
+The application is deployed on Render and can be accessed at:
+**[https://fit-track-aura.onrender.com](https://fit-track-aura.onrender.com)**
+
 ### Local Development Setup
 
 #### Prerequisites
@@ -598,80 +610,130 @@ python manage.py runserver
 
 Visit `http://127.0.0.1:8000/` to view the application.
 
-### Production Deployment (Heroku Example)
+### Production Deployment to Render
 
 #### Prerequisites
-- Heroku account
-- Heroku CLI installed
+- Render account (free tier available)
+- GitHub repository
 
 #### Deployment Steps
 
-1. **Install additional dependencies**
+1. **Prepare project for deployment**
+
+Create `build.sh` in project root:
 ```bash
-pip install gunicorn psycopg2-binary whitenoise
-pip freeze > requirements.txt
+#!/usr/bin/env bash
+# exit on error
+set -o errexit
+
+pip install -r requirements.txt
+python manage.py collectstatic --no-input
+python manage.py migrate
+python create_superuser.py
+python add_exercises.py
 ```
 
-2. **Create Procfile**
-```
-web: gunicorn fittrack_project.wsgi
+Make it executable:
+```bash
+chmod +x build.sh
 ```
 
-3. **Update settings.py for production**
+2. **Update settings.py for production**
+
+Add at the top:
 ```python
-# Add to MIDDLEWARE
+import dj_database_url
+```
+
+Update DATABASES:
+```python
+DATABASES = {
+    'default': dj_database_url.config(
+        default=config('DATABASE_URL', default='sqlite:///db.sqlite3'),
+        conn_max_age=600
+    )
+}
+```
+
+Update ALLOWED_HOSTS:
+```python
+ALLOWED_HOSTS = [
+    '127.0.0.1',
+    'localhost',
+    '.onrender.com',
+]
+```
+
+Add WhiteNoise to MIDDLEWARE (after SecurityMiddleware):
+```python
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',  # Add this
-    # ... other middleware
+    # ... rest of middleware
 ]
+```
 
-# Static files
+Add at bottom of settings.py:
+```python
+# Static files configuration for production
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-# Security settings
-SECURE_SSL_REDIRECT = True
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
-SECURE_BROWSER_XSS_FILTER = True
-SECURE_CONTENT_TYPE_NOSNIFF = True
+# Security settings for production
+if not DEBUG:
+    SECURE_SSL_REDIRECT = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    SECURE_BROWSER_XSS_FILTER = True
+    SECURE_CONTENT_TYPE_NOSNIFF = True
 ```
 
-4. **Create Heroku app**
-```bash
-heroku login
-heroku create your-app-name
+3. **Create Render Web Service**
+
+- Go to [https://render.com/](https://render.com/)
+- Sign in with GitHub
+- Click "New +" → "Web Service"
+- Connect your repository
+- Configure:
+  - **Name:** fit-track-aura
+  - **Region:** Oregon (or closest)
+  - **Branch:** main
+  - **Runtime:** Python 3
+  - **Build Command:** `./build.sh`
+  - **Start Command:** `gunicorn fittrack_project.wsgi:application`
+  - **Instance Type:** Free
+
+4. **Add Environment Variables**
+
+In Render dashboard, add Secret File:
+- **Filename:** `.env`
+- **Contents:**
+```
+SECRET_KEY=your-production-secret-key
+DEBUG=False
+PYTHON_VERSION=3.14.0
 ```
 
-5. **Add PostgreSQL database**
-```bash
-heroku addons:create heroku-postgresql:mini
-```
+5. **Create PostgreSQL Database**
 
-6. **Set environment variables**
-```bash
-heroku config:set SECRET_KEY=your-secret-key-here
-heroku config:set DEBUG=False
-heroku config:set ALLOWED_HOSTS=your-app-name.herokuapp.com
-```
+- Click "New +" → "PostgreSQL"
+- **Name:** fit-track-aura-db
+- **Region:** Same as web service
+- **PostgreSQL Version:** 17
+- **Instance Type:** Free
 
-7. **Deploy to Heroku**
-```bash
-git push heroku main
-```
+6. **Connect Database to Web Service**
 
-8. **Run migrations on Heroku**
-```bash
-heroku run python manage.py migrate
-heroku run python manage.py createsuperuser
-heroku run python add_exercises.py
-```
+- In web service Environment tab
+- Click "Add Environment Variable"
+- Key: `DATABASE_URL`
+- Value: Copy from PostgreSQL "Internal Database URL"
 
-9. **Open the app**
-```bash
-heroku open
-```
+7. **Deploy**
+
+- Click "Manual Deploy" → "Deploy latest commit"
+- Wait 3-5 minutes for build to complete
+- Visit your live site: `https://fit-track-aura.onrender.com`
 
 ### Environment Variables
 
@@ -681,8 +743,8 @@ Required environment variables for production:
 |----------|-------------|---------|
 | SECRET_KEY | Django secret key | `django-insecure-abc123...` |
 | DEBUG | Debug mode (False in production) | `False` |
-| DATABASE_URL | Database connection string | `postgres://user:pass@host/db` |
-| ALLOWED_HOSTS | Comma-separated allowed hosts | `your-app.herokuapp.com` |
+| DATABASE_URL | PostgreSQL connection string | `postgres://user:pass@host/db` |
+| PYTHON_VERSION | Python version for Render | `3.14.0` |
 
 ### Security Considerations
 
@@ -693,6 +755,49 @@ Required environment variables for production:
 - ✅ Secure cookies enabled
 - ✅ CSRF and XSS protection enabled
 - ✅ `.env` file in `.gitignore`
+- ✅ No hardcoded passwords in code
+
+### Important Notes
+
+**Render Free Tier Limitations:**
+- Services spin down after 15 minutes of inactivity
+- First load after inactivity may take 30-60 seconds
+- No persistent disk storage (use PostgreSQL for data)
+- Suitable for student projects and portfolios
+
+---
+
+## Admin Access
+
+### For Code Institute Assessors
+
+To access the Django admin panel for assessment purposes:
+
+**Admin Panel URL:** [https://fit-track-aura.onrender.com/admin/](https://fit-track-aura.onrender.com/admin/)
+
+**Admin Credentials:**
+- **Username:** `admin`
+- **Password:** Provided in LMS submission form
+
+**What you can access:**
+- View all user accounts and data
+- Full CRUD operations on all models (Workouts, Goals, Exercises)
+- User management and permissions
+- Database administration
+- View all workout exercises and relationships
+
+**Note:** For security reasons, the admin password is provided separately in the project submission form, not in this public README.
+
+### Test User Account
+
+You can create your own test account by visiting:
+**[https://fit-track-aura.onrender.com/accounts/signup/](https://fit-track-aura.onrender.com/accounts/signup/)**
+
+Or use the admin panel to view existing user data and workouts.
+
+### Important for Assessors
+
+**First Load Delay:** The application uses Render's free tier, which spins down after 15 minutes of inactivity. If the service is asleep, the first page load may take 30-60 seconds. Subsequent page loads will be instant.
 
 ---
 
@@ -704,6 +809,7 @@ Required environment variables for production:
 - **Bootstrap 5 Documentation:** [https://getbootstrap.com/docs/5.3/](https://getbootstrap.com/docs/5.3/)
 - **Django Allauth:** [https://django-allauth.readthedocs.io/](https://django-allauth.readthedocs.io/)
 - **Select2 Documentation:** [https://select2.org/](https://select2.org/)
+- **Render Documentation:** [https://render.com/docs](https://render.com/docs)
 - **Code Institute Learning Materials:** Django walkthrough projects and course content
 - **Stack Overflow:** Various solutions for specific implementation challenges
 
@@ -711,28 +817,29 @@ Required environment variables for production:
 
 - **Color Palette:** Inspired by modern fitness app designs
 - **Glassmorphism Effects:** CSS-Tricks and contemporary UI trends
-- **Dashboard Layout:** Influenced by popular fitness tracking apps
+- **Dashboard Layout:** Influenced by popular fitness tracking apps (Strava, MyFitnessPal)
 
 ### Content
 
 - **Exercise Library:** Compiled from standard fitness resources and exercise databases
 - **Icons & Emojis:** Unicode emoji characters
-- **Images:** Generated using Pillow (Python Imaging Library)
+- **Wireframes:** Created using Adobe Firefly AI
+- **Favicon & OG Images:** Generated using Pillow (Python Imaging Library)
 
 ### Acknowledgments
 
-- **Code Institute:** For providing the learning platform and project guidance
-- **Mentor:** [Your mentor's name] for feedback and support
-- **Slack Community:** For assistance with debugging and best practices
-- **Family & Friends:** For testing the application and providing feedback
+- **Code Institute:** For providing the comprehensive learning platform and project guidance
+- **Slack Community:** For assistance with debugging, deployment issues, and best practices
+- **Family & Friends:** For testing the application and providing valuable user feedback
+- **Render:** For providing free cloud hosting for student projects
 
 ---
 
 ## Contact
 
 **Developer:** Danny Kadoshi  
-**Email:** [dannykadoshi@me.com]  
-**GitHub:** [@dannykadoshi](https://github.com/dannykadoshi)  
+**Email:** dannykadoshi@me.com  
+**GitHub:** [@dannykadoshi](https://github.com/dannykadoshi)
 
 ---
 
