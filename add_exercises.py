@@ -8,10 +8,10 @@ from workouts.models import Exercise
 
 # Map ALL exercises with their correct categories
 exercise_categories = {
-    # Strength - Upper Body
     'Ab Wheel': 'strength',
     'Arnold Press': 'strength',
     'Barbell Row': 'strength',
+    'Basketball': 'sports',
     'Battle Ropes': 'cardio',
     'Bench Press': 'strength',
     'Bicep Curls': 'strength',
@@ -67,6 +67,7 @@ exercise_categories = {
     'Shrugs': 'strength',
     'Side Plank': 'strength',
     'Skull Crushers': 'strength',
+    'Soccer': 'sports',
     'Squats': 'strength',
     'Stair Climber': 'cardio',
     'Stationary Bike': 'cardio',
@@ -75,44 +76,36 @@ exercise_categories = {
     'Swimming': 'cardio',
     'T-Bar Row': 'strength',
     'Tennis': 'sports',
-    'Basketball': 'sports',
-    'Soccer': 'sports',
     'Treadmill': 'cardio',
     'Tricep Dips': 'strength',
     'Walking Lunges': 'strength',
     'Yoga': 'flexibility',
 }
 
-print("Fixing ALL exercise categories...")
+print("FORCE UPDATING ALL EXERCISES...")
 updated_count = 0
-created_count = 0
-skipped_count = 0
 
-# First, update ALL existing exercises
+# Update EVERY exercise, no checking
 for exercise in Exercise.objects.all():
     if exercise.name in exercise_categories:
-        correct_category = exercise_categories[exercise.name]
-        if exercise.category != correct_category:
-            exercise.category = correct_category
-            exercise.save()
-            print(f"🔄 FIXED: {exercise.name} → {correct_category}")
-            updated_count += 1
+        old_category = exercise.category
+        new_category = exercise_categories[exercise.name]
+        exercise.category = new_category
+        exercise.save()  # FORCE SAVE EVERY TIME
+        
+        if old_category:
+            if old_category == new_category:
+                print(f"✅ {exercise.name}: {old_category} (no change needed)")
+            else:
+                print(f"🔄 {exercise.name}: {old_category} → {new_category}")
+                updated_count += 1
         else:
-            print(f"✅ OK: {exercise.name} ({correct_category})")
-            skipped_count += 1
+            print(f"🆕 {exercise.name}: BLANK → {new_category}")
+            updated_count += 1
     else:
-        print(f"⚠️  Unknown exercise (not in list): {exercise.name}")
+        print(f"⚠️  {exercise.name}: NOT IN LIST")
 
-# Then, create any missing exercises
-for name, category in exercise_categories.items():
-    obj, created = Exercise.objects.get_or_create(name=name, defaults={'category': category})
-    if created:
-        print(f"➕ CREATED: {name} ({category})")
-        created_count += 1
-
-print(f"\n" + "="*50)
-print(f"🔄 Updated: {updated_count}")
-print(f"➕ Created: {created_count}")
-print(f"✅ Already OK: {skipped_count}")
-print(f"🎉 Total exercises: {Exercise.objects.count()}")
-print("="*50)
+print(f"\n{'='*60}")
+print(f"✅ UPDATED: {updated_count} exercises")
+print(f"🎉 TOTAL: {Exercise.objects.count()} exercises")
+print(f"{'='*60}")
