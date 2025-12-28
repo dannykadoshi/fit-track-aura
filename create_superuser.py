@@ -8,15 +8,9 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
-# Create admin superuser if it doesn't exist
+# Admin user should already exist from first deployment
+# This script only runs once
 if not User.objects.filter(username='admin').exists():
-    User.objects.create_superuser(
-        username='admin',
-        email='admin@gmail.com',
-        password='admin1005'
-    )
-    print("✅ Admin superuser created successfully!")
-    print("Username: admin")
-    print("Email: admin@gmail.com")
+    print("⚠️ Admin user not found - create manually via Django admin")
 else:
-    print("ℹ️ Admin user already exists - skipping creation")
+    print("ℹ️ Admin user exists - ready to use")
