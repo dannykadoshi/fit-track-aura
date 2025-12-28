@@ -1,10 +1,10 @@
+from django.contrib.auth import get_user_model
 import os
 import django
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'fittrack_project.settings')
 django.setup()
 
-from django.contrib.auth import get_user_model
 
 User = get_user_model()
 

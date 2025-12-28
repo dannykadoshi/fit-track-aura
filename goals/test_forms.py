@@ -5,7 +5,7 @@ from datetime import date, timedelta
 
 class GoalFormTest(TestCase):
     """Test cases for GoalForm"""
-    
+
     def test_goal_form_valid_data(self):
         """Test form with valid data"""
         form_data = {
@@ -18,7 +18,7 @@ class GoalFormTest(TestCase):
         }
         form = GoalForm(data=form_data)
         self.assertTrue(form.is_valid())
-        
+
     def test_goal_form_missing_title(self):
         """Test form without required title"""
         form_data = {
@@ -29,7 +29,7 @@ class GoalFormTest(TestCase):
         form = GoalForm(data=form_data)
         self.assertFalse(form.is_valid())
         self.assertIn('title', form.errors)
-        
+
     def test_goal_form_missing_target_date(self):
         """Test form without required target date"""
         form_data = {

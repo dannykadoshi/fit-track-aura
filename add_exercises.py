@@ -1,10 +1,10 @@
+from workouts.models import Exercise
 import os
 import django
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'fittrack_project.settings')
 django.setup()
 
-from workouts.models import Exercise
 
 exercises = [
     # Upper Body
@@ -21,7 +21,7 @@ exercises = [
     ('Dips', 'upper_body'),
     ('Arnold Press', 'upper_body'),
     ('Chest Press Machine', 'upper_body'),
-    
+
     # Back
     ('Pull-Ups', 'back'),
     ('Lat Pulldown', 'back'),
@@ -32,7 +32,7 @@ exercises = [
     ('T-Bar Row', 'back'),
     ('Chin-Ups', 'back'),
     ('Reverse Flyes', 'back'),
-    
+
     # Legs
     ('Leg Press', 'legs'),
     ('Lunges', 'legs'),
@@ -45,7 +45,7 @@ exercises = [
     ('Walking Lunges', 'legs'),
     ('Step-Ups', 'legs'),
     ('Glute Bridges', 'legs'),
-    
+
     # Core
     ('Crunches', 'core'),
     ('Russian Twists', 'core'),
@@ -57,7 +57,7 @@ exercises = [
     ('Hanging Knee Raises', 'core'),
     ('Flutter Kicks', 'core'),
     ('Dead Bug', 'core'),
-    
+
     # Cardio
     ('Treadmill', 'cardio'),
     ('Rowing Machine', 'cardio'),

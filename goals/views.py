@@ -10,7 +10,7 @@ def goal_list(request):
     """List all goals for the logged-in user"""
     active_goals = request.user.goals.filter(is_completed=False).order_by('target_date')
     completed_goals = request.user.goals.filter(is_completed=True).order_by('-completed_date')
-    
+
     context = {
         'active_goals': active_goals,
         'completed_goals': completed_goals,
@@ -31,7 +31,7 @@ def goal_create(request):
             return redirect('goal_list')
     else:
         form = GoalForm()
-    
+
     context = {
         'form': form,
     }
@@ -42,7 +42,7 @@ def goal_create(request):
 def goal_update(request, pk):
     """Update an existing goal"""
     goal = get_object_or_404(Goal, pk=pk, user=request.user)
-    
+
     if request.method == 'POST':
         form = GoalForm(request.POST, instance=goal)
         if form.is_valid():
@@ -51,7 +51,7 @@ def goal_update(request, pk):
             return redirect('goal_list')
     else:
         form = GoalForm(instance=goal)
-    
+
     context = {
         'form': form,
         'goal': goal,
@@ -63,12 +63,12 @@ def goal_update(request, pk):
 def goal_delete(request, pk):
     """Delete a goal"""
     goal = get_object_or_404(Goal, pk=pk, user=request.user)
-    
+
     if request.method == 'POST':
         goal.delete()
         messages.success(request, 'Goal deleted successfully! 🗑️')
         return redirect('goal_list')
-    
+
     context = {
         'goal': goal,
     }

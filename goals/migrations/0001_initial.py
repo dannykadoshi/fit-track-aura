@@ -20,7 +20,8 @@ class Migration(migrations.Migration):
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('title', models.CharField(max_length=200)),
                 ('description', models.TextField(blank=True)),
-                ('category', models.CharField(choices=[('weight_loss', 'Weight Loss'), ('muscle_gain', 'Muscle Gain'), ('strength', 'Strength'), ('endurance', 'Endurance'), ('flexibility', 'Flexibility'), ('custom', 'Custom')], default='custom', max_length=20)),
+                ('category', models.CharField(choices=[('weight_loss', 'Weight Loss'), ('muscle_gain', 'Muscle Gain'), ('strength', 'Strength'), (
+                    'endurance', 'Endurance'), ('flexibility', 'Flexibility'), ('custom', 'Custom')], default='custom', max_length=20)),
                 ('target_value', models.CharField(help_text="e.g., '100km', '20 workouts', '5kg'", max_length=100)),
                 ('current_value', models.CharField(blank=True, default='0', max_length=100)),
                 ('target_date', models.DateField()),
@@ -28,7 +29,8 @@ class Migration(migrations.Migration):
                 ('completed_date', models.DateField(blank=True, null=True)),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('updated_at', models.DateTimeField(auto_now=True)),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='goals', to=settings.AUTH_USER_MODEL)),
+                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE,
+                 related_name='goals', to=settings.AUTH_USER_MODEL)),
             ],
             options={
                 'ordering': ['-created_at'],

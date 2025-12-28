@@ -24,18 +24,18 @@ from goals import views as goal_views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
-    
+
     # Homepage & Dashboard
     path('', workout_views.home, name='home'),
     path('dashboard/', workout_views.dashboard, name='dashboard'),
-    
+
     # Workout URLs
     path('workouts/', workout_views.workout_list, name='workout_list'),
     path('workouts/<int:pk>/', workout_views.workout_detail, name='workout_detail'),
     path('workouts/new/', workout_views.workout_create, name='workout_create'),
     path('workouts/<int:pk>/edit/', workout_views.workout_update, name='workout_update'),
     path('workouts/<int:pk>/delete/', workout_views.workout_delete, name='workout_delete'),
-    
+
     # Goal URLs
     path('goals/', goal_views.goal_list, name='goal_list'),
     path('goals/new/', goal_views.goal_create, name='goal_create'),
@@ -48,7 +48,7 @@ urlpatterns = [
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-    
+
 # Error handlers
 handler404 = 'fittrack_project.views.custom_404'
-handler500 = 'fittrack_project.views.custom_500'    
+handler500 = 'fittrack_project.views.custom_500'

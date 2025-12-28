@@ -21,11 +21,13 @@ class Migration(migrations.Migration):
                 ('bio', models.TextField(blank=True, max_length=500)),
                 ('date_of_birth', models.DateField(blank=True, null=True)),
                 ('height', models.DecimalField(blank=True, decimal_places=2, help_text='Height in cm', max_digits=5, null=True)),
-                ('weight_unit', models.CharField(choices=[('kg', 'Kilograms'), ('lbs', 'Pounds')], default='kg', max_length=3)),
+                ('weight_unit', models.CharField(choices=[
+                 ('kg', 'Kilograms'), ('lbs', 'Pounds')], default='kg', max_length=3)),
                 ('profile_picture', models.ImageField(blank=True, null=True, upload_to='profile_pics/')),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('updated_at', models.DateTimeField(auto_now=True)),
-                ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, related_name='profile', to=settings.AUTH_USER_MODEL)),
+                ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE,
+                 related_name='profile', to=settings.AUTH_USER_MODEL)),
             ],
         ),
     ]

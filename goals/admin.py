@@ -9,7 +9,7 @@ class GoalAdmin(admin.ModelAdmin):
     search_fields = ['title', 'description']
     date_hierarchy = 'target_date'
     actions = ['mark_as_complete']
-    
+
     def mark_as_complete(self, request, queryset):
         for goal in queryset:
             goal.mark_complete()
