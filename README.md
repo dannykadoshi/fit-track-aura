@@ -731,9 +731,8 @@ Required environment variables for production:
 ## Contact
 
 **Developer:** Danny Kadoshi  
-**Email:** [your-email@example.com]  
+**Email:** [dannykadoshi@me.com]  
 **GitHub:** [@dannykadoshi](https://github.com/dannykadoshi)  
-**LinkedIn:** [Your LinkedIn Profile]
 
 ---
 
@@ -741,7 +740,7 @@ Required environment variables for production:
 
 This project was created for educational purposes as part of Code Institute's Full Stack Software Development Diploma. 
 
-© 2024 FitTrack Aura | Portfolio Project 4 - Code Institute
+© 2025 FitTrack Aura | Portfolio Project 4 - Code Institute
 
 ---
 
