@@ -67,12 +67,18 @@ exercises = [
     ('Elliptical', 'cardio'),
 ]
 
-print("Adding exercises...")
+print("Adding/updating exercises...")
 for name, category in exercises:
-    obj, created = Exercise.objects.get_or_create(name=name, category=category)
+    obj, created = Exercise.objects.get_or_create(name=name, defaults={'category': category})
     if created:
-        print(f"✅ Added {name}")
+        print(f"✅ Added {name} ({category})")
     else:
-        print(f"⏭️  Skipped {name} (already exists)")
+        # Update category if it's different
+        if obj.category != category:
+            obj.category = category
+            obj.save()
+            print(f"🔄 Updated {name} → {category}")
+        else:
+            print(f"⏭️  Skipped {name} (already correct)")
 
 print(f"\n🎉 Total exercises in database: {Exercise.objects.count()}")
