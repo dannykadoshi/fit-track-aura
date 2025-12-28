@@ -796,9 +796,20 @@ You can create your own test account by visiting:
 
 Or use the admin panel to view existing user data and workouts.
 
-### Important for Assessors
+### Important Note for Assessors
 
 **First Load Delay:** The application uses Render's free tier, which spins down after 15 minutes of inactivity. If the service is asleep, the first page load may take 30-60 seconds. Subsequent page loads will be instant.
+
+**Database Limitation:** This project uses Render's free tier PostgreSQL database, which expires after 30 days. If you encounter a database connection error:
+
+1. The database may have expired (free tier limitation)
+2. Please contact me at dannykadoshi@me.com
+3. I can recreate the database within 10 minutes
+4. All data automatically reloads via build scripts
+
+**Current Database Expiration:** January 27, 2025
+
+This is a known limitation of free tier hosting and does not affect the project's code quality or functionality.
 
 ---
 
