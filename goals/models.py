@@ -13,7 +13,6 @@ class Goal(models.Model):
         ('strength', 'Strength'),
         ('endurance', 'Endurance'),
         ('flexibility', 'Flexibility'),
-        ('custom', 'Custom'),
     ]
 
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='goals')
