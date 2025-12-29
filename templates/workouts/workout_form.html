@@ -209,11 +209,9 @@
                             <div class="exercise-row" data-form-index="{{ forloop.counter0 }}">
                                 <div class="d-flex justify-content-between align-items-center mb-3">
                                     <h5 class="text-purple-400 mb-0">Exercise {{ forloop.counter }}</h5>
-                                    {% if not forloop.first %}
-                                        <button type="button" class="btn btn-sm btn-remove" onclick="removeExerciseRow(this)">
-                                            🗑️ Remove
-                                        </button>
-                                    {% endif %}
+                                    <button type="button" class="btn btn-sm btn-remove" onclick="removeExerciseRow(this)" style="display: none;">
+                                        🗑️ Remove
+                                    </button>
                                 </div>
 
                                 <!-- Hidden delete field -->
@@ -324,9 +322,14 @@
 
 <!-- JavaScript for Dynamic Forms and Select2 -->
 <script>
+    let formCount = {{ formset.total_form_count }};
+
     $(document).ready(function() {
         // Initialize Select2 on all exercise select dropdowns
         initializeSelect2();
+        
+        // Update exercise numbers and remove buttons
+        updateExerciseDisplay();
     });
 
     function initializeSelect2() {
@@ -345,10 +348,135 @@
             deleteCheckbox.checked = true;
             row.style.display = 'none';
         }
+        updateExerciseDisplay();
+    }
+
+    function updateExerciseDisplay() {
+        const visibleRows = document.querySelectorAll('.exercise-row:not([style*="display: none"])');
+        
+        visibleRows.forEach((row, index) => {
+            // Update exercise number
+            const header = row.querySelector('h5');
+            if (header) {
+                header.textContent = `Exercise ${index + 1}`;
+            }
+            
+            // Show/hide remove button
+            const removeBtn = row.querySelector('.btn-remove');
+            if (removeBtn) {
+                // Only show remove button if there's more than 1 visible exercise
+                if (visibleRows.length > 1) {
+                    removeBtn.style.display = 'inline-block';
+                } else {
+                    removeBtn.style.display = 'none';
+                }
+            }
+        });
     }
 
     function addExerciseRow() {
-        alert('To add more exercises, please save this workout first, then edit it to add more exercises.');
+        const container = document.getElementById('exercise-forms');
+        const totalForms = document.querySelector('input[name$="TOTAL_FORMS"]');
+        
+        // Update form index
+        const newIndex = formCount;
+        formCount++;
+        
+        // Update TOTAL_FORMS count
+        totalForms.value = formCount;
+        
+        // Create a completely new row from scratch (don't clone)
+        const newRow = document.createElement('div');
+        newRow.className = 'exercise-row';
+        newRow.setAttribute('data-form-index', newIndex);
+        newRow.style.display = 'block';
+        
+        // Build the HTML for the new exercise row
+        newRow.innerHTML = `
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5 class="text-purple-400 mb-0">Exercise ${newIndex + 1}</h5>
+                <button type="button" class="btn btn-sm btn-remove" onclick="removeExerciseRow(this)" style="display: inline-block;">
+                    🗑️ Remove
+                </button>
+            </div>
+
+            <!-- Hidden delete field -->
+            <div style="display: none;">
+                <input type="hidden" name="workoutexercise_set-${newIndex}-id" id="id_workoutexercise_set-${newIndex}-id">
+                <input type="checkbox" name="workoutexercise_set-${newIndex}-DELETE" id="id_workoutexercise_set-${newIndex}-DELETE">
+            </div>
+
+            <!-- Exercise Name -->
+            <div class="mb-3">
+                <label class="form-label">Exercise *</label>
+                <select name="workoutexercise_set-${newIndex}-exercise" id="id_workoutexercise_set-${newIndex}-exercise" class="form-control">
+                    <option value="">---------</option>
+                    ${getAllExerciseOptions()}
+                </select>
+            </div>
+
+            <!-- Sets, Reps, Weight -->
+            <div class="row">
+                <div class="col-md-3 mb-3">
+                    <label class="form-label">Sets</label>
+                    <input type="number" name="workoutexercise_set-${newIndex}-sets" class="form-control" placeholder="3" min="1" id="id_workoutexercise_set-${newIndex}-sets">
+                </div>
+                <div class="col-md-3 mb-3">
+                    <label class="form-label">Reps</label>
+                    <input type="number" name="workoutexercise_set-${newIndex}-reps" class="form-control" placeholder="10" min="1" id="id_workoutexercise_set-${newIndex}-reps">
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label class="form-label">Weight</label>
+                    <input type="number" name="workoutexercise_set-${newIndex}-weight" class="form-control" placeholder="50" min="0" step="0.5" id="id_workoutexercise_set-${newIndex}-weight">
+                </div>
+                <div class="col-md-2 mb-3">
+                    <label class="form-label">Unit</label>
+                    <select name="workoutexercise_set-${newIndex}-unit" class="form-control" id="id_workoutexercise_set-${newIndex}-unit">
+                        <option value="kg">Kilograms</option>
+                        <option value="lbs">Pounds</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Distance and Duration (for cardio) -->
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Distance (km)</label>
+                    <input type="number" name="workoutexercise_set-${newIndex}-distance" class="form-control" placeholder="Distance in km" min="0" step="0.1" id="id_workoutexercise_set-${newIndex}-distance">
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Duration (min)</label>
+                    <input type="number" name="workoutexercise_set-${newIndex}-duration" class="form-control" placeholder="Duration in minutes" min="1" id="id_workoutexercise_set-${newIndex}-duration">
+                </div>
+            </div>
+        `;
+        
+        // Add the new row to the container
+        container.appendChild(newRow);
+        
+        // Initialize Select2 on the new exercise dropdown
+        $(`#id_workoutexercise_set-${newIndex}-exercise`).select2({
+            placeholder: "🔍 Search for an exercise...",
+            allowClear: true,
+            theme: 'default',
+            width: '100%'
+        });
+        
+        // Update all exercise displays
+        updateExerciseDisplay();
+    }
+
+    // Helper function to get all exercise options
+    function getAllExerciseOptions() {
+        const firstSelect = document.querySelector('select[name*="exercise"]');
+        if (!firstSelect) return '';
+        
+        let options = '';
+        for (let i = 0; i < firstSelect.options.length; i++) {
+            const option = firstSelect.options[i];
+            options += `<option value="${option.value}">${option.text}</option>`;
+        }
+        return options;
     }
 </script>
 {% endblock %}
