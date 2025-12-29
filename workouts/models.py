@@ -55,8 +55,8 @@ class WorkoutExercise(models.Model):
     Individual exercises within a workout (many-to-many through table)
     """
     UNIT_CHOICES = [
-        ('kg', 'Kilograms'),
-        ('lbs', 'Pounds'),
+        ('kg', 'KG'),
+        ('lbs', 'LBS'),
     ]
 
     workout = models.ForeignKey(Workout, on_delete=models.CASCADE, related_name='workout_exercises')
