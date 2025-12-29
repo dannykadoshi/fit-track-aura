@@ -290,23 +290,6 @@
                         <li class="mb-2">• Be consistent with your logging</li>
                     </ul>
                 </div>
-
-                <!-- This Week Stats -->
-                <div class="card-custom p-4">
-                    <h5 class="fw-bold text-white mb-3">This Week</h5>
-                    <div class="d-flex justify-content-between align-items-center mb-3 pb-3 border-bottom border-secondary">
-                        <span class="text-muted">Workouts</span>
-                        <span class="fw-bold text-white">7</span>
-                    </div>
-                    <div class="d-flex justify-content-between align-items-center mb-3 pb-3 border-bottom border-secondary">
-                        <span class="text-muted">Total Time</span>
-                        <span class="fw-bold text-white">310 min</span>
-                    </div>
-                    <div class="d-flex justify-content-between align-items-center">
-                        <span class="text-muted">Exercises</span>
-                        <span class="fw-bold text-white">52</span>
-                    </div>
-                </div>
             </div>
         </div>
     </form>
@@ -339,6 +322,13 @@
             theme: 'default',
             width: '100%'
         });
+
+        // Initialize Select2 on unit dropdowns too
+        $('select[name*="unit"]').select2({
+            theme: 'default',
+            width: '100%',
+            minimumResultsForSearch: -1
+        });    
     }
 
     function removeExerciseRow(button) {
@@ -460,6 +450,13 @@
             allowClear: true,
             theme: 'default',
             width: '100%'
+        });
+
+        // Also initialize Select2 on unit dropdown
+        $(`#id_workoutexercise_set-${newIndex}-unit`).select2({
+            theme: 'default',
+            width: '100%',
+            minimumResultsForSearch: -1  // Hide search box
         });
         
         // Update all exercise displays
