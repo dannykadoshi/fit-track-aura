@@ -471,18 +471,21 @@ Comprehensive manual testing was performed and documented in [TESTING.md](TESTIN
    - Session persistence
 
 2. **Workout CRUD Operations**
-   - Create workout with exercises
+   - Create workout with exercises, sets, reps, and weight
    - View workout list and details
    - Edit workout information
    - Delete workout with confirmation
    - Form validation (required fields, date format)
+   - Dynamic exercise form with add/remove functionality
+   - Autocomplete exercise selection (72 pre-loaded exercises)
+   - Search and filter workouts
 
 3. **Goal CRUD Operations**
-   - Create goal with all fields
-   - View active and completed goals
-   - Update goal progress
-   - Mark goal as complete
-   - Delete goal with confirmation
+   - Create and track fitness goals with target dates and values
+   - Visual progress tracking with animated gradient progress bars
+   - Real-time progress percentage calculation
+   - Mark goals as complete when achieved
+   - View completed goals history with completion dates
 
 4. **Dashboard Functionality**
    - Statistics accuracy (workouts count, training time)
