@@ -134,7 +134,7 @@ def workout_list(request):
     
     # Add exercise count to each workout
     for workout in workouts:
-        workout.total_exercises = workout.exercises.count()
+        workout.total_exercises = workout.workout_exercises.count()
     
     return render(request, 'workouts/workout_list.html', {'workouts': workouts})
 
