@@ -214,3 +214,8 @@ def workout_delete(request, pk):
         return redirect('dashboard')
     
     return render(request, 'workouts/workout_confirm_delete.html', {'workout': workout})
+
+
+def faq(request):
+    """FAQ page view"""
+    return render(request, 'pages/faq.html')
