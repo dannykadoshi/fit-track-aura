@@ -29,12 +29,12 @@ class WorkoutExerciseForm(forms.ModelForm):
             default_exercises = Exercise.objects.filter(is_custom=False).order_by('name')
             custom_exercises = Exercise.objects.filter(created_by=user, is_custom=True).order_by('name')
             
-            # Create choices with optgroups
+            # Create choices with optgroups - CUSTOM FIRST!
             choices = []
-            if default_exercises.exists():
-                choices.append(('Default Exercises', [(ex.id, ex.name) for ex in default_exercises]))
             if custom_exercises.exists():
                 choices.append(('My Custom Exercises', [(ex.id, f"{ex.name} ✨") for ex in custom_exercises]))
+            if default_exercises.exists():
+                choices.append(('Default Exercises', [(ex.id, ex.name) for ex in default_exercises]))
             
             # If no groups, just show all
             if not choices:
@@ -57,12 +57,12 @@ class WorkoutExerciseForm(forms.ModelForm):
         }
 
 
-# Formset for managing multiple exercises in a workout
+# Formset for managing multiple exercises in a workout - EXTRA=0 (start with 1 only)
 WorkoutExerciseFormSet = inlineformset_factory(
     Workout,
     WorkoutExercise,
     form=WorkoutExerciseForm,
-    extra=1,
+    extra=0,  # Changed from 1 to 0
     can_delete=True,
     min_num=1,
     validate_min=True,
