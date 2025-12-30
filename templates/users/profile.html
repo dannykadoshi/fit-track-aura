@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}My Profile - FitTrack Aura{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row mb-4">
+        <div class="col-12">
+            <h1 class="display-5 fw-bold text-white">My Profile</h1>
+            <p class="text-muted">Manage your account information and preferences</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="card-custom p-4 mb-4">
+                <h3 class="fw-bold text-white mb-4">👤 Profile Information</h3>
+                
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Username</label>
+                        {{ user_form.username }}
+                        <small class="text-muted d-block mt-1">Username cannot be changed</small>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Email Address</label>
+                        {{ user_form.email }}
+                        {% if user_form.email.errors %}
+                            <div class="text-danger small mt-1">{{ user_form.email.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Date of Birth</label>
+                        {{ profile_form.date_of_birth }}
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Height (cm)</label>
+                        {{ profile_form.height }}
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Preferred Weight Unit</label>
+                        {{ profile_form.weight_unit }}
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label">Bio</label>
+                        {{ profile_form.bio }}
+                    </div>
+
+                    <button type="submit" class="btn btn-gradient-purple btn-lg">
+                        💾 Save Changes
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="card-custom p-4 mb-4">
+                <h5 class="fw-bold text-white mb-3">📊 Account Stats</h5>
+                <div class="d-flex justify-content-between align-items-center mb-3 pb-3 border-bottom border-secondary">
+                    <span class="text-muted">Member Since</span>
+                    <span class="fw-bold text-white">{{ user.date_joined|date:"M Y" }}</span>
+                </div>
+                <div class="d-flex justify-content-between align-items-center mb-3 pb-3 border-bottom border-secondary">
+                    <span class="text-muted">Total Workouts</span>
+                    <span class="fw-bold text-white">{{ user.workouts.count }}</span>
+                </div>
+                <div class="d-flex justify-content-between align-items-center">
+                    <span class="text-muted">Active Goals</span>
+                    <span class="fw-bold text-white">{{ active_goals_count }}</span>
+                </div>
+            </div>
+
+            <div class="card-custom p-4">
+                <h5 class="fw-bold text-white mb-3">🔒 Security</h5>
+                <p class="text-muted small mb-3">Keep your account secure by using a strong password.</p>
+                <a href="{% url 'change_password' %}" class="btn btn-outline-light btn-sm w-100">
+                    Change Password
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
