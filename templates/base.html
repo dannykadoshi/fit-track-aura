@@ -67,6 +67,8 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'goal_list' %}">Goals</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'about' %}">About</a>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
                                 {{ user.username }}
@@ -116,6 +118,10 @@
     <!-- Footer -->
     <footer class="bg-dark text-light py-4 mt-5">
         <div class="container text-center">
+            <div class="mb-2">
+                <a href="{% url 'about' %}" class="text-decoration-none me-3" style="color: #a855f7;">About</a>
+                <a href="{% url 'faq' %}" class="text-decoration-none" style="color: #a855f7;">FAQ</a>
+            </div>           
             <p class="mb-0">© 2025 FitTrack Aura | Portfolio Project 4 - Code Institute | Built by Danny Kadoshi</p>
         </div>
     </footer>

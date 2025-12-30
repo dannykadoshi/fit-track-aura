@@ -219,3 +219,8 @@ def workout_delete(request, pk):
 def faq(request):
     """FAQ page view"""
     return render(request, 'pages/faq.html')
+
+
+def about(request):
+    """About page view"""
+    return render(request, 'pages/about.html')

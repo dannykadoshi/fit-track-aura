@@ -1,0 +1,151 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}About - FitTrack Aura{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <!-- Hero Section -->
+    <div class="text-center mb-5">
+        <h1 class="display-3 fw-bold text-white mb-3">About FitTrack Aura 💪</h1>
+        <p class="lead text-muted">Your complete fitness tracking companion</p>
+    </div>
+
+    <!-- Project Info -->
+    <div class="row mb-5">
+        <div class="col-lg-8 mx-auto">
+            <div class="card-custom p-5">
+                <h2 class="fw-bold text-white mb-4">📖 About This Project</h2>
+                <p class="text-muted mb-3">
+                    FitTrack Aura is a comprehensive fitness tracking web application designed to help users monitor their workout routines, set and achieve fitness goals, and maintain motivation through visual progress tracking.
+                </p>
+                <p class="text-muted mb-3">
+                    This project was developed as <strong>Portfolio Project 4</strong> for the <strong>Code Institute Full Stack Software Development Diploma</strong>, demonstrating proficiency in full-stack web development using Django, Python, and modern web technologies.
+                </p>
+                <p class="text-muted mb-4">
+                    The application features a sleek, modern interface with a purple-gradient design theme, providing users with an engaging and intuitive experience for tracking their fitness journey.
+                </p>
+                
+                <!-- FAQ Button -->
+                <div class="text-center">
+                    <a href="{% url 'faq' %}" class="btn btn-gradient-purple btn-lg">
+                        ❓ View Frequently Asked Questions
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Features Grid -->
+    <div class="row mb-5">
+        <div class="col-12 text-center mb-4">
+            <h2 class="fw-bold text-white">✨ Key Features</h2>
+        </div>
+        
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card-custom p-4 h-100">
+                <div class="stat-icon mx-auto mb-3" style="width: 60px; height: 60px;">🏋️</div>
+                <h4 class="text-white mb-2">Workout Tracking</h4>
+                <p class="text-muted small">Log detailed workouts with exercises, sets, reps, and weights. Track your training history over time.</p>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card-custom p-4 h-100">
+                <div class="stat-icon mx-auto mb-3" style="width: 60px; height: 60px;">🎯</div>
+                <h4 class="text-white mb-2">Goal Setting</h4>
+                <p class="text-muted small">Set custom fitness goals with target values and track your progress with visual progress bars.</p>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card-custom p-4 h-100">
+                <div class="stat-icon mx-auto mb-3" style="width: 60px; height: 60px;">📊</div>
+                <h4 class="text-white mb-2">Activity Charts</h4>
+                <p class="text-muted small">Visualize your weekly workout duration with interactive charts powered by Chart.js.</p>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card-custom p-4 h-100">
+                <div class="stat-icon mx-auto mb-3" style="width: 60px; height: 60px;">🔥</div>
+                <h4 class="text-white mb-2">Workout Streaks</h4>
+                <p class="text-muted small">Build consistency with daily workout streaks. Track your current and best streaks for motivation.</p>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card-custom p-4 h-100">
+                <div class="stat-icon mx-auto mb-3" style="width: 60px; height: 60px;">👤</div>
+                <h4 class="text-white mb-2">User Profiles</h4>
+                <p class="text-muted small">Personalize your experience with custom profile settings, preferences, and account management.</p>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card-custom p-4 h-100">
+                <div class="stat-icon mx-auto mb-3" style="width: 60px; height: 60px;">📱</div>
+                <h4 class="text-white mb-2">Responsive Design</h4>
+                <p class="text-muted small">Fully responsive interface that works seamlessly on desktop, tablet, and mobile devices.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Technologies -->
+    <div class="row mb-5">
+        <div class="col-lg-8 mx-auto">
+            <div class="card-custom p-5">
+                <h2 class="fw-bold text-white mb-4 text-center">💻 Technologies Used</h2>
+                
+                <div class="row text-center">
+                    <div class="col-md-4 mb-3">
+                        <h5 class="text-white">Backend</h5>
+                        <p class="text-muted small">
+                            Django 6.0<br>
+                            Python 3.14<br>
+                            PostgreSQL<br>
+                            Django Allauth
+                        </p>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <h5 class="text-white">Frontend</h5>
+                        <p class="text-muted small">
+                            HTML5 & CSS3<br>
+                            Bootstrap 5.3<br>
+                            JavaScript<br>
+                            Chart.js 4.4
+                        </p>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <h5 class="text-white">Deployment</h5>
+                        <p class="text-muted small">
+                            Render<br>
+                            WhiteNoise<br>
+                            Gunicorn<br>
+                            Git & GitHub
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Developer -->
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <div class="card-custom p-5 text-center">
+                <div class="stat-icon mx-auto mb-3" style="width: 80px; height: 80px; font-size: 3rem;">👨‍💻</div>
+                <h2 class="fw-bold text-white mb-3">Built by Danny Kadoshi</h2>
+                <p class="text-muted mb-4">
+                    Full Stack Software Development Student at Code Institute<br>
+                    Portfolio Project 4 - December 2025
+                </p>
+                <div class="d-flex gap-3 justify-content-center">
+                    <a href="{% url 'dashboard' %}" class="btn btn-gradient-purple">Back to Dashboard</a>
+                    <a href="{% url 'faq' %}" class="btn btn-outline-light">View FAQ</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
