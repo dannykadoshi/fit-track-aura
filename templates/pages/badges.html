@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Achievements - FitTrack Aura{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <!-- Header -->
+    <div class="text-center mb-5">
+        <h1 class="display-4 fw-bold text-white mb-3">🏆 Achievements</h1>
+        <p class="lead text-muted">Unlock badges by reaching fitness milestones</p>
+        <div class="badge-custom" style="font-size: 1.2rem; padding: 0.75rem 1.5rem;">
+            {{ total_earned }} / {{ total_badges }} Badges Earned
+        </div>
+    </div>
+
+    <!-- Earned Badges -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <h3 class="text-white mb-4">✨ Earned Badges</h3>
+            
+            {% if earned_badges %}
+                <div class="row">
+                    {% for badge in earned_badges %}
+                        <div class="col-md-6 col-lg-4 mb-4">
+                            <div class="card-custom p-4 text-center h-100" style="border: 2px solid rgba(168, 85, 247, 0.5);">
+                                <div class="stat-icon mx-auto mb-3" style="width: 80px; height: 80px; font-size: 3rem; background: linear-gradient(135deg, #a855f7, #ec4899);">
+                                    {{ badge.icon }}
+                                </div>
+                                <h4 class="text-white mb-2">{{ badge.name }}</h4>
+                                <p class="text-muted mb-2">{{ badge.description }}</p>
+                                <small class="text-muted">
+                                    🎉 Earned on {{ badge.earned_date|date:"M d, Y" }}
+                                </small>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="text-center py-5">
+                    <div class="card-custom p-5">
+                        <div class="stat-icon mx-auto mb-4" style="width: 80px; height: 80px; font-size: 2.5rem; opacity: 0.3;">
+                            🏆
+                        </div>
+                        <h3 class="text-white mb-3">No badges earned yet</h3>
+                        <p class="text-muted mb-4">Start your fitness journey to unlock achievements!</p>
+                        <a href="{% url 'workout_create' %}" class="btn btn-gradient-purple">Log Your First Workout</a>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Locked Badges -->
+    {% if locked_badges %}
+        <div class="row">
+            <div class="col-12">
+                <h3 class="text-white mb-4">🔒 Locked Badges</h3>
+                
+                <div class="row">
+                    {% for badge in locked_badges %}
+                        <div class="col-md-6 col-lg-4 mb-4">
+                            <div class="card-custom p-4 text-center h-100" style="opacity: 0.6;">
+                                <div class="mx-auto mb-3" style="width: 80px; height: 80px; font-size: 3rem; filter: grayscale(100%);">
+                                    {{ badge.icon }}
+                                </div>
+                                <h4 class="text-white mb-2">{{ badge.name }}</h4>
+                                <p class="text-muted mb-2">{{ badge.description }}</p>
+                                <small class="text-muted">
+                                    🔒 Keep training to unlock!
+                                </small>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

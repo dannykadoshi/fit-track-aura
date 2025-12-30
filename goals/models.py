@@ -73,19 +73,13 @@ class Goal(models.Model):
     
     @property
     def display_target(self):
-        """Display target with unit - show integers when possible"""
-        num = self.target_number
-        if num == int(num):
-            return f"{int(num)} {self.get_unit_display()}"
-        return f"{num} {self.get_unit_display()}"
+        """Display target with unit"""
+        return f"{self.target_number} {self.get_unit_display()}"
     
     @property
     def display_current(self):
-        """Display current with unit - show integers when possible"""
-        num = self.current_number
-        if num == int(num):
-            return f"{int(num)} {self.get_unit_display()}"
-        return f"{num} {self.get_unit_display()}"
+        """Display current with unit"""
+        return f"{self.current_number} {self.get_unit_display()}"
     
     @property
     def target_display(self):
@@ -98,3 +92,71 @@ class Goal(models.Model):
         """Display just the number without decimals if it's a whole number"""
         num = self.current_number
         return int(num) if num == int(num) else num
+
+
+class Badge(models.Model):
+    """
+    Achievement badges that users can earn
+    """
+    BADGE_TYPES = [
+        ('first_workout', '🎯 First Step'),
+        ('10_workouts', '💪 Getting Strong'),
+        ('7_day_streak', '�� On Fire'),
+        ('first_goal', '⭐ Goal Crusher'),
+        ('custom_exercise', '✨ Innovator'),
+        ('50_workouts', '🚀 Dedicated'),
+        ('30_day_streak', '👑 Champion'),
+    ]
+    
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='badges')
+    badge_type = models.CharField(max_length=20, choices=BADGE_TYPES)
+    earned_date = models.DateTimeField(auto_now_add=True)
+    
+    class Meta:
+        unique_together = ['user', 'badge_type']
+        ordering = ['-earned_date']
+    
+    def __str__(self):
+        return f"{self.get_badge_type_display()} - {self.user.username}"
+    
+    @property
+    def badge_icon(self):
+        """Return the emoji icon for this badge"""
+        icons = {
+            'first_workout': '🎯',
+            '10_workouts': '💪',
+            '7_day_streak': '🔥',
+            'first_goal': '⭐',
+            'custom_exercise': '✨',
+            '50_workouts': '🚀',
+            '30_day_streak': '👑',
+        }
+        return icons.get(self.badge_type, '🏆')
+    
+    @property
+    def badge_name(self):
+        """Return the name without emoji"""
+        names = {
+            'first_workout': 'First Step',
+            '10_workouts': 'Getting Strong',
+            '7_day_streak': 'On Fire',
+            'first_goal': 'Goal Crusher',
+            'custom_exercise': 'Innovator',
+            '50_workouts': 'Dedicated',
+            '30_day_streak': 'Champion',
+        }
+        return names.get(self.badge_type, 'Achievement')
+    
+    @property
+    def badge_description(self):
+        """Return description of how to earn this badge"""
+        descriptions = {
+            'first_workout': 'Complete your first workout',
+            '10_workouts': 'Log 10 workouts',
+            '7_day_streak': 'Maintain a 7-day workout streak',
+            'first_goal': 'Complete your first goal',
+            'custom_exercise': 'Create a custom exercise',
+            '50_workouts': 'Log 50 workouts',
+            '30_day_streak': 'Maintain a 30-day workout streak',
+        }
+        return descriptions.get(self.badge_type, 'Complete a challenge')

@@ -14,6 +14,7 @@ urlpatterns = [
     path('dashboard/', workout_views.dashboard, name='dashboard'),
     path('faq/', workout_views.faq, name='faq'),
     path('about/', workout_views.about, name='about'),
+    path('badges/', workout_views.badges, name='badges'),
     
     path('workouts/', workout_views.workout_list, name='workout_list'),
     path('workouts/<int:pk>/', workout_views.workout_detail, name='workout_detail'),

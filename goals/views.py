@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import Goal
 from .forms import GoalForm
+from .badge_utils import check_and_award_badges
 
 
 @login_required
@@ -80,5 +81,9 @@ def goal_complete(request, pk):
     """Mark a goal as complete"""
     goal = get_object_or_404(Goal, pk=pk, user=request.user)
     goal.mark_complete()
-    messages.success(request, f'Congratulations! Goal "{goal.title}" completed! 🎉')
+    
+    # Check for new badges
+    check_and_award_badges(request.user, request)
+    
+    messages.success(request, f'Goal "{goal.title}" marked as complete! 🎉')
     return redirect('goal_list')

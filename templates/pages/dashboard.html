@@ -181,6 +181,41 @@
         </div>
     </div>
 
+    <!-- Achievement Badges Preview -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <div class="card-custom p-4">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h3 class="fw-bold text-white mb-0">🏆 Achievements</h3>
+                    <a href="{% url 'badges' %}" class="btn btn-sm btn-outline-light">View All</a>
+                </div>
+                
+                {% if user.badges.exists %}
+                    <div class="d-flex gap-3 flex-wrap">
+                        {% for badge in user.badges.all|slice:":5" %}
+                            <div class="text-center" title="{{ badge.badge_name }}">
+                                <div class="stat-icon" style="width: 60px; height: 60px; font-size: 2rem;">
+                                    {{ badge.badge_icon }}
+                                </div>
+                                <small class="text-muted d-block mt-1">{{ badge.badge_name }}</small>
+                            </div>
+                        {% endfor %}
+                        {% if user.badges.count > 5 %}
+                            <div class="text-center">
+                                <a href="{% url 'badges' %}" class="stat-icon d-flex align-items-center justify-content-center" style="width: 60px; height: 60px; font-size: 1.5rem; background: rgba(255,255,255,0.1);">
+                                    +{{ user.badges.count|add:"-5" }}
+                                </a>
+                                <small class="text-muted d-block mt-1">More</small>
+                            </div>
+                        {% endif %}
+                    </div>
+                {% else %}
+                    <p class="text-muted mb-0">Complete workouts and goals to earn achievement badges! 🎯</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
     <!-- Weekly Activity Chart -->
     <div class="row mb-5">
         <div class="col-12">

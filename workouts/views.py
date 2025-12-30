@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from goals.badge_utils import check_and_award_badges
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.db.models import Count, Sum, Q
@@ -162,6 +163,9 @@ def workout_create(request):
             formset.instance = workout
             formset.save()
             
+            # Check for new badges
+            check_and_award_badges(request.user, request)
+            
             messages.success(request, f'Workout "{workout.title}" created successfully! 🎉')
             return redirect('dashboard')
     else:
@@ -253,6 +257,10 @@ def exercise_create(request):
             exercise.created_by = request.user
             exercise.is_custom = True
             exercise.save()
+            
+            # Check for new badges
+            check_and_award_badges(request.user, request)
+            
             messages.success(request, f'Exercise "{exercise.name}" created successfully! ✨')
             return redirect('exercise_library')
     else:
@@ -290,3 +298,53 @@ def exercise_delete(request, pk):
         return redirect('exercise_library')
     
     return render(request, 'workouts/exercise_confirm_delete.html', {'exercise': exercise})
+
+
+@login_required
+def badges(request):
+    """Display user's badges and available badges to unlock"""
+    from goals.models import Badge
+    
+    # Get user's earned badges
+    earned_badges = Badge.objects.filter(user=request.user)
+    earned_badge_types = set(earned_badges.values_list('badge_type', flat=True))
+    
+    # All possible badges
+    all_badge_types = [
+        ('first_workout', '🎯 First Step', 'Complete your first workout'),
+        ('10_workouts', '💪 Getting Strong', 'Log 10 workouts'),
+        ('7_day_streak', '🔥 On Fire', 'Maintain a 7-day workout streak'),
+        ('first_goal', '⭐ Goal Crusher', 'Complete your first goal'),
+        ('custom_exercise', '✨ Innovator', 'Create a custom exercise'),
+        ('50_workouts', '🚀 Dedicated', 'Log 50 workouts'),
+        ('30_day_streak', '👑 Champion', 'Maintain a 30-day workout streak'),
+    ]
+    
+    # Separate earned and locked badges
+    earned_list = []
+    locked_list = []
+    
+    for badge_type, name, description in all_badge_types:
+        badge_data = {
+            'type': badge_type,
+            'icon': name.split()[0],  # Get emoji
+            'name': ' '.join(name.split()[1:]),  # Get name without emoji
+            'description': description,
+        }
+        
+        if badge_type in earned_badge_types:
+            # Add earned date
+            badge_obj = earned_badges.get(badge_type=badge_type)
+            badge_data['earned_date'] = badge_obj.earned_date
+            earned_list.append(badge_data)
+        else:
+            locked_list.append(badge_data)
+    
+    context = {
+        'earned_badges': earned_list,
+        'locked_badges': locked_list,
+        'total_earned': len(earned_list),
+        'total_badges': len(all_badge_types),
+    }
+    
+    return render(request, 'pages/badges.html', context)
