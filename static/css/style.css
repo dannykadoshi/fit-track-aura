@@ -248,3 +248,14 @@ footer p {
 .navbar.sticky-top {
     z-index: 1030;
 }
+/* User menu styling */
+.navbar #userDropdown {
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    transition: all 0.3s ease;
+}
+
+.navbar #userDropdown:hover {
+    background: rgba(168, 85, 247, 0.15);
+}
