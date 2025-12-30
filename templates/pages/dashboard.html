@@ -113,7 +113,7 @@
         <!-- Stat 1 - Workouts This Month -->
         <div class="stat-card">
             <div class="d-flex justify-content-between align-items-center mb-3">
-                <div class="stat-icon">🏋️</div>
+                <div class="stat-icon">��️</div>
                 <span class="text-success fw-semibold">This Month</span>
             </div>
             <h3 class="fw-bold mb-1">{{ workouts_this_month }}</h3>
@@ -164,6 +164,46 @@
             </div>
             <h3 class="fw-bold mb-1">{{ goals_progress }}%</h3>
             <p class="text-muted mb-0">Goals Progress</p>
+        </div>
+    </div>
+
+    <!-- Weekly Activity Chart -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <div class="card-custom p-4">
+                <h3 class="fw-bold text-white mb-4">📈 Weekly Activity</h3>
+                
+                {% if weekly_total > 0 %}
+                    <div class="chart-container" style="position: relative; height: 300px;">
+                        <canvas id="weeklyActivityChart"></canvas>
+                    </div>
+                    
+                    <div class="row mt-4 text-center">
+                        <div class="col-md-4 mb-3">
+                            <div class="stat-icon mx-auto mb-2" style="width: 40px; height: 40px; font-size: 1.5rem;">💪</div>
+                            <h5 class="fw-bold text-white mb-0">{{ weekly_total }}</h5>
+                            <small class="text-muted">Total Minutes</small>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="stat-icon mx-auto mb-2" style="width: 40px; height: 40px; font-size: 1.5rem;">📊</div>
+                            <h5 class="fw-bold text-white mb-0">{{ weekly_average }}</h5>
+                            <small class="text-muted">Avg Per Day</small>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="stat-icon mx-auto mb-2" style="width: 40px; height: 40px; font-size: 1.5rem;">🔥</div>
+                            <h5 class="fw-bold text-white mb-0">{{ most_active_day }}</h5>
+                            <small class="text-muted">Most Active ({{ max_day_duration }} min)</small>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="text-center py-5">
+                        <div class="stat-icon mx-auto mb-3" style="width: 64px; height: 64px; font-size: 2.5rem;">📈</div>
+                        <h5 class="text-white mb-2">No activity this week yet</h5>
+                        <p class="text-muted mb-4">Start logging workouts to see your weekly progress!</p>
+                        <a href="{% url 'workout_create' %}" class="btn btn-gradient-purple">Log Your First Workout</a>
+                    </div>
+                {% endif %}
+            </div>
         </div>
     </div>
 
@@ -278,4 +318,79 @@
         </div>
     </div>
 </div>
+
+{% block extra_js %}
+{% if weekly_total > 0 %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script>
+    const ctx = document.getElementById('weeklyActivityChart').getContext('2d');
+    
+    const weeklyActivityChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: {{ week_labels|safe }},
+            datasets: [{
+                label: 'Minutes',
+                data: {{ week_data|safe }},
+                backgroundColor: 'rgba(168, 85, 247, 0.8)',
+                borderColor: 'rgba(168, 85, 247, 1)',
+                borderWidth: 2,
+                borderRadius: 8,
+                hoverBackgroundColor: 'rgba(236, 72, 153, 0.9)',
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false
+                },
+                tooltip: {
+                    backgroundColor: 'rgba(15, 23, 42, 0.9)',
+                    titleColor: '#fff',
+                    bodyColor: '#e2e8f0',
+                    borderColor: 'rgba(168, 85, 247, 0.5)',
+                    borderWidth: 1,
+                    padding: 12,
+                    displayColors: false,
+                    callbacks: {
+                        label: function(context) {
+                            return context.parsed.y + ' minutes';
+                        }
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        color: '#94a3b8',
+                        callback: function(value) {
+                            return value + ' min';
+                        }
+                    },
+                    grid: {
+                        color: 'rgba(255, 255, 255, 0.1)',
+                        drawBorder: false
+                    }
+                },
+                x: {
+                    ticks: {
+                        color: '#94a3b8'
+                    },
+                    grid: {
+                        display: false
+                    }
+                }
+            },
+            animation: {
+                duration: 1000,
+                easing: 'easeInOutQuart'
+            }
+        }
+    });
+</script>
+{% endif %}
+{% endblock %}
 {% endblock %}
