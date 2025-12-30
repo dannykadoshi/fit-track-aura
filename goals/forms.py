@@ -3,11 +3,11 @@ from .models import Goal
 
 
 class GoalForm(forms.ModelForm):
-    """Form for creating/editing goals"""
-
+    """Form for creating and updating goals"""
+    
     class Meta:
         model = Goal
-        fields = ['title', 'description', 'category', 'target_value', 'current_value', 'target_date']
+        fields = ['title', 'description', 'category', 'target_number', 'unit', 'current_number', 'target_date']
         widgets = {
             'title': forms.TextInput(attrs={
                 'class': 'form-control',
@@ -16,21 +16,37 @@ class GoalForm(forms.ModelForm):
             'description': forms.Textarea(attrs={
                 'class': 'form-control',
                 'rows': 3,
-                'placeholder': 'Describe your goal...'
+                'placeholder': 'Add any notes or details about your goal...'
             }),
             'category': forms.Select(attrs={
-                'class': 'form-control'
+                'class': 'form-select'
             }),
-            'target_value': forms.TextInput(attrs={
+            'target_number': forms.NumberInput(attrs={
                 'class': 'form-control',
-                'placeholder': 'e.g., 100km, 20 workouts, 5kg'
+                'placeholder': '100',
+                'step': '0.01',
+                'min': '0'
             }),
-            'current_value': forms.TextInput(attrs={
+            'current_number': forms.NumberInput(attrs={
                 'class': 'form-control',
-                'placeholder': 'e.g., 0km, 0 workouts, 0kg'
+                'placeholder': '0',
+                'step': '0.01',
+                'min': '0'
+            }),
+            'unit': forms.Select(attrs={
+                'class': 'form-select'
             }),
             'target_date': forms.DateInput(attrs={
                 'class': 'form-control',
                 'type': 'date'
             }),
+        }
+        labels = {
+            'title': 'Goal Title',
+            'description': 'Description (Optional)',
+            'category': 'Category',
+            'target_number': 'Target Value',
+            'current_number': 'Current Progress',
+            'unit': 'Unit',
+            'target_date': 'Target Date',
         }

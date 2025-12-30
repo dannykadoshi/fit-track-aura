@@ -1,70 +1,27 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}{% if goal %}Edit Goal{% else %}Create Goal{% endif %} - FitTrack Aura{% endblock %}
-
-{% block extra_css %}
-<style>
-    body {
-        background: linear-gradient(135deg, #0f172a 0%, #581c87 50%, #0f172a 100%) !important;
-    }
-    
-    h1, h2, h3, h4, h5, h6, label {
-        color: #ffffff !important;
-    }
-    
-    p, .text-muted, small {
-        color: #e2e8f0 !important;
-    }
-    
-    .form-control, .form-select {
-        background: rgba(255, 255, 255, 0.05) !important;
-        border: 1px solid rgba(255, 255, 255, 0.1) !important;
-        color: #ffffff !important;
-    }
-    
-    .form-control:focus, .form-select:focus {
-        background: rgba(255, 255, 255, 0.08) !important;
-        border-color: #a855f7 !important;
-        color: #ffffff !important;
-    }
-    
-    .form-control::placeholder {
-        color: #94a3b8 !important;
-    }
-    
-    option {
-        background: #1e293b !important;
-        color: #ffffff !important;
-    }
-</style>
-{% endblock %}
+{% block title %}{{ action }} Goal - FitTrack Aura{% endblock %}
 
 {% block content %}
 <div class="container py-5">
     <div class="row justify-content-center">
         <div class="col-lg-8">
-            <!-- Header -->
-            <div class="mb-4">
-                <a href="{% url 'goal_list' %}" class="text-white text-decoration-none d-block mb-2">
-                    ← Back to Goals
-                </a>
-                <h1 class="display-5 fw-bold text-white">
-                    {% if goal %}Edit Goal{% else %}Create New Goal{% endif %}
-                </h1>
-                <p class="text-muted">Set a target and track your progress</p>
-            </div>
+            <div class="card-custom p-4">
+                <h2 class="fw-bold text-white mb-4">
+                    {% if action == 'Create' %}
+                        �� Create New Goal
+                    {% else %}
+                        ✏️ Update Goal
+                    {% endif %}
+                </h2>
 
-            <!-- Form -->
-            <form method="post">
-                {% csrf_token %}
-                
-                <div class="card-custom p-4 mb-4">
-                    <h3 class="fw-bold text-white mb-4">🎯 Goal Details</h3>
-
+                <form method="post">
+                    {% csrf_token %}
+                    
                     <!-- Title -->
                     <div class="mb-3">
-                        <label class="form-label">Goal Title *</label>
+                        <label for="{{ form.title.id_for_label }}" class="form-label">{{ form.title.label }}</label>
                         {{ form.title }}
                         {% if form.title.errors %}
                             <div class="text-danger small mt-1">{{ form.title.errors }}</div>
@@ -73,7 +30,7 @@
 
                     <!-- Description -->
                     <div class="mb-3">
-                        <label class="form-label">Description</label>
+                        <label for="{{ form.description.id_for_label }}" class="form-label">{{ form.description.label }}</label>
                         {{ form.description }}
                         {% if form.description.errors %}
                             <div class="text-danger small mt-1">{{ form.description.errors }}</div>
@@ -82,64 +39,63 @@
 
                     <!-- Category -->
                     <div class="mb-3">
-                        <label class="form-label">Category *</label>
+                        <label for="{{ form.category.id_for_label }}" class="form-label">{{ form.category.label }}</label>
                         {{ form.category }}
                         {% if form.category.errors %}
                             <div class="text-danger small mt-1">{{ form.category.errors }}</div>
                         {% endif %}
                     </div>
 
-                    <!-- Target Value and Current Value -->
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label">Target Value *</label>
-                            {{ form.target_value }}
-                            <small class="text-muted d-block mt-1">e.g., 100km, 20 workouts, 5kg</small>
-                            {% if form.target_value.errors %}
-                                <div class="text-danger small mt-1">{{ form.target_value.errors }}</div>
+                    <!-- Target Value (Number + Unit) -->
+                    <div class="row mb-3">
+                        <div class="col-md-8">
+                            <label for="{{ form.target_number.id_for_label }}" class="form-label">{{ form.target_number.label }}</label>
+                            {{ form.target_number }}
+                            {% if form.target_number.errors %}
+                                <div class="text-danger small mt-1">{{ form.target_number.errors }}</div>
                             {% endif %}
                         </div>
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label">Current Value</label>
-                            {{ form.current_value }}
-                            <small class="text-muted d-block mt-1">Track your progress</small>
-                            {% if form.current_value.errors %}
-                                <div class="text-danger small mt-1">{{ form.current_value.errors }}</div>
+                        <div class="col-md-4">
+                            <label for="{{ form.unit.id_for_label }}" class="form-label">{{ form.unit.label }}</label>
+                            {{ form.unit }}
+                            {% if form.unit.errors %}
+                                <div class="text-danger small mt-1">{{ form.unit.errors }}</div>
                             {% endif %}
                         </div>
                     </div>
 
-                    <!-- Target Date -->
+                    <!-- Current Progress -->
                     <div class="mb-3">
-                        <label class="form-label">Target Date *</label>
+                        <label for="{{ form.current_number.id_for_label }}" class="form-label">{{ form.current_number.label }}</label>
+                        {{ form.current_number }}
+                        {% if form.current_number.errors %}
+                            <div class="text-danger small mt-1">{{ form.current_number.errors }}</div>
+                        {% endif %}
+                        <small class="text-muted d-block mt-1">How much progress have you made so far?</small>
+                    </div>
+
+                    <!-- Target Date -->
+                    <div class="mb-4">
+                        <label for="{{ form.target_date.id_for_label }}" class="form-label">{{ form.target_date.label }}</label>
                         {{ form.target_date }}
                         {% if form.target_date.errors %}
                             <div class="text-danger small mt-1">{{ form.target_date.errors }}</div>
                         {% endif %}
                     </div>
-                </div>
 
-                <!-- Tips Sidebar (in same column on mobile) -->
-                <div class="card-custom p-4 mb-4">
-                    <h5 class="fw-bold text-white mb-3">💡 Tips for Setting Goals</h5>
-                    <ul class="text-muted small mb-0" style="list-style: none; padding: 0;">
-                        <li class="mb-2">• Be specific with your target value</li>
-                        <li class="mb-2">• Set realistic but challenging deadlines</li>
-                        <li class="mb-2">• Update your current value regularly</li>
-                        <li class="mb-2">• Celebrate when you complete a goal!</li>
-                    </ul>
-                </div>
-
-                <!-- Action Buttons -->
-                <div class="d-flex gap-3">
-                    <button type="submit" class="btn btn-gradient-purple btn-lg flex-grow-1">
-                        💾 {% if goal %}Update Goal{% else %}Create Goal{% endif %}
-                    </button>
-                    <a href="{% url 'goal_list' %}" class="btn btn-outline-light btn-lg">
-                        Cancel
-                    </a>
-                </div>
-            </form>
+                    <!-- Buttons -->
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-gradient-purple">
+                            {% if action == 'Create' %}
+                                Create Goal
+                            {% else %}
+                                Update Goal
+                            {% endif %}
+                        </button>
+                        <a href="{% url 'goal_list' %}" class="btn btn-outline-light">Cancel</a>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </div>

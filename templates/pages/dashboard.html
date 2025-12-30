@@ -290,7 +290,7 @@
                                             <h6 class="fw-semibold text-white mb-0 small">{{ goal.title }}</h6>
                                         </div>
                                         <p class="text-muted mb-0 small">
-                                            {{ goal.current_value }} / {{ goal.target_value }} • 
+                                            {{ goal.current_number }} / {{ goal.target_number }} {{ goal.get_unit_display }} • 
                                             Due {{ goal.target_date|date:"M d" }}
                                         </p>
                                     </div>
