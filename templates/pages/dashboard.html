@@ -160,9 +160,23 @@
         <div class="stat-card">
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <div class="stat-icon" style="background: linear-gradient(135deg, #f59e0b, #dc2626);">🎯</div>
-                <span class="text-warning fw-semibold">Active</span>
+                <span class="{% if goals_count > 0 %}text-warning{% else %}text-muted{% endif %} fw-semibold">
+                    {% if goals_count == 0 %}
+                        Set Goals
+                    {% elif goals_count == 1 %}
+                        1 Active Goal
+                    {% else %}
+                        {{ goals_count }} Active Goals
+                    {% endif %}
+                </span>
             </div>
-            <h3 class="fw-bold mb-1">{{ goals_progress }}%</h3>
+            <h3 class="fw-bold mb-1">
+                {% if goals_count > 0 %}
+                    {{ goals_progress }}%
+                {% else %}
+                    —
+                {% endif %}
+            </h3>
             <p class="text-muted mb-0">Goals Progress</p>
         </div>
     </div>

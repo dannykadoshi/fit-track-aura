@@ -113,6 +113,7 @@ def dashboard(request):
         'current_streak': current_streak,
         'best_streak': best_streak,
         'active_goals': goals_with_progress,
+        'goals_count': goals_count,  # <-- ADDED THIS!
         'goals_progress': int(avg_progress),
         'recent_workouts': recent_workouts,
         # Chart data
