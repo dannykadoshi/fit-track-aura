@@ -21,6 +21,12 @@ urlpatterns = [
     path('workouts/<int:pk>/edit/', workout_views.workout_update, name='workout_update'),
     path('workouts/<int:pk>/delete/', workout_views.workout_delete, name='workout_delete'),
     
+    # Exercise Library
+    path('exercises/', workout_views.exercise_library, name='exercise_library'),
+    path('exercises/new/', workout_views.exercise_create, name='exercise_create'),
+    path('exercises/<int:pk>/edit/', workout_views.exercise_update, name='exercise_update'),
+    path('exercises/<int:pk>/delete/', workout_views.exercise_delete, name='exercise_delete'),
+    
     path('goals/', goal_views.goal_list, name='goal_list'),
     path('goals/new/', goal_views.goal_create, name='goal_create'),
     path('goals/<int:pk>/edit/', goal_views.goal_update, name='goal_update'),

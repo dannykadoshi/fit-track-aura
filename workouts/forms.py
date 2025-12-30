@@ -1,88 +1,71 @@
-from django.forms import inlineformset_factory
 from django import forms
+from django.forms import inlineformset_factory
 from .models import Workout, WorkoutExercise, Exercise
 
 
 class WorkoutForm(forms.ModelForm):
-    """Form for creating/editing workouts"""
+    """Form for creating and updating workouts"""
     class Meta:
         model = Workout
         fields = ['title', 'date', 'duration', 'notes']
         widgets = {
-            'title': forms.TextInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'e.g., Upper Body Strength Training'
-            }),
-            'date': forms.DateInput(attrs={
-                'class': 'form-control',
-                'type': 'date'
-            }),
-            'duration': forms.NumberInput(attrs={
-                'class': 'form-control',
-                'placeholder': '45',
-                'min': '1'
-            }),
-            'notes': forms.Textarea(attrs={
-                'class': 'form-control',
-                'rows': 3,
-                'placeholder': 'How did you feel? Any observations?'
-            }),
+            'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'e.g., Morning Cardio'}),
+            'date': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
+            'duration': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Minutes'}),
+            'notes': forms.Textarea(attrs={'class': 'form-control', 'rows': 3, 'placeholder': 'How did it go?'}),
         }
 
 
 class WorkoutExerciseForm(forms.ModelForm):
-    """Form for adding exercises to a workout"""
-    exercise = forms.ModelChoiceField(
-        queryset=Exercise.objects.all(),
-        widget=forms.Select(attrs={
-            'class': 'form-control'
-        })
-    )
-
+    """Form for individual exercises within a workout"""
     class Meta:
         model = WorkoutExercise
-        fields = ['exercise', 'sets', 'reps', 'weight', 'unit', 'distance', 'duration']
+        fields = ['exercise', 'sets', 'reps', 'weight', 'unit', 'distance', 'duration', 'notes']
         widgets = {
-            'sets': forms.NumberInput(attrs={
-                'class': 'form-control',
-                'placeholder': '3',
-                'min': '1'
-            }),
-            'reps': forms.NumberInput(attrs={
-                'class': 'form-control',
-                'placeholder': '10',
-                'min': '1'
-            }),
-            'weight': forms.NumberInput(attrs={
-                'class': 'form-control',
-                'placeholder': '50',
-                'min': '0',
-                'step': '0.5'
-            }),
-            'unit': forms.Select(attrs={
-                'class': 'form-control'
-            }),
-            'distance': forms.NumberInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'Distance in km',
-                'min': '0',
-                'step': '0.1'
-            }),
-            'duration': forms.NumberInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'Duration in minutes',
-                'min': '1'
-            }),
+            'exercise': forms.Select(attrs={'class': 'form-select exercise-select'}),
+            'sets': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Sets'}),
+            'reps': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Reps'}),
+            'weight': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Weight', 'step': '0.5'}),
+            'unit': forms.Select(attrs={'class': 'form-select'}),
+            'distance': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'km', 'step': '0.1'}),
+            'duration': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Minutes'}),
+            'notes': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Notes'}),
         }
 
 
-# Django formsets for handling multiple exercises
+# Formset for managing multiple exercises in a workout
 WorkoutExerciseFormSet = inlineformset_factory(
     Workout,
     WorkoutExercise,
     form=WorkoutExerciseForm,
-    extra=1,  # Show 1 empty form by default
+    extra=1,
     can_delete=True,
-    min_num=0,  # Changed from 1 to 0 - no minimum required
-    validate_min=False  # Changed from True to False
+    min_num=1,
+    validate_min=True,
 )
+
+
+class ExerciseForm(forms.ModelForm):
+    """Form for creating custom exercises"""
+    class Meta:
+        model = Exercise
+        fields = ['name', 'category', 'description']
+        widgets = {
+            'name': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': "e.g., Farmer's Walk"
+            }),
+            'category': forms.Select(attrs={
+                'class': 'form-select'
+            }),
+            'description': forms.Textarea(attrs={
+                'class': 'form-control',
+                'rows': 3,
+                'placeholder': 'Describe the exercise (optional)...'
+            }),
+        }
+        labels = {
+            'name': 'Exercise Name',
+            'category': 'Category',
+            'description': 'Description (Optional)',
+        }

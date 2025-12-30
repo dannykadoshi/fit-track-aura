@@ -5,7 +5,7 @@ from django.db.models import Count, Sum, Q
 from django.utils import timezone
 from datetime import timedelta, datetime
 from .models import Workout, WorkoutExercise, Exercise
-from .forms import WorkoutForm, WorkoutExerciseFormSet
+from .forms import WorkoutForm, WorkoutExerciseFormSet, ExerciseForm
 from goals.models import Goal
 
 
@@ -224,3 +224,69 @@ def faq(request):
 def about(request):
     """About page view"""
     return render(request, 'pages/about.html')
+
+
+@login_required
+def exercise_library(request):
+    """Display all exercises (default + user's custom)"""
+    # Get default exercises
+    default_exercises = Exercise.objects.filter(is_custom=False).order_by('category', 'name')
+    
+    # Get user's custom exercises
+    custom_exercises = Exercise.objects.filter(created_by=request.user, is_custom=True).order_by('category', 'name')
+    
+    context = {
+        'default_exercises': default_exercises,
+        'custom_exercises': custom_exercises,
+    }
+    
+    return render(request, 'workouts/exercise_library.html', context)
+
+
+@login_required
+def exercise_create(request):
+    """Create a custom exercise"""
+    if request.method == 'POST':
+        form = ExerciseForm(request.POST)
+        if form.is_valid():
+            exercise = form.save(commit=False)
+            exercise.created_by = request.user
+            exercise.is_custom = True
+            exercise.save()
+            messages.success(request, f'Exercise "{exercise.name}" created successfully! ✨')
+            return redirect('exercise_library')
+    else:
+        form = ExerciseForm()
+    
+    return render(request, 'workouts/exercise_form.html', {'form': form, 'action': 'Create'})
+
+
+@login_required
+def exercise_update(request, pk):
+    """Update a custom exercise (only user's own)"""
+    exercise = get_object_or_404(Exercise, pk=pk, created_by=request.user, is_custom=True)
+    
+    if request.method == 'POST':
+        form = ExerciseForm(request.POST, instance=exercise)
+        if form.is_valid():
+            form.save()
+            messages.success(request, f'Exercise "{exercise.name}" updated successfully! ✅')
+            return redirect('exercise_library')
+    else:
+        form = ExerciseForm(instance=exercise)
+    
+    return render(request, 'workouts/exercise_form.html', {'form': form, 'action': 'Update', 'exercise': exercise})
+
+
+@login_required
+def exercise_delete(request, pk):
+    """Delete a custom exercise (only user's own)"""
+    exercise = get_object_or_404(Exercise, pk=pk, created_by=request.user, is_custom=True)
+    
+    if request.method == 'POST':
+        exercise_name = exercise.name
+        exercise.delete()
+        messages.success(request, f'Exercise "{exercise_name}" deleted successfully! 🗑️')
+        return redirect('exercise_library')
+    
+    return render(request, 'workouts/exercise_confirm_delete.html', {'exercise': exercise})

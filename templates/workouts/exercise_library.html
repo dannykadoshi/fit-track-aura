@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Exercise Library - FitTrack Aura{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <!-- Header -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center flex-wrap">
+                <div class="mb-3 mb-md-0">
+                    <h1 class="display-5 fw-bold text-white">💪 Exercise Library</h1>
+                    <p class="text-muted">Manage your exercise collection</p>
+                </div>
+                <a href="{% url 'exercise_create' %}" class="btn btn-gradient-purple btn-lg">
+                    ➕ Add Custom Exercise
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom Exercises (TOP PRIORITY) -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <h3 class="text-white mb-4">✨ My Custom Exercises</h3>
+            
+            {% if custom_exercises %}
+                <div class="row">
+                    {% for exercise in custom_exercises %}
+                        <div class="col-md-6 col-lg-4 mb-3">
+                            <div class="card-custom p-3">
+                                <div class="d-flex align-items-start gap-3">
+                                    <div class="stat-icon" style="width: 48px; height: 48px;">
+                                        {% if exercise.category == 'strength' %}💪
+                                        {% elif exercise.category == 'cardio' %}🏃
+                                        {% elif exercise.category == 'flexibility' %}🧘
+                                        {% else %}⚽
+                                        {% endif %}
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <div class="d-flex align-items-center gap-2 mb-1">
+                                            <h5 class="text-white mb-0">{{ exercise.name }}</h5>
+                                            <span class="badge badge-custom" style="font-size: 0.7rem;">Custom</span>
+                                        </div>
+                                        <span class="badge bg-secondary mb-2">{{ exercise.get_category_display }}</span>
+                                        {% if exercise.description %}
+                                            <p class="text-muted small mb-2">{{ exercise.description|truncatewords:15 }}</p>
+                                        {% endif %}
+                                        <div class="d-flex gap-2 mt-2">
+                                            <a href="{% url 'exercise_update' exercise.pk %}" class="btn btn-sm btn-outline-light">Edit</a>
+                                            <a href="{% url 'exercise_delete' exercise.pk %}" class="btn btn-sm btn-outline-danger">Delete</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="text-center py-5">
+                    <div class="card-custom p-5">
+                        <div class="stat-icon mx-auto mb-4" style="width: 80px; height: 80px; font-size: 2.5rem;">✨</div>
+                        <h3 class="text-white mb-3">No custom exercises yet</h3>
+                        <p class="text-muted mb-4">Create your own exercises to track unique movements in your workouts!</p>
+                        <a href="{% url 'exercise_create' %}" class="btn btn-gradient-purple btn-lg">
+                            Add Your First Exercise
+                        </a>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Default Exercises (COLLAPSIBLE) -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card-custom p-4">
+                <button class="btn btn-link text-white text-decoration-none p-0 d-flex justify-content-between align-items-center w-100" type="button" data-bs-toggle="collapse" data-bs-target="#defaultExercises">
+                    <h3 class="mb-0">📋 Default Exercises ({{ default_exercises.count }})</h3>
+                    <span class="text-muted">Click to show/hide ▼</span>
+                </button>
+                
+                <div class="collapse mt-4" id="defaultExercises">
+                    {% if default_exercises %}
+                        <div class="row">
+                            {% for exercise in default_exercises %}
+                                <div class="col-md-6 col-lg-4 mb-3">
+                                    <div class="card-custom p-3" style="background: rgba(255, 255, 255, 0.03);">
+                                        <div class="d-flex align-items-start gap-3">
+                                            <div class="stat-icon" style="width: 48px; height: 48px;">
+                                                {% if exercise.category == 'strength' %}💪
+                                                {% elif exercise.category == 'cardio' %}🏃
+                                                {% elif exercise.category == 'flexibility' %}🧘
+                                                {% else %}⚽
+                                                {% endif %}
+                                            </div>
+                                            <div class="flex-grow-1">
+                                                <h5 class="text-white mb-1">{{ exercise.name }}</h5>
+                                                <span class="badge bg-secondary mb-2">{{ exercise.get_category_display }}</span>
+                                                {% if exercise.description %}
+                                                    <p class="text-muted small mb-0">{{ exercise.description|truncatewords:15 }}</p>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <div class="text-center py-3">
+                            <p class="text-muted mb-0">No default exercises available</p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
