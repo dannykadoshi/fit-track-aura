@@ -3,6 +3,54 @@
 
 {% block title %}Dashboard - FitTrack Aura{% endblock %}
 
+{% block extra_css %}
+<style>
+    /* Progress Bar Styles for Dashboard */
+    .progress-custom {
+        width: 100%;
+        height: 8px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 1rem;
+        overflow: hidden;
+        position: relative;
+        margin-top: 8px;
+    }
+    
+    .progress-bar-custom {
+        height: 100%;
+        background: linear-gradient(90deg, #a855f7, #ec4899);
+        border-radius: 1rem;
+        transition: width 0.3s ease;
+        position: relative;
+    }
+    
+    .progress-bar-custom::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(90deg, 
+            rgba(255, 255, 255, 0.2) 0%, 
+            rgba(255, 255, 255, 0) 50%, 
+            rgba(255, 255, 255, 0.2) 100%
+        );
+        animation: shimmer 2s infinite;
+    }
+    
+    @keyframes shimmer {
+        0% { transform: translateX(-100%); }
+        100% { transform: translateX(100%); }
+    }
+    
+    /* Green when 100% complete */
+    .progress-bar-custom[style*="100%"] {
+        background: linear-gradient(90deg, #22c55e, #16a34a) !important;
+    }
+</style>
+{% endblock %}
+
 {% block content %}
 <div class="container py-5">
     <!-- Welcome Section -->
@@ -112,7 +160,7 @@
         <div class="stat-card">
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <div class="stat-icon" style="background: linear-gradient(135deg, #f59e0b, #dc2626);">🎯</div>
-                <span class="text-warning fw-semibold">{{ active_goals.count }} Active</span>
+                <span class="text-warning fw-semibold">Active</span>
             </div>
             <h3 class="fw-bold mb-1">{{ goals_progress }}%</h3>
             <p class="text-muted mb-0">Goals Progress</p>
@@ -178,7 +226,7 @@
                 {% if active_goals %}
                     <div class="space-y-3">
                         {% for goal in active_goals %}
-                            <div class="card-custom p-3">
+                            <div class="card-custom p-3 mb-3">
                                 <div class="d-flex align-items-start justify-content-between mb-2">
                                     <div class="flex-grow-1">
                                         <div class="d-flex align-items-center gap-2 mb-2">
@@ -187,13 +235,14 @@
                                             </span>
                                             <h6 class="fw-semibold text-white mb-0 small">{{ goal.title }}</h6>
                                         </div>
-                                        <p class="text-muted mb-2 small">
+                                        <p class="text-muted mb-0 small">
                                             {{ goal.current_value }} / {{ goal.target_value }} • 
                                             Due {{ goal.target_date|date:"M d" }}
                                         </p>
                                     </div>
-                                    <span class="text-success fw-bold">{{ goal.progress }}%</span>
+                                    <span class="fw-bold" style="color: {% if goal.progress >= 100 %}#22c55e{% else %}#a855f7{% endif %}">{{ goal.progress }}%</span>
                                 </div>
+                                <!-- Progress Bar -->
                                 <div class="progress-custom">
                                     <div class="progress-bar-custom" style="width: {{ goal.progress }}%;"></div>
                                 </div>

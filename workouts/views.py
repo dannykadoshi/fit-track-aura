@@ -43,14 +43,10 @@ def dashboard(request):
         valid_goals = 0
         for goal in active_goals:
             try:
-                # Convert string values to float for comparison
-                target = float(goal.target_value) if goal.target_value else 0
-                current = float(goal.current_value) if goal.current_value else 0
-
-                if target > 0:
-                    goal_progress = (current / target) * 100
-                    total_progress += min(goal_progress, 100)  # Cap at 100%
-                    valid_goals += 1
+                # Use the model's progress_percentage property
+                goal_progress = goal.progress_percentage
+                total_progress += goal_progress
+                valid_goals += 1
             except (ValueError, TypeError):
                 # If conversion fails, skip this goal
                 continue
@@ -68,18 +64,8 @@ def dashboard(request):
     # Add progress property to each goal for the template
     goals_with_progress = []
     for goal in active_goals[:3]:
-        try:
-            # Convert string values to float
-            target = float(goal.target_value) if goal.target_value else 0
-            current = float(goal.current_value) if goal.current_value else 0
-
-            if target > 0:
-                goal.progress = min(int((current / target) * 100), 100)
-            else:
-                goal.progress = 0
-        except (ValueError, TypeError):
-            goal.progress = 0
-
+        # Use the model's progress_percentage property
+        goal.progress = goal.progress_percentage
         goals_with_progress.append(goal)
 
     context = {
