@@ -155,9 +155,9 @@
                     <!-- Title -->
                     <div class="mb-3">
                         <label class="form-label">Workout Title *</label>
-                        {{ workout_form.title }}
-                        {% if workout_form.title.errors %}
-                            <div class="text-danger small mt-1">{{ workout_form.title.errors }}</div>
+                        {{ form.title }}
+                        {% if form.title.errors %}
+                            <div class="text-danger small mt-1">{{ form.title.errors }}</div>
                         {% endif %}
                     </div>
 
@@ -165,16 +165,16 @@
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label class="form-label">📅 Date *</label>
-                            {{ workout_form.date }}
-                            {% if workout_form.date.errors %}
-                                <div class="text-danger small mt-1">{{ workout_form.date.errors }}</div>
+                            {{ form.date }}
+                            {% if form.date.errors %}
+                                <div class="text-danger small mt-1">{{ form.date.errors }}</div>
                             {% endif %}
                         </div>
                         <div class="col-md-6 mb-3">
                             <label class="form-label">⏱️ Duration (minutes)</label>
-                            {{ workout_form.duration }}
-                            {% if workout_form.duration.errors %}
-                                <div class="text-danger small mt-1">{{ workout_form.duration.errors }}</div>
+                            {{ form.duration }}
+                            {% if form.duration.errors %}
+                                <div class="text-danger small mt-1">{{ form.duration.errors }}</div>
                             {% endif %}
                         </div>
                     </div>
@@ -182,9 +182,9 @@
                     <!-- Notes -->
                     <div class="mb-3">
                         <label class="form-label">Notes (Optional)</label>
-                        {{ workout_form.notes }}
-                        {% if workout_form.notes.errors %}
-                            <div class="text-danger small mt-1">{{ workout_form.notes.errors }}</div>
+                        {{ form.notes }}
+                        {% if form.notes.errors %}
+                            <div class="text-danger small mt-1">{{ form.notes.errors }}</div>
                         {% endif %}
                     </div>
                 </div>
@@ -205,7 +205,7 @@
 
                     <!-- Exercise Rows Container -->
                     <div id="exercise-forms">
-                        {% for form in formset %}
+                        {% for exercise_form in formset %}
                             <div class="exercise-row" data-form-index="{{ forloop.counter0 }}">
                                 <div class="d-flex justify-content-between align-items-center mb-3">
                                     <h5 class="text-purple-400 mb-0">Exercise {{ forloop.counter }}</h5>
@@ -216,16 +216,16 @@
 
                                 <!-- Hidden delete field -->
                                 <div style="display: none;">
-                                    {{ form.id }}
-                                    {{ form.DELETE }}
+                                    {{ exercise_form.id }}
+                                    {{ exercise_form.DELETE }}
                                 </div>
 
                                 <!-- Exercise Name -->
                                 <div class="mb-3">
                                     <label class="form-label">Exercise *</label>
-                                    {{ form.exercise }}
-                                    {% if form.exercise.errors %}
-                                        <div class="text-danger small mt-1">{{ form.exercise.errors }}</div>
+                                    {{ exercise_form.exercise }}
+                                    {% if exercise_form.exercise.errors %}
+                                        <div class="text-danger small mt-1">{{ exercise_form.exercise.errors }}</div>
                                     {% endif %}
                                 </div>
 
@@ -233,19 +233,19 @@
                                 <div class="row">
                                     <div class="col-md-3 mb-3">
                                         <label class="form-label">Sets</label>
-                                        {{ form.sets }}
+                                        {{ exercise_form.sets }}
                                     </div>
                                     <div class="col-md-3 mb-3">
                                         <label class="form-label">Reps</label>
-                                        {{ form.reps }}
+                                        {{ exercise_form.reps }}
                                     </div>
                                     <div class="col-md-4 mb-3">
                                         <label class="form-label">Weight</label>
-                                        {{ form.weight }}
+                                        {{ exercise_form.weight }}
                                     </div>
                                     <div class="col-md-2 mb-3">
                                         <label class="form-label">Unit</label>
-                                        {{ form.unit }}
+                                        {{ exercise_form.unit }}
                                     </div>
                                 </div>
 
@@ -253,11 +253,11 @@
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
                                         <label class="form-label">Distance (km)</label>
-                                        {{ form.distance }}
+                                        {{ exercise_form.distance }}
                                     </div>
                                     <div class="col-md-6 mb-3">
                                         <label class="form-label">Duration (min)</label>
-                                        {{ form.duration }}
+                                        {{ exercise_form.duration }}
                                     </div>
                                 </div>
                             </div>
