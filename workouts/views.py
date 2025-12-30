@@ -152,7 +152,7 @@ def workout_create(request):
     """Create a new workout"""
     if request.method == 'POST':
         form = WorkoutForm(request.POST)
-        formset = WorkoutExerciseFormSet(request.POST)
+        formset = WorkoutExerciseFormSet(request.POST, form_kwargs={'user': request.user})
         
         if form.is_valid() and formset.is_valid():
             workout = form.save(commit=False)
@@ -166,7 +166,7 @@ def workout_create(request):
             return redirect('dashboard')
     else:
         form = WorkoutForm()
-        formset = WorkoutExerciseFormSet()
+        formset = WorkoutExerciseFormSet(form_kwargs={'user': request.user})
     
     return render(request, 'workouts/workout_form.html', {
         'form': form,
@@ -182,7 +182,7 @@ def workout_update(request, pk):
     
     if request.method == 'POST':
         form = WorkoutForm(request.POST, instance=workout)
-        formset = WorkoutExerciseFormSet(request.POST, instance=workout)
+        formset = WorkoutExerciseFormSet(request.POST, instance=workout, form_kwargs={'user': request.user})
         
         if form.is_valid() and formset.is_valid():
             form.save()
@@ -192,7 +192,7 @@ def workout_update(request, pk):
             return redirect('dashboard')
     else:
         form = WorkoutForm(instance=workout)
-        formset = WorkoutExerciseFormSet(instance=workout)
+        formset = WorkoutExerciseFormSet(instance=workout, form_kwargs={'user': request.user})
     
     return render(request, 'workouts/workout_form.html', {
         'form': form,
