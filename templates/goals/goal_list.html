@@ -98,11 +98,11 @@
                         <!-- Progress Bar -->
                         <div class="mb-2">
                             <div class="d-flex justify-content-between text-sm mb-1">
-                                <span class="text-muted small">Progress: {{ goal.current_value }}</span>
-                                <span class="text-white small fw-bold">Target: {{ goal.target_value }}</span>
+                                <span class="text-muted small">Progress: {{ goal.current_value }} / {{ goal.target_value }}</span>
+                                <span class="text-white small fw-bold">{{ goal.progress_percentage }}%</span>
                             </div>
                             <div class="progress-custom">
-                                <div class="progress-bar-custom" style="width: 50%;"></div>
+                                <div class="progress-bar-custom" style="width: {{ goal.progress_percentage }}%;"></div>
                             </div>
                         </div>
                     </div>

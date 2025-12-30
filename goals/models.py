@@ -38,3 +38,22 @@ class Goal(models.Model):
         self.is_completed = True
         self.completed_date = timezone.now().date()
         self.save()
+
+    @property
+    def progress_percentage(self):
+        """Calculate progress percentage"""
+        try:
+            # Try to convert to float for calculation
+            # Remove common units and whitespace
+            current = self.current_value.replace('km', '').replace('kg', '').replace('lbs', '').strip()
+            target = self.target_value.replace('km', '').replace('kg', '').replace('lbs', '').strip()
+            
+            current_float = float(current) if current else 0
+            target_float = float(target) if target else 0
+            
+            if target_float > 0:
+                percentage = (current_float / target_float) * 100
+                return min(int(percentage), 100)  # Cap at 100%
+            return 0
+        except (ValueError, ZeroDivisionError, AttributeError):
+            return 0
