@@ -67,11 +67,14 @@
                                 Workouts
                             </a>
                             <ul class="dropdown-menu dropdown-menu-dark">
-                                <li><a class="dropdown-item" href="{% url 'workout_list' %}">My Workouts</a></li>
-                                <li><a class="dropdown-item" href="{% url 'workout_create' %}">Log New Workout</a></li>
+                                <li><a class="dropdown-item" href="{% url 'workout_list' %}">🫵🏼 My Workouts</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="{% url 'workout_create' %}">✍🏻 Log New Workout</a></li>
                                 <li><hr class="dropdown-divider"></li>
                                 <li><a class="dropdown-item" href="{% url 'workout_calendar' %}">📅 Calendar View</a></li>
+                                <li><hr class="dropdown-divider"></li>
                                 <li><a class="dropdown-item" href="{% url 'template_list' %}">📋 Workout Templates</a></li>
+                                <li><hr class="dropdown-divider"></li>
                                 <li><a class="dropdown-item" href="{% url 'exercise_library' %}">💪 Exercise Library</a></li>
                             </ul>
                         </li>
@@ -88,6 +91,7 @@
                             </a>
                             <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end">
                                 <li><a class="dropdown-item" href="{% url 'profile' %}">👤 My Profile</a></li>
+                                <li><hr class="dropdown-divider"></li>
                                 <li><a class="dropdown-item" href="{% url 'badges' %}">🏆 Achievements</a></li>
                                 <li><hr class="dropdown-divider"></li>
                                 <li>
