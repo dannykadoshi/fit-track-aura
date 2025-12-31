@@ -16,6 +16,10 @@ urlpatterns = [
     path('about/', workout_views.about, name='about'),
     path('badges/', workout_views.badges, name='badges'),
     
+    # PDF Exports
+    path('workouts/export-pdf/', workout_views.export_workouts_pdf, name='export_workouts_pdf'),
+    path('goals/export-pdf/', goal_views.export_goals_pdf, name='export_goals_pdf'),
+    
     path('workouts/', workout_views.workout_list, name='workout_list'),
     path('workouts/<int:pk>/', workout_views.workout_detail, name='workout_detail'),
     path('workouts/new/', workout_views.workout_create, name='workout_create'),

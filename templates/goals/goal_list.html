@@ -86,18 +86,23 @@
 <div class="container py-5">
     <!-- Header -->
     <div class="row mb-4">
-        <div class="col-12">
-            <div class="d-flex justify-content-between align-items-center flex-wrap">
-                <div class="mb-3 mb-md-0">
-                    <h1 class="display-5 fw-bold text-white">My Goals</h1>
-                    <p class="text-muted">Set targets and track your progress</p>
-                </div>
+    <div class="col-12">
+        <div class="d-flex justify-content-between align-items-center flex-wrap">
+            <div class="mb-3 mb-md-0">
+                <h1 class="display-5 fw-bold text-white">My Goals</h1>
+                <p class="text-muted">Set targets and track your progress</p>
+            </div>
+            <div class="d-flex gap-2">
+                <a href="{% url 'export_goals_pdf' %}" class="btn btn-outline-light">
+                    📄 Export PDF
+                </a>
                 <a href="{% url 'goal_create' %}" class="btn btn-gradient-purple btn-lg">
                     🎯 Create New Goal
                 </a>
             </div>
         </div>
     </div>
+</div>
 
     <!-- Active Goals -->
     <div class="row mb-5">

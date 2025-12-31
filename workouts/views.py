@@ -348,3 +348,25 @@ def badges(request):
     }
     
     return render(request, 'pages/badges.html', context)
+
+
+@login_required
+def export_workouts_pdf(request):
+    """Export user's workouts to PDF"""
+    from django.http import HttpResponse
+    from .pdf_utils import generate_workouts_pdf
+    from datetime import datetime
+    
+    workouts = Workout.objects.filter(user=request.user).order_by('-date')
+    
+    # Generate PDF
+    pdf_buffer = generate_workouts_pdf(workouts, request.user)
+    
+    # Create response
+    response = HttpResponse(pdf_buffer, content_type='application/pdf')
+    filename = f"FitTrack_Workouts_{datetime.now().strftime('%Y%m%d')}.pdf"
+    response['Content-Disposition'] = f'attachment; filename="{filename}"'
+    
+    messages.success(request, f'Workouts exported successfully! 📄')
+    
+    return response

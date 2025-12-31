@@ -23,18 +23,23 @@
 <div class="container py-5">
     <!-- Header -->
     <div class="row mb-4">
-        <div class="col-12">
-            <div class="d-flex justify-content-between align-items-center flex-wrap">
-                <div class="mb-3 mb-md-0">
-                    <h1 class="display-5 fw-bold text-white">My Workouts</h1>
-                    <p class="text-muted">Track and manage your training sessions</p>
-                </div>
+    <div class="col-12">
+        <div class="d-flex justify-content-between align-items-center flex-wrap">
+            <div class="mb-3 mb-md-0">
+                <h1 class="display-5 fw-bold text-white">My Workouts</h1>
+                <p class="text-muted">Track your training history</p>
+            </div>
+            <div class="d-flex gap-2">
+                <a href="{% url 'export_workouts_pdf' %}" class="btn btn-outline-light">
+                    📄 Export PDF
+                </a>
                 <a href="{% url 'workout_create' %}" class="btn btn-gradient-purple btn-lg">
                     ➕ Log New Workout
                 </a>
             </div>
         </div>
     </div>
+</div>
 
     <!-- Search Bar -->
     <div class="row mb-4">

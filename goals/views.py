@@ -87,3 +87,25 @@ def goal_complete(request, pk):
     
     messages.success(request, f'Goal "{goal.title}" marked as complete! 🎉')
     return redirect('goal_list')
+
+
+@login_required
+def export_goals_pdf(request):
+    """Export user's goals to PDF"""
+    from django.http import HttpResponse
+    from workouts.pdf_utils import generate_goals_pdf
+    from datetime import datetime
+    
+    goals = Goal.objects.filter(user=request.user).order_by('-created_at')
+    
+    # Generate PDF
+    pdf_buffer = generate_goals_pdf(goals, request.user)
+    
+    # Create response
+    response = HttpResponse(pdf_buffer, content_type='application/pdf')
+    filename = f"FitTrack_Goals_{datetime.now().strftime('%Y%m%d')}.pdf"
+    response['Content-Disposition'] = f'attachment; filename="{filename}"'
+    
+    messages.success(request, f'Goals exported successfully! 📄')
+    
+    return response
