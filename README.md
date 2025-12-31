@@ -40,7 +40,6 @@ A comprehensive Django fitness tracking web application that empowers users to l
 - [Testing](#testing)
 - [Deployment](#deployment)
 - [Credits](#credits)
-- [Screenshot Checklist](#screenshot-checklist)
 
 ---
 
