@@ -4,4 +4,5 @@ from . import views
 urlpatterns = [
     path('profile/', views.profile_view, name='profile'),
     path('profile/change-password/', views.change_password, name='change_password'),
+    path('toggle-theme/', views.toggle_theme, name='toggle_theme'),
 ]

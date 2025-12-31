@@ -54,3 +54,21 @@ def change_password(request):
     }
     
     return render(request, 'users/change_password.html', context)
+
+
+@login_required
+def toggle_theme(request):
+    """Toggle between dark and light theme"""
+    profile = request.user.profile
+    
+    if profile.theme == 'dark':
+        profile.theme = 'light'
+        messages.success(request, '☀️ Switched to Light Mode')
+    else:
+        profile.theme = 'dark'
+        messages.success(request, '🌙 Switched to Dark Mode')
+    
+    profile.save()
+    
+    # Redirect back to the page they came from
+    return redirect(request.META.get('HTTP_REFERER', 'dashboard'))

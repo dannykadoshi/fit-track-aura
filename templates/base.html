@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="{% if user.is_authenticated and user.profile.theme == 'light' %}light{% else %}dark{% endif %}">
     <title>{% block title %}FitTrack Aura- Your Fitness Journey{% endblock %}</title>
     
     <!-- Bootstrap CSS -->
@@ -42,7 +42,7 @@
 
     {% block extra_css %}{% endblock %}
 </head>
-<body class="bg-dark text-light">
+<body class="{% if user.is_authenticated and user.profile.theme == 'light' %}light-mode{% else %}bg-dark text-light{% endif %}">
     
     <!-- Navigation Bar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-gradient-purple sticky-top">
@@ -88,6 +88,16 @@
                             <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end">
                                 <li><a class="dropdown-item" href="{% url 'profile' %}">👤 My Profile</a></li>
                                 <li><a class="dropdown-item" href="{% url 'badges' %}">🏆 Achievements</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <a class="dropdown-item" href="{% url 'toggle_theme' %}">
+                                        {% if user.profile.theme == 'dark' %}
+                                          ☀️ Light Mode
+                                        {% else %}
+                                            🌙 Dark Mode
+                                        {% endif %}
+                                    </a>
+                                </li>
                                 <li><hr class="dropdown-divider"></li>
                                 <li>
                                     <form method="post" action="{% url 'account_logout' %}">

@@ -259,3 +259,462 @@ footer p {
 .navbar #userDropdown:hover {
     background: rgba(168, 85, 247, 0.15);
 }
+
+/* ===================================
+   LIGHT MODE THEME
+   =================================== */
+
+body.light-mode {
+    background: linear-gradient(135deg, #f0f4f8 0%, #d9e2ec 50%, #f0f4f8 100%) !important;
+}
+
+body.light-mode h1,
+body.light-mode h2,
+body.light-mode h3,
+body.light-mode h4,
+body.light-mode h5,
+body.light-mode h6 {
+    color: #1e293b !important;
+}
+
+body.light-mode p,
+body.light-mode .text-muted,
+body.light-mode small,
+body.light-mode .text-white {
+    color: #475569 !important;
+}
+
+body.light-mode .card-custom {
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+body.light-mode .stat-card {
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+body.light-mode .navbar {
+    background: linear-gradient(135deg, rgba(248, 250, 252, 0.95), rgba(226, 232, 240, 0.95)) !important;
+    border-bottom: 1px solid rgba(168, 85, 247, 0.3);
+}
+
+body.light-mode .navbar-brand .gradient-text,
+body.light-mode .nav-link {
+    color: #1e293b !important;
+}
+
+body.light-mode .dropdown-menu-dark {
+    background-color: rgba(255, 255, 255, 0.95) !important;
+}
+
+body.light-mode .dropdown-item {
+    color: #1e293b !important;
+}
+
+body.light-mode .dropdown-item:hover {
+    background-color: rgba(168, 85, 247, 0.1);
+}
+
+body.light-mode footer {
+    background: rgba(248, 250, 252, 0.95) !important;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+body.light-mode footer p,
+body.light-mode footer a {
+    color: #475569 !important;
+}
+
+body.light-mode .form-control,
+body.light-mode .form-select {
+    background-color: white;
+    border-color: #cbd5e1;
+    color: #1e293b;
+}
+
+body.light-mode .alert {
+    background-color: rgba(255, 255, 255, 0.9);
+    color: #1e293b;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/* ===================================
+   LIGHT MODE - ADDITIONAL FIXES
+   =================================== */
+
+/* Navbar fixes */
+body.light-mode .navbar .nav-link {
+    color: #1e293b !important;
+}
+
+body.light-mode .navbar .nav-link:hover {
+    color: #a855f7 !important;
+}
+
+body.light-mode .navbar #userDropdown {
+    color: #1e293b !important;
+}
+
+body.light-mode .navbar-toggler {
+    border-color: #1e293b;
+}
+
+body.light-mode .navbar-toggler-icon {
+    filter: invert(1);
+}
+
+/* Footer link colors */
+body.light-mode footer a {
+    color: #a855f7 !important;
+}
+
+body.light-mode footer a:hover {
+    color: #ec4899 !important;
+}
+
+/* Form labels */
+body.light-mode .form-label {
+    color: #1e293b !important;
+}
+
+/* Text colors for all text elements */
+body.light-mode .lead,
+body.light-mode .hero-subtitle,
+body.light-mode label,
+body.light-mode th,
+body.light-mode td {
+    color: #475569 !important;
+}
+
+/* Headings in light mode */
+body.light-mode .display-1,
+body.light-mode .display-2,
+body.light-mode .display-3,
+body.light-mode .display-4,
+body.light-mode .display-5 {
+    color: #1e293b !important;
+}
+
+/* Button outline in light mode */
+body.light-mode .btn-outline-light {
+    color: #1e293b;
+    border-color: #cbd5e1;
+}
+
+body.light-mode .btn-outline-light:hover {
+    background-color: #f1f5f9;
+    border-color: #a855f7;
+    color: #a855f7;
+}
+
+/* Tables */
+body.light-mode table {
+    color: #1e293b;
+}
+
+/* Placeholders */
+body.light-mode .form-control::placeholder,
+body.light-mode .form-select::placeholder {
+    color: #94a3b8 !important;
+}
+
+/* Progress bars */
+body.light-mode .progress-custom {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+/* Badges */
+body.light-mode .badge-custom {
+    background: linear-gradient(135deg, #a855f7, #ec4899);
+    color: white !important;
+}
+
+body.light-mode .badge-secondary {
+    background-color: #cbd5e1 !important;
+    color: #1e293b !important;
+}
+
+/* Workout/Goal cards */
+body.light-mode .workout-card,
+body.light-mode .goal-card {
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+body.light-mode .workout-card:hover,
+body.light-mode .goal-card:hover {
+    border-color: rgba(168, 85, 247, 0.5);
+}
+
+/* Chart text colors */
+body.light-mode canvas {
+    filter: brightness(0.8);
+}
+
+/* Alert messages */
+body.light-mode .alert-success {
+    background-color: #dcfce7;
+    border-color: #86efac;
+    color: #166534;
+}
+
+body.light-mode .alert-danger {
+    background-color: #fee2e2;
+    border-color: #fca5a5;
+    color: #991b1b;
+}
+
+body.light-mode .alert-info {
+    background-color: #dbeafe;
+    border-color: #93c5fd;
+    color: #1e40af;
+}
+
+body.light-mode .alert-warning {
+    background-color: #fef3c7;
+    border-color: #fcd34d;
+    color: #92400e;
+}
+
+/* Stat icons in light mode */
+body.light-mode .stat-icon {
+    background: linear-gradient(135deg, #a855f7, #ec4899) !important;
+    color: white !important;
+}
+
+/* Dropdown in light mode */
+body.light-mode .dropdown-menu {
+    background-color: white !important;
+    border: 1px solid #cbd5e1;
+}
+
+body.light-mode .dropdown-divider {
+    border-color: #cbd5e1;
+}
+
+/* Exercise search dropdown */
+body.light-mode .exercise-select {
+    background-color: white;
+    color: #1e293b;
+}
+
+/* Back button and links */
+body.light-mode a {
+    color: #a855f7;
+}
+
+body.light-mode a:hover {
+    color: #ec4899;
+}
+
+/* Small text elements */
+body.light-mode small.text-muted {
+    color: #64748b !important;
+}
+
+/* Formset delete checkbox */
+body.light-mode input[type="checkbox"] {
+    border: 1px solid #cbd5e1;
+}
+
+/* Pro tips box */
+body.light-mode .card-custom h3,
+body.light-mode .card-custom h4,
+body.light-mode .card-custom h5 {
+    color: #1e293b !important;
+}
+
+body.light-mode .card-custom ul li {
+    color: #475569 !important;
+}
+
+/* Exercise form placeholders */
+body.light-mode .form-control:focus {
+    border-color: #a855f7;
+    box-shadow: 0 0 0 0.2rem rgba(168, 85, 247, 0.25);
+}
+
+/* ===================================
+   LIGHT MODE - FORM INPUT FIXES
+   =================================== */
+
+/* Form inputs - make border visible when NOT focused */
+body.light-mode .form-control,
+body.light-mode .form-select {
+    background-color: white;
+    border: 2px solid #cbd5e1 !important;
+    color: #1e293b !important;
+}
+
+/* Form inputs - purple border when focused */
+body.light-mode .form-control:focus,
+body.light-mode .form-select:focus {
+    border-color: #a855f7 !important;
+    box-shadow: 0 0 0 0.2rem rgba(168, 85, 247, 0.25) !important;
+}
+
+/* Placeholder text - darker for visibility */
+body.light-mode .form-control::placeholder {
+    color: #94a3b8 !important;
+    opacity: 1;
+}
+
+/* Select dropdowns */
+body.light-mode select.form-select {
+    background-color: white;
+    color: #1e293b !important;
+}
+
+body.light-mode select.form-select option {
+    background-color: white;
+    color: #1e293b;
+}
+
+/* ===================================
+   LIGHT MODE - BUTTON TEXT FIX
+   =================================== */
+
+/* Use Template button - white text for readability */
+body.light-mode .btn-gradient-purple {
+    color: white !important;
+}
+
+/* Ensure gradient buttons always have white text */
+body.light-mode .btn-gradient-purple:hover {
+    color: white !important;
+}
+
+/* Input number fields */
+body.light-mode input[type="number"],
+body.light-mode input[type="date"],
+body.light-mode input[type="text"],
+body.light-mode textarea {
+    background-color: white !important;
+    border: 2px solid #cbd5e1 !important;
+    color: #1e293b !important;
+}
+
+body.light-mode input[type="number"]:focus,
+body.light-mode input[type="date"]:focus,
+body.light-mode input[type="text"]:focus,
+body.light-mode textarea:focus {
+    border-color: #a855f7 !important;
+    box-shadow: 0 0 0 0.2rem rgba(168, 85, 247, 0.25) !important;
+}
+
+/* Date input specific styling */
+body.light-mode input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(0.5);
+}
+
+/* Number input arrows */
+body.light-mode input[type="number"]::-webkit-inner-spin-button,
+body.light-mode input[type="number"]::-webkit-outer-spin-button {
+    opacity: 1;
+}
+
+/* ===================================
+   LIGHT MODE - SELECT DROPDOWN FIX
+   =================================== */
+
+/* All select dropdowns - consistent border styling */
+body.light-mode select.form-select,
+body.light-mode select.form-control,
+body.light-mode .exercise-select {
+    background-color: white !important;
+    border: 2px solid #cbd5e1 !important;
+    color: #1e293b !important;
+}
+
+/* Select dropdown on focus */
+body.light-mode select.form-select:focus,
+body.light-mode select.form-control:focus,
+body.light-mode .exercise-select:focus {
+    border-color: #a855f7 !important;
+    box-shadow: 0 0 0 0.2rem rgba(168, 85, 247, 0.25) !important;
+}
+
+/* Exercise dropdown specifically */
+body.light-mode .exercise-select {
+    border: 2px solid #cbd5e1 !important;
+}
+
+/* Unit dropdown specifically */
+body.light-mode select[name$="-unit"] {
+    background-color: white !important;
+    border: 2px solid #cbd5e1 !important;
+    color: #1e293b !important;
+}
+
+/* All form inputs in exercise section */
+body.light-mode #exercise-formset input.form-control,
+body.light-mode #exercise-formset select.form-select,
+body.light-mode #exercise-formset select.form-control {
+    background-color: white !important;
+    border: 2px solid #cbd5e1 !important;
+    color: #1e293b !important;
+}
+
+/* Focus state for exercise section inputs */
+body.light-mode #exercise-formset input.form-control:focus,
+body.light-mode #exercise-formset select.form-select:focus,
+body.light-mode #exercise-formset select.form-control:focus {
+    border-color: #a855f7 !important;
+    box-shadow: 0 0 0 0.2rem rgba(168, 85, 247, 0.25) !important;
+}
+
+/* ===================================
+   LIGHT MODE - DROPDOWN MENU CONTENT FIX
+   =================================== */
+
+/* Fix the actual dropdown options in light mode */
+body.light-mode select option,
+body.light-mode select optgroup {
+    background-color: white !important;
+    color: #1e293b !important;
+}
+
+/* Optgroup headers (My Custom Exercises, Default Exercises) */
+body.light-mode select optgroup {
+    background-color: #f1f5f9 !important;
+    color: #1e293b !important;
+    font-weight: bold;
+}
+
+/* Individual options */
+body.light-mode select option {
+    background-color: white !important;
+    color: #1e293b !important;
+}
+
+/* Selected option */
+body.light-mode select option:checked {
+    background-color: #a855f7 !important;
+    color: white !important;
+}
+
+/* Hover state for options */
+body.light-mode select option:hover {
+    background-color: #f1f5f9 !important;
+}
+
+/* Force all select elements to have light background */
+body.light-mode select {
+    background-color: white !important;
+    color: #1e293b !important;
+}
+
+/* ===================================
+   LIGHT MODE - FORCE SELECT LIGHT THEME
+   =================================== */
+
+/* Force browser to use light color scheme for selects */
+body.light-mode select {
+    color-scheme: light;
+}
+
+/* This tells the browser to use light mode for native controls */
+body.light-mode {
+    color-scheme: light;
+}
