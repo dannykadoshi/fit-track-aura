@@ -49,6 +49,9 @@ FitTrack Aura is a full-stack fitness tracking application built with Django, de
 
 ### Key Goals
 
+![Home Page](docs/screenshots/home-page-1.png)
+![Home Page](docs/screenshots/home-page-2.png)
+
 - **Track Fitness:** Log detailed workouts with exercises, sets, reps, and weights
 - **Set Goals:** Create fitness targets with visual progress tracking
 - **Stay Motivated:** Earn achievement badges and maintain workout streaks
@@ -77,7 +80,7 @@ Fitness enthusiasts who want comprehensive workout tracking, goal-oriented indiv
 
 Development followed Agile methodology using GitHub Projects with user stories organized into Epics, prioritized using MoSCoW method, and tracked through a Kanban board.
 
-**GitHub Projects Board:** [View Full Board](https://github.com/users/dannykadoshi/projects/4)
+**GitHub Projects Board:** [View Full Board](https://github.com/users/dannykadoshi/projects/6)
 
 #### Epic Summary
 
@@ -164,11 +167,19 @@ Development followed Agile methodology using GitHub Projects with user stories o
 #### UI/UX Principles
 
 - **Glassmorphism:** Semi-transparent cards with backdrop blur for modern aesthetic
+
+![Glassmorphism](docs/screenshots/Glassmorphism.png)
+
 - **Mobile-First:** Responsive design using Bootstrap 5 grid system
+
+![Mobile-First](docs/screenshots/responsive-mobile-dashboard.png)
+
 - **Visual Feedback:** Success messages, progress bars, hover effects, loading states
+
+![Success messages](docs/screenshots/user-feedback-message.png)
+
 - **Accessibility:** Semantic HTML, ARIA labels, WCAG AA color contrast
 
-![Mobile-First](docs/screenshots/mobile-homepage.jpeg)
 ---
 
 ### Wireframes
@@ -1039,7 +1050,7 @@ PYTHON_VERSION=3.12.0
 ## Contact
 
 **Developer:** Danny Kadoshi  
-**Email:** [Contact Me - Email](dannykadoshi@me.com)
+**Email:** [dannykadoshi@me.com](dannykadoshi@me.com)
 **GitHub:** [@dannykadoshi](https://github.com/dannykadoshi)
 
 ---
