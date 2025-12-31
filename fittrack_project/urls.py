@@ -10,6 +10,7 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')),
     path('', include('users.urls')),
     
+     # Workouts View
     path('', workout_views.home, name='home'),
     path('dashboard/', workout_views.dashboard, name='dashboard'),
     path('faq/', workout_views.faq, name='faq'),
@@ -38,6 +39,10 @@ urlpatterns = [
     path('templates/<int:pk>/use/', workout_views.use_template, name='use_template'),
     path('templates/<int:pk>/delete/', workout_views.template_delete, name='template_delete'),
     
+    # Calendar View
+    path('calendar/', workout_views.workout_calendar, name='workout_calendar'),
+    
+     # Goals View
     path('goals/', goal_views.goal_list, name='goal_list'),
     path('goals/new/', goal_views.goal_create, name='goal_create'),
     path('goals/<int:pk>/edit/', goal_views.goal_update, name='goal_update'),

@@ -509,3 +509,88 @@ def template_delete(request, pk):
         return redirect('template_list')
     
     return render(request, 'workouts/template_confirm_delete.html', {'template': template})
+
+
+@login_required
+def workout_calendar(request):
+    """Display workouts in a calendar view"""
+    from datetime import datetime, timedelta
+    from calendar import monthrange
+    
+    # Get month/year from query params or use current
+    year = int(request.GET.get('year', datetime.now().year))
+    month = int(request.GET.get('month', datetime.now().month))
+    
+    # Get first and last day of month
+    first_day = datetime(year, month, 1).date()
+    days_in_month = monthrange(year, month)[1]
+    last_day = datetime(year, month, days_in_month).date()
+    
+    # Get all workouts for this month
+    workouts = Workout.objects.filter(
+        user=request.user,
+        date__gte=first_day,
+        date__lte=last_day
+    ).select_related('user')
+    
+    # Create a dict of workouts by date
+    workouts_by_date = {}
+    for workout in workouts:
+        date_key = workout.date.strftime('%Y-%m-%d')
+        if date_key not in workouts_by_date:
+            workouts_by_date[date_key] = []
+        workouts_by_date[date_key].append(workout)
+    
+    # Calculate calendar grid
+    first_weekday = first_day.weekday()  # Monday = 0
+    
+    # Build calendar days
+    calendar_days = []
+    
+    # Add empty days for days before month starts
+    for i in range(first_weekday):
+        calendar_days.append({'day': None, 'workouts': []})
+    
+    # Add all days of the month
+    for day in range(1, days_in_month + 1):
+        current_date = datetime(year, month, day).date()
+        date_key = current_date.strftime('%Y-%m-%d')
+        day_workouts = workouts_by_date.get(date_key, [])
+        
+        calendar_days.append({
+            'day': day,
+            'date': current_date,
+            'workouts': day_workouts,
+            'is_today': current_date == datetime.now().date(),
+            'total_duration': sum(w.duration or 0 for w in day_workouts)
+        })
+    
+    # Calculate previous and next month
+    if month == 1:
+        prev_month = 12
+        prev_year = year - 1
+    else:
+        prev_month = month - 1
+        prev_year = year
+    
+    if month == 12:
+        next_month = 1
+        next_year = year + 1
+    else:
+        next_month = month + 1
+        next_year = year
+    
+    context = {
+        'calendar_days': calendar_days,
+        'month': month,
+        'year': year,
+        'month_name': datetime(year, month, 1).strftime('%B'),
+        'prev_month': prev_month,
+        'prev_year': prev_year,
+        'next_month': next_month,
+        'next_year': next_year,
+        'total_workouts': len(workouts),
+        'total_duration': sum(w.duration or 0 for w in workouts),
+    }
+    
+    return render(request, 'workouts/calendar.html', context)

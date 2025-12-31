@@ -1,0 +1,160 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Workout Calendar - FitTrack Aura{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <!-- Header -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center flex-wrap">
+                <div class="mb-3 mb-md-0">
+                    <h1 class="display-5 fw-bold text-white">📅 Workout Calendar</h1>
+                    <p class="text-muted">Visual overview of your training schedule</p>
+                </div>
+                <a href="{% url 'workout_list' %}" class="btn btn-outline-light">
+                    ← Back to Workouts
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Month Navigation -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card-custom p-4">
+                <div class="d-flex justify-content-between align-items-center">
+                    <a href="?month={{ prev_month }}&year={{ prev_year }}" class="btn btn-outline-light">
+                        ← Previous
+                    </a>
+                    
+                    <h2 class="text-white mb-0">{{ month_name }} {{ year }}</h2>
+                    
+                    <a href="?month={{ next_month }}&year={{ next_year }}" class="btn btn-outline-light">
+                        Next →
+                    </a>
+                </div>
+                
+                <!-- Month Stats -->
+                <div class="row mt-4 text-center">
+                    <div class="col-md-6">
+                        <div class="stat-icon mx-auto mb-2" style="width: 48px; height: 48px;">💪</div>
+                        <h4 class="text-white">{{ total_workouts }}</h4>
+                        <small class="text-muted">Workouts This Month</small>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="stat-icon mx-auto mb-2" style="width: 48px; height: 48px;">⏱️</div>
+                        <h4 class="text-white">{{ total_duration }}</h4>
+                        <small class="text-muted">Total Minutes</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Calendar Grid -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card-custom p-4">
+                <!-- Weekday Headers -->
+                <div class="row text-center mb-3">
+                    <div class="col">
+                        <strong class="text-white">Mon</strong>
+                    </div>
+                    <div class="col">
+                        <strong class="text-white">Tue</strong>
+                    </div>
+                    <div class="col">
+                        <strong class="text-white">Wed</strong>
+                    </div>
+                    <div class="col">
+                        <strong class="text-white">Thu</strong>
+                    </div>
+                    <div class="col">
+                        <strong class="text-white">Fri</strong>
+                    </div>
+                    <div class="col">
+                        <strong class="text-white">Sat</strong>
+                    </div>
+                    <div class="col">
+                        <strong class="text-white">Sun</strong>
+                    </div>
+                </div>
+
+                <!-- Calendar Days -->
+                {% for day_data in calendar_days %}
+                    {% if forloop.counter0|divisibleby:7 %}
+                        <div class="row mb-2">
+                    {% endif %}
+                    
+                    <div class="col p-1">
+                        {% if day_data.day %}
+                            <div class="calendar-day {% if day_data.is_today %}today{% endif %} {% if day_data.workouts %}has-workout{% endif %}" 
+                                 style="min-height: 100px; border: 1px solid rgba(255,255,255,0.1); border-radius: 0.5rem; padding: 0.5rem; position: relative; {% if day_data.workouts %}background: linear-gradient(135deg, rgba(168, 85, 247, 0.2), rgba(236, 72, 153, 0.2));{% else %}background: rgba(255,255,255,0.03);{% endif %}">
+                                
+                                <!-- Day Number -->
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    <span class="{% if day_data.is_today %}badge badge-custom{% else %}text-white{% endif %}" style="font-size: 0.9rem;">
+                                        {{ day_data.day }}
+                                    </span>
+                                    {% if day_data.workouts %}
+                                        <span class="badge bg-success" style="font-size: 0.7rem;">
+                                            {{ day_data.workouts|length }}
+                                        </span>
+                                    {% endif %}
+                                </div>
+                                
+                                <!-- Workouts -->
+                                {% if day_data.workouts %}
+                                    {% for workout in day_data.workouts %}
+                                        <a href="{% url 'workout_detail' workout.pk %}" class="text-decoration-none d-block mb-1">
+                                            <div class="p-1" style="background: rgba(168, 85, 247, 0.3); border-radius: 0.25rem; font-size: 0.75rem;">
+                                                <div class="text-white text-truncate">
+                                                    {{ workout.title|truncatechars:15 }}
+                                                </div>
+                                                {% if workout.duration %}
+                                                    <small class="text-muted">⏱️ {{ workout.duration }}min</small>
+                                                {% endif %}
+                                            </div>
+                                        </a>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                        {% else %}
+                            <!-- Empty day (before month starts) -->
+                            <div style="min-height: 100px;"></div>
+                        {% endif %}
+                    </div>
+                    
+                    {% if forloop.counter|divisibleby:7 or forloop.last %}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Legend -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card-custom p-3">
+                <div class="d-flex gap-4 justify-content-center flex-wrap">
+                    <div class="d-flex align-items-center gap-2">
+                        <div style="width: 20px; height: 20px; background: linear-gradient(135deg, rgba(168, 85, 247, 0.2), rgba(236, 72, 153, 0.2)); border-radius: 0.25rem;"></div>
+                        <small class="text-muted">Has Workouts</small>
+                    </div>
+                    <div class="d-flex align-items-center gap-2">
+                        <span class="badge badge-custom">15</span>
+                        <small class="text-muted">Today</small>
+                    </div>
+                    <div class="d-flex align-items-center gap-2">
+                        <span class="badge bg-success">2</span>
+                        <small class="text-muted">Workout Count</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
