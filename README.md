@@ -63,6 +63,8 @@ This application demonstrates advanced full-stack development capabilities inclu
 - Access application on any device (responsive design)
 - Choose preferred theme (dark/light mode)
 
+**[⬆ Back to Top](#fittrack-aura-)**
+
 ---
 
 ## User Experience (UX)
@@ -608,6 +610,8 @@ Low-fidelity wireframes were created during the planning phase to establish layo
 - Touch-friendly button sizes
 - Simplified tables with horizontal scroll
 - Bottom navigation for key actions
+
+**[⬆ Back to Top](#fittrack-aura-)**
 
 ---
 
@@ -1650,6 +1654,8 @@ python manage.py showmigrations
 - `0005_workouttemplate.py` - Added WorkoutTemplate, TemplateExercise
 - `0006_userprofile_theme.py` - Added theme field to UserProfile
 
+**[⬆ Back to Top](#fittrack-aura-)**
+
 ---
 
 ## Technologies Used
@@ -1869,6 +1875,8 @@ git log --oneline --graph
 - Style: `Improve navbar frosted glass effect`
 - Test: `Add tests for goal completion`
 
+**[⬆ Back to Top](#fittrack-aura-)**
+
 ---
 
 ## Testing
@@ -1989,6 +1997,8 @@ coverage report
 - **Render Free Tier:** PostgreSQL database expires after 90 days (non-critical, build script reloads data)
 
 **No critical bugs or issues at time of submission.**
+
+**[⬆ Back to Top](#fittrack-aura-)**
 
 ---
 
@@ -2262,6 +2272,8 @@ PYTHON_VERSION=3.12.0
 - Environment variable management
 - Perfect for portfolios and MVPs
 
+**[⬆ Back to Top](#fittrack-aura-)**
+
 ---
 
 ## Admin Access
@@ -2312,6 +2324,8 @@ The free PostgreSQL database expires after 90 days. If you encounter a database 
 **Current Database Expiry:** March 31, 2026
 
 *This is a known limitation of free hosting and does not affect code quality or functionality.*
+
+**[⬆ Back to Top](#fittrack-aura-)**
 
 ---
 
@@ -2427,6 +2441,8 @@ The free PostgreSQL database expires after 90 days. If you encounter a database 
 - **Code Institute Tutors** - For technical support
 - **Fellow Students** - For collaboration and motivation
 - **Open Source Community** - For Django, Python, and countless libraries
+
+**[⬆ Back to Top](#fittrack-aura-)**
 
 ---
 
