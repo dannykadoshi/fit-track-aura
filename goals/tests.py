@@ -126,8 +126,9 @@ class GoalUpdateTest(TestCase):
         self.goal = Goal.objects.create(
             user=self.user,
             title='Run 100km',
-            target_value='100km',
-            current_value='0km',
+            target_number=100,
+            current_number=0,
+            unit='km',
             target_date=date.today() + timedelta(days=30)
         )
 
@@ -138,8 +139,9 @@ class GoalUpdateTest(TestCase):
         updated_data = {
             'title': 'Run 100km',
             'category': 'endurance',
-            'target_value': '100km',
-            'current_value': '50km',  # Updated progress
+            'target_number': 100,
+            'current_number': 50,
+            'unit': 'km',
             'target_date': self.goal.target_date
         }
 
@@ -153,4 +155,4 @@ class GoalUpdateTest(TestCase):
 
         # Progress should be updated
         self.goal.refresh_from_db()
-        self.assertEqual(self.goal.current_value, '50km')
+        self.assertEqual(self.goal.current_number, 50)

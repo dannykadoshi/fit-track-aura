@@ -12,8 +12,9 @@ class GoalFormTest(TestCase):
             'title': 'Run 100km',
             'description': 'Build endurance',
             'category': 'endurance',
-            'target_value': '100km',
-            'current_value': '0km',
+            'target_number': 100,
+            'current_number': 0,
+            'unit': 'km',
             'target_date': date.today() + timedelta(days=30)
         }
         form = GoalForm(data=form_data)
@@ -23,7 +24,8 @@ class GoalFormTest(TestCase):
         """Test form without required title"""
         form_data = {
             'category': 'endurance',
-            'target_value': '100km',
+            'target_number': 100,
+            'unit': 'km',
             'target_date': date.today() + timedelta(days=30)
         }
         form = GoalForm(data=form_data)
