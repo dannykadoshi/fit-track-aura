@@ -14,6 +14,8 @@ A comprehensive Django fitness tracking web application that empowers users to l
 **Live Site:** [FitTrack Aura](https://fit-track-aura.onrender.com)  
 **Admin Panel:** [Admin Panel - FitTrack Aura](https://fit-track-aura.onrender.com/admin/)  
 **GitHub Projects Board:** [GitHub Repository - View User Stories & Agile Workflow](https://github.com/dannykadoshi/fit-track-aura)
+**Full testing documentation:** [TESTING.md](TESTING.md)
+
 
 **Test Accounts:**
 - **Admin:** Username: `admin` / Password: *See LMS submission form*
