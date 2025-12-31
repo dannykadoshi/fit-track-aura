@@ -131,15 +131,51 @@ def dashboard(request):
 
 @login_required
 def workout_list(request):
-    """List all workouts for the logged-in user"""
-    workouts = Workout.objects.filter(user=request.user).order_by('-date')
+    """List all workouts for the logged-in user with search and filters"""
+    workouts = Workout.objects.filter(user=request.user)
+    
+    # Search by title or exercise name
+    search_query = request.GET.get('search', '')
+    if search_query:
+        workouts = workouts.filter(
+            Q(title__icontains=search_query) |
+            Q(workout_exercises__exercise__name__icontains=search_query)
+        ).distinct()
+    
+    # Filter by date range
+    date_from = request.GET.get('date_from', '')
+    date_to = request.GET.get('date_to', '')
+    
+    if date_from:
+        workouts = workouts.filter(date__gte=date_from)
+    if date_to:
+        workouts = workouts.filter(date__lte=date_to)
+    
+    # Filter by category (exercise category)
+    category = request.GET.get('category', '')
+    if category:
+        workouts = workouts.filter(workout_exercises__exercise__category=category).distinct()
+    
+    # Order by date
+    workouts = workouts.order_by('-date')
     
     # Add exercise count to each workout
     for workout in workouts:
         workout.total_exercises = workout.workout_exercises.count()
     
-    return render(request, 'workouts/workout_list.html', {'workouts': workouts})
-
+    # Get available categories for filter dropdown
+    categories = Exercise.CATEGORY_CHOICES
+    
+    context = {
+        'workouts': workouts,
+        'search_query': search_query,
+        'date_from': date_from,
+        'date_to': date_to,
+        'category': category,
+        'categories': categories,
+    }
+    
+    return render(request, 'workouts/workout_list.html', context)
 
 @login_required
 def workout_detail(request, pk):

@@ -41,6 +41,52 @@
     </div>
 </div>
 
+<!-- Search & Filter Section -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card-custom p-4">
+                <form method="get" action="{% url 'workout_list' %}">
+                    <div class="row g-3">
+                        <!-- Search -->
+                        <div class="col-md-4">
+                            <label class="form-label text-white">🔍 Search</label>
+                            <input type="text" name="search" class="form-control" placeholder="Search by title or exercise..." value="{{ search_query }}">
+                        </div>
+                        
+                        <!-- Date From -->
+                        <div class="col-md-3">
+                            <label class="form-label text-white">📅 From</label>
+                            <input type="date" name="date_from" class="form-control" value="{{ date_from }}">
+                        </div>
+                        
+                        <!-- Date To -->
+                        <div class="col-md-3">
+                            <label class="form-label text-white">📅 To</label>
+                            <input type="date" name="date_to" class="form-control" value="{{ date_to }}">
+                        </div>
+                        
+                        <!-- Category Filter -->
+                        <div class="col-md-2">
+                            <label class="form-label text-white">Category</label>
+                            <select name="category" class="form-select">
+                                <option value="">All</option>
+                                {% for cat_value, cat_label in categories %}
+                                    <option value="{{ cat_value }}" {% if category == cat_value %}selected{% endif %}>{{ cat_label }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <!-- Buttons -->
+                    <div class="d-flex gap-2 mt-3">
+                        <button type="submit" class="btn btn-gradient-purple">Apply Filters</button>
+                        <a href="{% url 'workout_list' %}" class="btn btn-outline-light">Clear</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <!-- Search Bar -->
     <div class="row mb-4">
         <div class="col-md-6">
@@ -99,18 +145,21 @@
             {% endfor %}
         </div>
     {% else %}
-        <div class="text-center py-5">
-            <div class="card-custom p-5">
-                <div class="stat-icon mx-auto mb-4" style="width: 80px; height: 80px; font-size: 2.5rem;">
-                    🏋️
-                </div>
+    <div class="text-center py-5">
+        <div class="card-custom p-5">
+            {% if search_query or date_from or date_to or category %}
+                <div class="stat-icon mx-auto mb-4" style="width: 80px; height: 80px; font-size: 2.5rem;">🔍</div>
+                <h3 class="text-white mb-3">No workouts found</h3>
+                <p class="text-muted mb-4">Try adjusting your search filters</p>
+                <a href="{% url 'workout_list' %}" class="btn btn-gradient-purple">Clear Filters</a>
+            {% else %}
+                <div class="stat-icon mx-auto mb-4" style="width: 80px; height: 80px; font-size: 2.5rem;">💪</div>
                 <h3 class="text-white mb-3">No workouts yet</h3>
-                <p class="text-muted mb-4">Start tracking your fitness journey today!</p>
-                <a href="{% url 'workout_create' %}" class="btn btn-gradient-purple btn-lg">
-                    Log Your First Workout
-                </a>
-            </div>
+                <p class="text-muted mb-4">Start your fitness journey by logging your first workout!</p>
+                <a href="{% url 'workout_create' %}" class="btn btn-gradient-purple btn-lg">Log Your First Workout</a>
+            {% endif %}
         </div>
-    {% endif %}
+    </div>
+{% endif %}
 </div>
 {% endblock %}
