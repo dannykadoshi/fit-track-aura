@@ -47,12 +47,9 @@
                     </p>
                 </div>
                 <div class="d-flex gap-2">
-                    <a href="{% url 'workout_update' workout.pk %}" class="btn btn-gradient-purple">
-                        ✏️ Edit
-                    </a>
-                    <a href="{% url 'workout_delete' workout.pk %}" class="btn btn-outline-danger">
-                        🗑️ Delete
-                    </a>
+                    <a href="{% url 'workout_update' workout.pk %}" class="btn btn-outline-light">Edit</a>
+                    <a href="{% url 'save_as_template' workout.pk %}" class="btn btn-outline-light">📋 Save as Template</a>
+                    <a href="{% url 'workout_delete' workout.pk %}" class="btn btn-outline-danger">Delete</a>
                 </div>
             </div>
         </div>

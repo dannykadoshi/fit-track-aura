@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Workout Templates - FitTrack Aura{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <!-- Header -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center flex-wrap">
+                <div class="mb-3 mb-md-0">
+                    <h1 class="display-5 fw-bold text-white">📋 Workout Templates</h1>
+                    <p class="text-muted">Quick-start your workouts with saved templates</p>
+                </div>
+                <a href="{% url 'workout_list' %}" class="btn btn-outline-light">
+                    ← Back to Workouts
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Templates List -->
+    <div class="row">
+        {% if templates %}
+            {% for template in templates %}
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="card-custom p-4 h-100">
+                        <div class="d-flex align-items-start gap-3 mb-3">
+                            <div class="stat-icon" style="width: 48px; height: 48px; font-size: 2rem;">📋</div>
+                            <div class="flex-grow-1">
+                                <h4 class="text-white mb-1">{{ template.name }}</h4>
+                                {% if template.description %}
+                                    <p class="text-muted small mb-2">{{ template.description }}</p>
+                                {% endif %}
+                                <p class="text-muted small mb-0">
+                                    💪 {{ template.exercises.count }} exercise{{ template.exercises.count|pluralize }}
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <!-- Template Exercises Preview -->
+                        <div class="mb-3">
+                            <small class="text-muted d-block mb-2">Exercises:</small>
+                            {% for exercise in template.exercises.all|slice:":3" %}
+                                <span class="badge bg-secondary me-1 mb-1">{{ exercise.exercise.name }}</span>
+                            {% endfor %}
+                            {% if template.exercises.count > 3 %}
+                                <span class="badge bg-secondary">+{{ template.exercises.count|add:"-3" }} more</span>
+                            {% endif %}
+                        </div>
+                        
+                        <!-- Buttons -->
+                        <div class="d-flex gap-2">
+                            <a href="{% url 'use_template' template.pk %}" class="btn btn-gradient-purple btn-sm flex-grow-1">
+                                ⚡ Use Template
+                            </a>
+                            <a href="{% url 'template_delete' template.pk %}" class="btn btn-sm btn-outline-danger">
+                                Delete
+                            </a>
+                        </div>
+                        
+                        <small class="text-muted d-block mt-2">Created {{ template.created_at|date:"M d, Y" }}</small>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="col-12">
+                <div class="text-center py-5">
+                    <div class="card-custom p-5">
+                        <div class="stat-icon mx-auto mb-4" style="width: 80px; height: 80px; font-size: 2.5rem;">📋</div>
+                        <h3 class="text-white mb-3">No templates yet</h3>
+                        <p class="text-muted mb-4">Save your favorite workouts as templates for quick logging!</p>
+                        <a href="{% url 'workout_list' %}" class="btn btn-gradient-purple">Go to Workouts</a>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

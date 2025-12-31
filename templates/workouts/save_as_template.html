@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}Save as Template - FitTrack Aura{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <div class="card-custom p-4">
+                <h2 class="fw-bold text-white mb-4">📋 Save Workout as Template</h2>
+                
+                <div class="alert alert-info mb-4">
+                    <strong>Workout:</strong> {{ workout.title }}<br>
+                    <strong>Exercises:</strong> {{ workout.workout_exercises.count }}
+                </div>
+
+                <form method="post">
+                    {% csrf_token %}
+                    
+                    <div class="mb-3">
+                        <label class="form-label text-white">Template Name *</label>
+                        <input type="text" name="template_name" class="form-control" placeholder="e.g., Monday Chest Day" required>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label text-white">Description (Optional)</label>
+                        <textarea name="template_description" class="form-control" rows="3" placeholder="What's this workout routine for?"></textarea>
+                    </div>
+
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-gradient-purple">Save as Template</button>
+                        <a href="{% url 'workout_list' %}" class="btn btn-outline-light">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

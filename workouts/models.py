@@ -74,3 +74,7 @@ class WorkoutExercise(models.Model):
 
     def __str__(self):
         return f"{self.exercise.name} in {self.workout.title}"
+
+
+# Import template models
+from .template_models import WorkoutTemplate, TemplateExercise

@@ -406,3 +406,106 @@ def export_workouts_pdf(request):
     messages.success(request, f'Workouts exported successfully! 📄')
     
     return response
+
+
+@login_required
+def template_list(request):
+    """List all workout templates for the user"""
+    from .template_models import WorkoutTemplate
+    
+    templates = WorkoutTemplate.objects.filter(user=request.user)
+    
+    context = {
+        'templates': templates,
+    }
+    
+    return render(request, 'workouts/template_list.html', context)
+
+
+@login_required
+def save_as_template(request, pk):
+    """Save an existing workout as a template"""
+    from .template_models import WorkoutTemplate, TemplateExercise
+    
+    workout = get_object_or_404(Workout, pk=pk, user=request.user)
+    
+    if request.method == 'POST':
+        template_name = request.POST.get('template_name')
+        template_description = request.POST.get('template_description', '')
+        
+        if template_name:
+            # Create template
+            template = WorkoutTemplate.objects.create(
+                user=request.user,
+                name=template_name,
+                description=template_description
+            )
+            
+            # Copy exercises from workout to template
+            for workout_exercise in workout.workout_exercises.all():
+                TemplateExercise.objects.create(
+                    template=template,
+                    exercise=workout_exercise.exercise,
+                    sets=workout_exercise.sets,
+                    reps=workout_exercise.reps,
+                    weight=workout_exercise.weight,
+                    unit=workout_exercise.unit,
+                    distance=workout_exercise.distance,
+                    duration=workout_exercise.duration,
+                    notes=workout_exercise.notes,
+                )
+            
+            messages.success(request, f'Template "{template_name}" created successfully! 📋')
+            return redirect('template_list')
+    
+    return render(request, 'workouts/save_as_template.html', {'workout': workout})
+
+
+@login_required
+def use_template(request, pk):
+    """Create a new workout from a template"""
+    from .template_models import WorkoutTemplate
+    from django.utils import timezone
+    
+    template = get_object_or_404(WorkoutTemplate, pk=pk, user=request.user)
+    
+    # Create new workout from template
+    workout = Workout.objects.create(
+        user=request.user,
+        title=template.name,
+        date=timezone.now().date(),
+        notes=f"Created from template: {template.name}"
+    )
+    
+    # Copy exercises from template to workout
+    for template_exercise in template.exercises.all():
+        WorkoutExercise.objects.create(
+            workout=workout,
+            exercise=template_exercise.exercise,
+            sets=template_exercise.sets,
+            reps=template_exercise.reps,
+            weight=template_exercise.weight,
+            unit=template_exercise.unit,
+            distance=template_exercise.distance,
+            duration=template_exercise.duration,
+            notes=template_exercise.notes,
+        )
+    
+    messages.success(request, f'Workout created from template "{template.name}"! You can now edit it. ✅')
+    return redirect('workout_update', pk=workout.pk)
+
+
+@login_required
+def template_delete(request, pk):
+    """Delete a workout template"""
+    from .template_models import WorkoutTemplate
+    
+    template = get_object_or_404(WorkoutTemplate, pk=pk, user=request.user)
+    
+    if request.method == 'POST':
+        template_name = template.name
+        template.delete()
+        messages.success(request, f'Template "{template_name}" deleted successfully! 🗑️')
+        return redirect('template_list')
+    
+    return render(request, 'workouts/template_confirm_delete.html', {'template': template})
