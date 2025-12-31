@@ -2,6 +2,8 @@
 
 Comprehensive testing documentation demonstrating robust quality assurance through automated testing, manual verification, and code validation.
 
+![FitTrack Aura](static/images/og-image.png)
+
 **[← Back to README](README.md)**
 
 ---
