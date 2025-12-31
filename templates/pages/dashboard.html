@@ -113,7 +113,7 @@
         <!-- Stat 1 - Workouts This Month -->
         <div class="stat-card">
             <div class="d-flex justify-content-between align-items-center mb-3">
-                <div class="stat-icon">🏋️‍♂️</div>
+                <div class="stat-icon">��️‍♂️</div>
                 <span class="text-success fw-semibold">This Month</span>
             </div>
             <h3 class="fw-bold mb-1">{{ workouts_this_month }}</h3>
@@ -239,7 +239,7 @@
                             <small class="text-muted">Avg Per Day</small>
                         </div>
                         <div class="col-md-4 mb-3">
-                            <div class="stat-icon mx-auto mb-2" style="width: 40px; height: 40px; font-size: 1.5rem;">🔥</div>
+                            <div class="stat-icon mx-auto mb-2" style="width: 40px; height: 40px; font-size: 1.5rem;">📆</div>
                             <h5 class="fw-bold text-white mb-0">{{ most_active_day }}</h5>
                             <small class="text-muted">Most Active ({{ max_day_duration }} min)</small>
                         </div>
@@ -257,7 +257,7 @@
     </div>
 
     <!-- Main Content Grid -->
-    <div class="row g-4">
+    <div class="row g-4 mb-5">
         <!-- Recent Workouts -->
         <div class="col-lg-8">
             <div class="card-custom p-4">
@@ -362,6 +362,33 @@
                 <div class="d-flex justify-content-between align-items-center">
                     <span class="text-muted">Total Workouts</span>
                     <span class="fw-bold text-white">{{ workouts_count }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Share Monthly Progress -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card-custom p-4 text-center">
+                <h4 class="fw-bold text-white mb-3">📱 Share Your Progress</h4>
+                <p class="text-muted mb-3">Let others know about your fitness journey this month!</p>
+                <div class="d-flex gap-2 justify-content-center flex-wrap">
+                    <a href="https://twitter.com/intent/tweet?text=📊 This month on FitTrack Aura: {{ workouts_this_month }} workouts, {{ total_time }} minutes! 💪 %23fitnessjourney" 
+                       target="_blank" 
+                       class="btn btn-outline-light btn-sm">
+                        🐦 Share on X
+                    </a>
+                    <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}" 
+                       target="_blank" 
+                       class="btn btn-outline-light btn-sm">
+                        📘 Facebook
+                    </a>
+                    <a href="https://wa.me/?text=📊 This month I completed {{ workouts_this_month }} workouts on FitTrack Aura! {{ total_time }} minutes of training!" 
+                       target="_blank" 
+                       class="btn btn-outline-light btn-sm">
+                        💬 WhatsApp
+                    </a>
                 </div>
             </div>
         </div>
