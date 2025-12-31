@@ -17,13 +17,13 @@
             <div class="card-custom p-5">
                 <h2 class="fw-bold text-white mb-4">📖 About This Project</h2>
                 <p class="text-muted mb-3">
-                    FitTrack Aura is a comprehensive fitness tracking web application designed to help users monitor their workout routines, set and achieve fitness goals, and maintain motivation through visual progress tracking.
+                    FitTrack Aura is a comprehensive fitness tracking web application designed to help users monitor their workout routines, set and achieve fitness goals, and maintain motivation through visual progress tracking and gamification.
                 </p>
                 <p class="text-muted mb-3">
-                    This project was developed as <strong>Portfolio Project 4</strong> for the <strong>Code Institute Full Stack Software Development Diploma</strong>, demonstrating proficiency in full-stack web development using Django, Python, and modern web technologies.
+                    This project was developed as <strong>Portfolio Project 4</strong> for the <strong>Code Institute Full Stack Software Development Diploma</strong>, demonstrating proficiency in full-stack web development using Django, Python, PostgreSQL, and modern web technologies.
                 </p>
                 <p class="text-muted mb-4">
-                    The application features a sleek, modern interface with a purple-gradient design theme, providing users with an engaging and intuitive experience for tracking their fitness journey.
+                    The application features a sleek, modern interface with a purple-gradient design theme and dark/light mode support, providing users with an engaging and intuitive experience for tracking their fitness journey across all devices.
                 </p>
                 
                 <!-- FAQ Button -->
@@ -42,11 +42,12 @@
             <h2 class="fw-bold text-white">✨ Key Features</h2>
         </div>
         
+        <!-- Core Features -->
         <div class="col-md-6 col-lg-4 mb-4">
             <div class="card-custom p-4 h-100">
                 <div class="stat-icon mx-auto mb-3" style="width: 60px; height: 60px;">🏋️</div>
                 <h4 class="text-white mb-2">Workout Tracking</h4>
-                <p class="text-muted small">Log detailed workouts with exercises, sets, reps, and weights. Track your training history over time.</p>
+                <p class="text-muted small">Log detailed workouts with exercises, sets, reps, and weights. Track strength training and cardio with comprehensive statistics.</p>
             </div>
         </div>
 
@@ -54,7 +55,7 @@
             <div class="card-custom p-4 h-100">
                 <div class="stat-icon mx-auto mb-3" style="width: 60px; height: 60px;">🎯</div>
                 <h4 class="text-white mb-2">Goal Setting</h4>
-                <p class="text-muted small">Set custom fitness goals with target values and track your progress with visual progress bars.</p>
+                <p class="text-muted small">Set custom fitness goals with target values, track progress with visual progress bars, and celebrate achievements.</p>
             </div>
         </div>
 
@@ -62,7 +63,7 @@
             <div class="card-custom p-4 h-100">
                 <div class="stat-icon mx-auto mb-3" style="width: 60px; height: 60px;">📊</div>
                 <h4 class="text-white mb-2">Activity Charts</h4>
-                <p class="text-muted small">Visualize your weekly workout duration with interactive charts powered by Chart.js.</p>
+                <p class="text-muted small">Visualize your weekly workout duration with interactive charts powered by Chart.js. See trends and patterns in your training.</p>
             </div>
         </div>
 
@@ -70,15 +71,81 @@
             <div class="card-custom p-4 h-100">
                 <div class="stat-icon mx-auto mb-3" style="width: 60px; height: 60px;">🔥</div>
                 <h4 class="text-white mb-2">Workout Streaks</h4>
-                <p class="text-muted small">Build consistency with daily workout streaks. Track your current and best streaks for motivation.</p>
+                <p class="text-muted small">Build consistency with daily workout streaks. Track your current and best streaks for motivation and unlock special badges.</p>
+            </div>
+        </div>
+
+        <!-- New Features -->
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card-custom p-4 h-100">
+                <div class="stat-icon mx-auto mb-3" style="width: 60px; height: 60px;">🏆</div>
+                <h4 class="text-white mb-2">Achievement Badges</h4>
+                <p class="text-muted small">Earn badges for milestones: first workout, 10/50 workouts, 7/30-day streaks, completing goals, and creating custom exercises.</p>
             </div>
         </div>
 
         <div class="col-md-6 col-lg-4 mb-4">
             <div class="card-custom p-4 h-100">
+                <div class="stat-icon mx-auto mb-3" style="width: 60px; height: 60px;">💪</div>
+                <h4 class="text-white mb-2">Custom Exercises</h4>
+                <p class="text-muted small">Create your own exercises beyond the default library. Perfect for specialized movements or personal training routines.</p>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card-custom p-4 h-100">
+                <div class="stat-icon mx-auto mb-3" style="width: 60px; height: 60px;">📋</div>
+                <h4 class="text-white mb-2">Workout Templates</h4>
+                <p class="text-muted small">Save favorite workouts as reusable templates. Quick-log recurring routines with one click instead of re-entering exercises.</p>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card-custom p-4 h-100">
+                <div class="stat-icon mx-auto mb-3" style="width: 60px; height: 60px;">📅</div>
+                <h4 class="text-white mb-2">Calendar View</h4>
+                <p class="text-muted small">Visualize your training schedule in monthly calendar format. See workout counts, durations, and navigate through your history.</p>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card-custom p-4 h-100">
+                <div class="stat-icon mx-auto mb-3" style="width: 60px; height: 60px;">🔍</div>
+                <h4 class="text-white mb-2">Search & Filter</h4>
+                <p class="text-muted small">Find workouts quickly by title, exercise, date range, or category. Powerful filtering for comprehensive workout history.</p>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card-custom p-4 h-100">
+                <div class="stat-icon mx-auto mb-3" style="width: 60px; height: 60px;">📄</div>
+                <h4 class="text-white mb-2">PDF Export</h4>
+                <p class="text-muted small">Export workouts and goals as professional PDF reports. Perfect for tracking progress or sharing with trainers.</p>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card-custom p-4 h-100">
+                <div class="stat-icon mx-auto mb-3" style="width: 60px; height: 60px;">🌙</div>
+                <h4 class="text-white mb-2">Dark/Light Mode</h4>
+                <p class="text-muted small">Toggle between dark and light themes. Your preference is saved and persists across sessions for comfortable viewing.</p>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card-custom p-4 h-100">
+                <div class="stat-icon mx-auto mb-3" style="width: 60px; height: 60px;">📱</div>
+                <h4 class="text-white mb-2">Social Sharing</h4>
+                <p class="text-muted small">Share achievements on X, Facebook, and WhatsApp. Celebrate milestones and inspire others on your fitness journey!</p>
+            </div>
+        </div>
+
+        <!-- Original Features -->
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card-custom p-4 h-100">
                 <div class="stat-icon mx-auto mb-3" style="width: 60px; height: 60px;">👤</div>
                 <h4 class="text-white mb-2">User Profiles</h4>
-                <p class="text-muted small">Personalize your experience with custom profile settings, preferences, and account management.</p>
+                <p class="text-muted small">Personalize your experience with custom profile settings, preferences, password management, and account control.</p>
             </div>
         </div>
 
@@ -86,7 +153,7 @@
             <div class="card-custom p-4 h-100">
                 <div class="stat-icon mx-auto mb-3" style="width: 60px; height: 60px;">📱</div>
                 <h4 class="text-white mb-2">Responsive Design</h4>
-                <p class="text-muted small">Fully responsive interface that works seamlessly on desktop, tablet, and mobile devices.</p>
+                <p class="text-muted small">Fully responsive interface that works seamlessly on desktop, tablet, and mobile devices with touch-optimized controls.</p>
             </div>
         </div>
     </div>
@@ -101,10 +168,11 @@
                     <div class="col-md-4 mb-3">
                         <h5 class="text-white">Backend</h5>
                         <p class="text-muted small">
-                            Django 6.0<br>
-                            Python 3.14<br>
+                            Django 5.0<br>
+                            Python 3.12<br>
                             PostgreSQL<br>
-                            Django Allauth
+                            Django Allauth<br>
+                            ReportLab (PDF)
                         </p>
                     </div>
                     <div class="col-md-4 mb-3">
@@ -113,13 +181,15 @@
                             HTML5 & CSS3<br>
                             Bootstrap 5.3<br>
                             JavaScript<br>
-                            Chart.js 4.4
+                            Chart.js 4.4<br>
+                            Select2
                         </p>
                     </div>
                     <div class="col-md-4 mb-3">
                         <h5 class="text-white">Deployment</h5>
                         <p class="text-muted small">
                             Render<br>
+                            Cloudinary<br>
                             WhiteNoise<br>
                             Gunicorn<br>
                             Git & GitHub
