@@ -82,6 +82,12 @@ def dashboard(request):
         goal.progress = goal.progress_percentage
         goals_with_progress.append(goal)
 
+    # Check if streak notification should be shown (once per session)
+    show_streak_notification = False
+    if best_streak >= 3 and 'streak_notification_shown' not in request.session:
+        request.session['streak_notification_shown'] = True
+        show_streak_notification = True
+
     # Recent workouts
     recent_workouts = workouts[:5]
     for workout in recent_workouts:
@@ -114,9 +120,10 @@ def dashboard(request):
         'current_streak': current_streak,
         'best_streak': best_streak,
         'active_goals': goals_with_progress,
-        'goals_count': goals_count,  # <-- ADDED THIS!
+        'goals_count': goals_count,
         'goals_progress': int(avg_progress),
         'recent_workouts': recent_workouts,
+        'show_streak_notification': show_streak_notification,
         # Chart data
         'week_labels': day_labels,
         'week_data': week_data,
