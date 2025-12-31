@@ -48,6 +48,13 @@ coverage.xml
 *.cover
 *.py.cover
 .hypothesis/
+
+# Node.js / npm
+node_modules/
+package-lock.json
+
+# Bootstrap full (before purge)
+static/css/bootstrap.full.css
 .pytest_cache/
 cover/
 
