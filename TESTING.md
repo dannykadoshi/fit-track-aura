@@ -1,6 +1,8 @@
 # FitTrack Aura - Comprehensive Testing Documentation
 
-This document contains detailed testing procedures and results for FitTrack Aura, including all implemented features through December 2025.
+This document outlines the comprehensive testing strategy used for the FitTrack Aura application.
+It includes manual testing, validation, security checks, responsiveness testing, and performance evaluation
+to ensure the project meets Code Institute Portfolio Project 4 requirements.
 
 ---
 
@@ -1270,6 +1272,8 @@ url = "https://fit-track-aura.onrender.com"
 
 ## Performance
 
+Performance testing was conducted to ensure acceptable user experience rather than enterprise-scale load handling.
+
 ### Lighthouse Scores
 
 **Tool**: Chrome DevTools Lighthouse
@@ -1343,6 +1347,8 @@ url = "https://fit-track-aura.onrender.com"
 
 ## Automated Testing
 
+Priority was given to testing core business logic, models, and forms, as these represent the highest risk areas.
+
 ### Unit Tests Summary
 
 **Total Tests**: 32 tests
@@ -1390,7 +1396,7 @@ coverage report
 - High accessibility scores
 - Strong performance metrics
 
-**The application is production-ready and meets all project requirements for Code Institute Portfolio Project 4.**
+**The application meets all functional and technical requirements for Code Institute Portfolio Project 4.**
 
 ---
 
