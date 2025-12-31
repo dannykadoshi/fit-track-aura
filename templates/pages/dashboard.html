@@ -90,7 +90,7 @@
                 {% endif %}
             </div>
             <div>
-                <h5 class="alert-heading mb-1">Achievement Unlocked!</h5>
+                <h2 class="alert-heading mb-1">Achievement Unlocked!</h2>
                 <p class="mb-0">
                     Your best streak is <strong>{{ best_streak }} days</strong>! 
                     {% if best_streak >= 30 %}
@@ -186,7 +186,7 @@
         <div class="col-12">
             <div class="card-custom p-4">
                 <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h3 class="fw-bold text-white mb-0">🏆 Achievements</h3>
+                <h2 class="fw-bold text-white mb-0">🏆 Achievements</h2>
                     <a href="{% url 'badges' %}" class="btn btn-sm btn-outline-light">View All</a>
                 </div>
                 
@@ -220,7 +220,7 @@
     <div class="row mb-5">
         <div class="col-12">
             <div class="card-custom p-4">
-                <h3 class="fw-bold text-white mb-4">📈 Weekly Activity</h3>
+                <h2 class="fw-bold text-white mb-4">📈 Weekly Activity</h2>
                 
                 {% if weekly_total > 0 %}
                     <div class="chart-container" style="position: relative; height: 300px;">
@@ -262,7 +262,7 @@
         <div class="col-lg-8">
             <div class="card-custom p-4">
                 <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h3 class="fw-bold mb-0">Recent Workouts</h3>
+                    <h2 class="fw-bold mb-0">Recent Workouts</h2>
                     <a href="{% url 'workout_create' %}" class="btn btn-sm btn-gradient-purple">
                         <span>➕</span> Log Workout
                     </a>
@@ -308,7 +308,7 @@
         <div class="col-lg-4">
             <div class="card-custom p-4">
                 <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h3 class="fw-bold mb-0">Active Goals</h3>
+                    <h2 class="fw-bold mb-0">Active Goals</h2>
                     <a href="{% url 'goal_list' %}" class="text-purple-400 text-decoration-none small fw-semibold">Manage →</a>
                 </div>
 
@@ -350,7 +350,7 @@
 
             <!-- Streak Stats -->
             <div class="card-custom p-4 mt-4">
-                <h5 class="fw-bold mb-3">Streak Stats</h5>
+                <h3 class="fw-bold mb-3">Streak Stats</h3>
                 <div class="d-flex justify-content-between align-items-center mb-3 pb-3 border-bottom border-secondary">
                     <span class="text-muted">Current Streak</span>
                     <span class="fw-bold text-white">{{ current_streak }} days 🔥</span>
@@ -371,7 +371,7 @@
     <div class="row">
         <div class="col-12">
             <div class="card-custom p-4 text-center">
-                <h4 class="fw-bold text-white mb-3">📱 Share Your Progress</h4>
+                <h2 class="fw-bold text-white mb-3">📱 Share Your Progress</h2>
                 <p class="text-muted mb-3">Let others know about your fitness journey this month!</p>
                 <div class="d-flex gap-2 justify-content-center flex-wrap">
                     <a href="https://twitter.com/intent/tweet?text=📊 This month on FitTrack Aura: {{ workouts_this_month }} workouts, {{ total_time }} minutes! 💪 %23fitnessjourney&url=https://fit-track-aura.onrender.com" 
@@ -398,9 +398,10 @@
 {% if weekly_total > 0 %}
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <script>
-    const ctx = document.getElementById('weeklyActivityChart').getContext('2d');
-    
-    const weeklyActivityChart = new Chart(ctx, {
+    (function() {
+        const ctx = document.getElementById('weeklyActivityChart').getContext('2d');
+        
+        const weeklyActivityChart = new Chart(ctx, {
         type: 'bar',
         data: {
             labels: {{ week_labels|safe }},
@@ -465,6 +466,7 @@
             }
         }
     });
+    })();
 </script>
 {% endif %}
 {% endblock %}
