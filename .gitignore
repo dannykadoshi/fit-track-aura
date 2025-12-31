@@ -18,6 +18,11 @@ lib/
 lib64/
 parts/
 sdist/
+
+# Private Assessment Documents
+PROJECT_ASSESSMENT.md
+PRIVATE_NOTES.md
+*.private.md
 var/
 wheels/
 share/python-wheels/
