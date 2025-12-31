@@ -12,11 +12,11 @@ class WorkoutTemplate(models.Model):
     description = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    
+
     class Meta:
         ordering = ['-created_at']
         unique_together = ['user', 'name']
-    
+
     def __str__(self):
         return f"{self.name} - {self.user.username}"
 
@@ -29,7 +29,7 @@ class TemplateExercise(models.Model):
         ('kg', 'KG'),
         ('lbs', 'LBS'),
     ]
-    
+
     template = models.ForeignKey(WorkoutTemplate, on_delete=models.CASCADE, related_name='exercises')
     exercise = models.ForeignKey(Exercise, on_delete=models.CASCADE)
     sets = models.PositiveIntegerField(null=True, blank=True)
@@ -40,9 +40,9 @@ class TemplateExercise(models.Model):
     duration = models.PositiveIntegerField(null=True, blank=True)
     notes = models.TextField(blank=True)
     order = models.PositiveIntegerField(default=0)
-    
+
     class Meta:
         ordering = ['order', 'id']
-    
+
     def __str__(self):
         return f"{self.exercise.name} in {self.template.name}"

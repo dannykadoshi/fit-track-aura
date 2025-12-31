@@ -469,4 +469,3 @@ class GoalDeleteTests(TestCase):
 
         # Goal should still exist
         self.assertTrue(Goal.objects.filter(pk=self.goal.pk).exists())
-

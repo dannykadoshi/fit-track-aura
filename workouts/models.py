@@ -77,4 +77,3 @@ class WorkoutExercise(models.Model):
 
 
 # Import template models
-from .template_models import WorkoutTemplate, TemplateExercise

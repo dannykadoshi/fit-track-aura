@@ -12,7 +12,7 @@ def profile_view(request):
     if request.method == 'POST':
         user_form = UserUpdateForm(request.POST, instance=request.user)
         profile_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
-        
+
         if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
             profile_form.save()
@@ -21,16 +21,16 @@ def profile_view(request):
     else:
         user_form = UserUpdateForm(instance=request.user)
         profile_form = ProfileUpdateForm(instance=request.user.profile)
-    
+
     # Calculate active goals count
     active_goals_count = request.user.goals.filter(is_completed=False).count()
-    
+
     context = {
         'user_form': user_form,
         'profile_form': profile_form,
         'active_goals_count': active_goals_count,
     }
-    
+
     return render(request, 'users/profile.html', context)
 
 
@@ -48,11 +48,11 @@ def change_password(request):
             messages.error(request, 'Please correct the errors below.')
     else:
         form = PasswordChangeForm(request.user)
-    
+
     context = {
         'form': form,
     }
-    
+
     return render(request, 'users/change_password.html', context)
 
 
@@ -60,15 +60,15 @@ def change_password(request):
 def toggle_theme(request):
     """Toggle between dark and light theme"""
     profile = request.user.profile
-    
+
     if profile.theme == 'dark':
         profile.theme = 'light'
         messages.success(request, '☀️ Switched to Light Mode')
     else:
         profile.theme = 'dark'
         messages.success(request, '🌙 Switched to Dark Mode')
-    
+
     profile.save()
-    
+
     # Redirect back to the page they came from
     return redirect(request.META.get('HTTP_REFERER', 'dashboard'))

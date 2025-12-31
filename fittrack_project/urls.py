@@ -9,40 +9,40 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
     path('', include('users.urls')),
-    
-     # Workouts View
+
+    # Workouts View
     path('', workout_views.home, name='home'),
     path('dashboard/', workout_views.dashboard, name='dashboard'),
     path('faq/', workout_views.faq, name='faq'),
     path('about/', workout_views.about, name='about'),
     path('badges/', workout_views.badges, name='badges'),
-    
+
     # PDF Exports
     path('workouts/export-pdf/', workout_views.export_workouts_pdf, name='export_workouts_pdf'),
     path('goals/export-pdf/', goal_views.export_goals_pdf, name='export_goals_pdf'),
-    
+
     path('workouts/', workout_views.workout_list, name='workout_list'),
     path('workouts/<int:pk>/', workout_views.workout_detail, name='workout_detail'),
     path('workouts/new/', workout_views.workout_create, name='workout_create'),
     path('workouts/<int:pk>/edit/', workout_views.workout_update, name='workout_update'),
     path('workouts/<int:pk>/delete/', workout_views.workout_delete, name='workout_delete'),
-    
+
     # Exercise Library
     path('exercises/', workout_views.exercise_library, name='exercise_library'),
     path('exercises/new/', workout_views.exercise_create, name='exercise_create'),
     path('exercises/<int:pk>/edit/', workout_views.exercise_update, name='exercise_update'),
     path('exercises/<int:pk>/delete/', workout_views.exercise_delete, name='exercise_delete'),
-    
+
     # Workout Templates
     path('templates/', workout_views.template_list, name='template_list'),
     path('workouts/<int:pk>/save-as-template/', workout_views.save_as_template, name='save_as_template'),
     path('templates/<int:pk>/use/', workout_views.use_template, name='use_template'),
     path('templates/<int:pk>/delete/', workout_views.template_delete, name='template_delete'),
-    
+
     # Calendar View
     path('calendar/', workout_views.workout_calendar, name='workout_calendar'),
-    
-     # Goals View
+
+    # Goals View
     path('goals/', goal_views.goal_list, name='goal_list'),
     path('goals/new/', goal_views.goal_create, name='goal_create'),
     path('goals/<int:pk>/edit/', goal_views.goal_update, name='goal_update'),

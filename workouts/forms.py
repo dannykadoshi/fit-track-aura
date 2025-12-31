@@ -18,30 +18,30 @@ class WorkoutForm(forms.ModelForm):
 
 class WorkoutExerciseForm(forms.ModelForm):
     """Form for individual exercises within a workout"""
-    
+
     def __init__(self, *args, **kwargs):
         # Get user from kwargs if provided
         user = kwargs.pop('user', None)
         super().__init__(*args, **kwargs)
-        
+
         if user:
             # Get default and custom exercises
             default_exercises = Exercise.objects.filter(is_custom=False).order_by('name')
             custom_exercises = Exercise.objects.filter(created_by=user, is_custom=True).order_by('name')
-            
+
             # Create choices with optgroups - CUSTOM FIRST!
             choices = []
             if custom_exercises.exists():
                 choices.append(('My Custom Exercises', [(ex.id, f"{ex.name} ✨") for ex in custom_exercises]))
             if default_exercises.exists():
                 choices.append(('Default Exercises', [(ex.id, ex.name) for ex in default_exercises]))
-            
+
             # If no groups, just show all
             if not choices:
                 self.fields['exercise'].queryset = Exercise.objects.all()
             else:
                 self.fields['exercise'].choices = [('', '---------')] + choices
-    
+
     class Meta:
         model = WorkoutExercise
         fields = ['exercise', 'sets', 'reps', 'weight', 'unit', 'distance', 'duration', 'notes']

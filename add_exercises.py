@@ -4,7 +4,7 @@ import django
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'fittrack_project.settings')
 django.setup()
 
-from workouts.models import Exercise
+from workouts.models import Exercise  # noqa: E402
 
 # Map ALL exercises with their correct categories
 exercise_categories = {
@@ -92,7 +92,7 @@ for exercise in Exercise.objects.all():
         new_category = exercise_categories[exercise.name]
         exercise.category = new_category
         exercise.save()  # FORCE SAVE EVERY TIME
-        
+
         if old_category:
             if old_category == new_category:
                 print(f"✅ {exercise.name}: {old_category} (no change needed)")

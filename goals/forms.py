@@ -4,7 +4,7 @@ from .models import Goal
 
 class GoalForm(forms.ModelForm):
     """Form for creating and updating goals"""
-    
+
     class Meta:
         model = Goal
         fields = ['title', 'description', 'category', 'target_number', 'unit', 'current_number', 'target_date']

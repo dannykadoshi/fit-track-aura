@@ -1,6 +1,6 @@
 from django.test import TestCase
 from workouts.forms import WorkoutForm, WorkoutExerciseForm
-from datetime import date, timedelta
+from datetime import date
 
 
 class WorkoutFormTest(TestCase):

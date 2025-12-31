@@ -2,7 +2,7 @@
 from django.test import TestCase, Client
 from django.contrib.auth.models import User
 from django.urls import reverse
-from datetime import date, timedelta
+from datetime import date
 from .models import Workout, Exercise
 
 

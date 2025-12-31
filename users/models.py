@@ -6,12 +6,12 @@ from django.dispatch import receiver
 
 class UserProfile(models.Model):
     """Extended user profile with additional information"""
-    
+
     WEIGHT_UNIT_CHOICES = [
         ('kg', 'Kilograms'),
         ('lbs', 'Pounds'),
     ]
-    
+
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
     bio = models.TextField(max_length=500, blank=True)
     date_of_birth = models.DateField(null=True, blank=True)
@@ -25,7 +25,7 @@ class UserProfile(models.Model):
     )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    
+
     def __str__(self):
         return f"{self.user.username}'s profile"
 

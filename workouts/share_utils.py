@@ -1,30 +1,41 @@
-from django.urls import reverse
 
 
 def generate_share_text(achievement_type, user, **kwargs):
     """Generate shareable text for different achievement types"""
-    
+
     if achievement_type == 'workout_completed':
         workout = kwargs.get('workout')
-        return f"💪 Just completed '{workout.title}' on FitTrack Aura! {workout.duration}min of training done! #fitness #workout"
-    
+        return (
+            f"💪 Just completed '{workout.title}' on FitTrack Aura! "
+            f"{workout.duration}min of training done! #fitness #workout"
+        )
+
     elif achievement_type == 'goal_achieved':
         goal = kwargs.get('goal')
-        return f"🎯 Goal achieved on FitTrack Aura: {goal.title}! Another milestone reached! #fitnessgoals #success"
-    
+        return (
+            f"🎯 Goal achieved on FitTrack Aura: {goal.title}! "
+            f"Another milestone reached! #fitnessgoals #success"
+        )
+
     elif achievement_type == 'streak':
         streak = kwargs.get('streak')
         return f"🔥 {streak} day workout streak on FitTrack Aura! Consistency is key! #fitnessmotivation #streak"
-    
+
     elif achievement_type == 'badge_earned':
         badge = kwargs.get('badge')
-        return f"🏆 Achievement unlocked on FitTrack Aura: {badge.badge_name}! {badge.badge_description} #achievement #fitness"
-    
+        return (
+            f"🏆 Achievement unlocked on FitTrack Aura: {badge.badge_name}! "
+            f"{badge.badge_description} #achievement #fitness"
+        )
+
     elif achievement_type == 'monthly_summary':
         workouts = kwargs.get('workouts')
         duration = kwargs.get('duration')
-        return f"📊 This month on FitTrack Aura: {workouts} workouts, {duration} minutes of training! Keep pushing! #fitnessjourney"
-    
+        return (
+            f"📊 This month on FitTrack Aura: {workouts} workouts, "
+            f"{duration} minutes of training! Keep pushing! #fitnessjourney"
+        )
+
     return "Check out my progress on FitTrack Aura! 💪 #fitness"
 
 

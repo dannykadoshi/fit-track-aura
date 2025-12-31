@@ -1,5 +1,4 @@
 from datetime import date, timedelta
-from django.db.models import Min
 
 
 def calculate_workout_streak(user):
