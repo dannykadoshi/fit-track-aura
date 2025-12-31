@@ -4,9 +4,6 @@ A comprehensive Django fitness tracking web application that empowers users to l
 
 ![FitTrack Aura](static/images/og-image.png)
 
-**Live Site:** [https://fit-track-aura.onrender.com](https://fit-track-aura.onrender.com)  
-**Repository:** [https://github.com/dannykadoshi/fit-track-aura](https://github.com/dannykadoshi/fit-track-aura)
-
 **Portfolio Project 4** - Full-Stack Toolkit  
 **Code Institute Diploma** - Full Stack Software Development
 
@@ -14,13 +11,13 @@ A comprehensive Django fitness tracking web application that empowers users to l
 
 ## 🚀 Quick Start for Assessors
 
-**Live Site:** [https://fit-track-aura.onrender.com](https://fit-track-aura.onrender.com)  
-**Admin Panel:** [https://fit-track-aura.onrender.com/admin/](https://fit-track-aura.onrender.com/admin/)  
-**GitHub Projects Board:** [View User Stories & Agile Workflow](https://github.com/users/dannykadoshi/projects/4)
+**Live Site:** [FitTrack Aura](https://fit-track-aura.onrender.com)  
+**Admin Panel:** [Admin Panel - FitTrack Aura](https://fit-track-aura.onrender.com/admin/)  
+**GitHub Projects Board:** [GitHub Repository - View User Stories & Agile Workflow](https://github.com/dannykadoshi/fit-track-aura)
 
 **Test Accounts:**
 - **Admin:** Username: `admin` / Password: *See LMS submission form*
-- **Demo User:** Username: `demo` / Password: *See LMS submission form*
+- **Demo User:** Username: `create your own user` / Password: *Create a password*
 
 **⏱️ Important:** Render free tier spins down after inactivity. First load may take 30-60 seconds (subsequent loads are instant).
 
@@ -172,7 +169,7 @@ Development followed Agile methodology using GitHub Projects with user stories o
 - **Visual Feedback:** Success messages, progress bars, hover effects, loading states
 - **Accessibility:** Semantic HTML, ARIA labels, WCAG AA color contrast
 
-![Mobile-First](docs/screenshots/mobile-homepage.png)
+![Mobile-First](docs/screenshots/mobile-homepage.jpeg)
 ---
 
 ### Wireframes
@@ -285,6 +282,8 @@ Low-fidelity wireframes guided the development process and ensured user-centered
 - Select2 autocomplete for 70+ exercises
 - Support for strength (sets/reps/weight) and cardio (distance/duration)
 
+![Create Workout](docs/screenshots/log-new-workout.png)
+
 **Read:**
 - Paginated workout list with search and filter
 - Filter by date range or exercise category
@@ -293,6 +292,8 @@ Low-fidelity wireframes guided the development process and ensured user-centered
 **Update:**
 - Pre-filled edit form with existing data
 - Modify workouts and exercises
+
+![Workout and Exercise filter](docs/screenshots/workout-and-exercise-filter.png)
 
 **Delete:**
 - Confirmation page before deletion
@@ -419,10 +420,27 @@ Low-fidelity wireframes guided the development process and ensured user-centered
 
 - **Form Validation:** Client and server-side validation with inline error messages
 - **User Feedback:** Django messages framework with color-coded alerts
+
+![User Feedback messages](docs/screenshots/user-feedback-message.png)
+
 - **Error Handling:** Custom 404 and 500 error pages
+
+![Error handling -404](docs/screenshots/404-error.png)
+
 - **FAQ Page:** 13 comprehensive questions with accordion UI
+
+![FAQ page](docs/screenshots/FAQ-page.png)
+
 - **About Page:** Project overview, 14 feature cards, technology stack
+
+![About Page](docs/screenshots/about-page-1.png)
+![About Page](docs/screenshots/about-page-2.png)
+![About Page](docs/screenshots/about-page-3.png)
+
 - **Profile Management:** Edit bio, DOB, height, weight unit, theme preference, password change
+
+![Profile Management](docs/screenshots/profile-management.png)
+
 - **Security:** CSRF tokens, login required decorators, XSS protection, SQL injection protection
 
 ---
@@ -779,7 +797,7 @@ Comprehensive testing was performed including automated unit tests, manual featu
 
 **Known Limitations:**
 - Native select dropdowns use OS styling (browser limitation)
-- Render free tier: Database expires after 90 days (non-critical)
+- Render free tier: Database expires after 30 days (non-critical)
 
 **Full testing documentation:** [TESTING.md](TESTING.md)
 
@@ -789,12 +807,12 @@ Comprehensive testing was performed including automated unit tests, manual featu
 
 ### Live Application
 
-**URL:** [https://fit-track-aura.onrender.com](https://fit-track-aura.onrender.com)
+**URL:** [FitTrack Aura](https://fit-track-aura.onrender.com)
 
 **Important Note for Assessors:**
 - Render free tier spins down after 15 minutes of inactivity
 - **First load may take 30-60 seconds** (subsequent loads are instant)
-- Database expires after 90 days (build script reloads data automatically)
+- Database expires after 30 days (build script reloads data automatically)
 
 ---
 
@@ -978,21 +996,6 @@ PYTHON_VERSION=3.12.0
 - Check application logs in Render
 - Verify all migrations ran successfully
 
----
-
-### Admin Access
-
-**For Code Institute Assessors:**
-
-**Admin Panel:** [https://fit-track-aura.onrender.com/admin/](https://fit-track-aura.onrender.com/admin/)
-
-**Credentials:**
-- Username: `admin`
-- Password: *Provided in LMS submission form*
-
-**Admin capabilities:** View all users, full CRUD on all models, database administration
-
----
 
 ## Credits
 
@@ -1029,7 +1032,6 @@ PYTHON_VERSION=3.12.0
 ### Acknowledgments
 
 - **Code Institute:** Comprehensive learning platform and project guidance
-- **Slack Community:** Debugging assistance and best practices
 - **Family & Friends:** User testing and feedback
 - **Render:** Free cloud hosting for student projects
 
@@ -1038,7 +1040,7 @@ PYTHON_VERSION=3.12.0
 ## Contact
 
 **Developer:** Danny Kadoshi  
-**Email:** dannykadoshi@me.com  
+**Email:** [Contact Me - Email](dannykadoshi@me.com)
 **GitHub:** [@dannykadoshi](https://github.com/dannykadoshi)
 
 ---
@@ -1053,6 +1055,6 @@ Educational project for Code Institute Full Stack Software Development Diploma.
 
 **Last Updated:** December 31, 2025  
 **Version:** 1.0.0  
-**Status:** Production Ready ✅
+**Status:** Grading Ready ✅
 
 **[Back to Top](#fittrack-aura-)**
