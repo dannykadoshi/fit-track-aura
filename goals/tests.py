@@ -96,7 +96,7 @@ class GoalCompleteTest(TestCase):
 
     def test_user_cannot_complete_other_users_goal(self):
         """Test users can't complete goals they don't own"""
-        other_user = User.objects.create_user(
+        _other_user = User.objects.create_user(
             username='otheruser',
             password='testpass123'
         )
@@ -247,7 +247,7 @@ class BadgeUtilsTests(TestCase):
         from .badge_utils import check_and_award_badges
 
         # Create and complete a goal
-        goal = Goal.objects.create(
+        _goal = Goal.objects.create(
             user=self.user,
             title='Test Goal',
             category='strength',
@@ -455,7 +455,7 @@ class GoalDeleteTests(TestCase):
 
     def test_user_cannot_delete_other_users_goal(self):
         """Test users can't delete goals they don't own"""
-        other_user = User.objects.create_user(
+        _other_user = User.objects.create_user(
             username='otheruser',
             password='testpass123'
         )

@@ -84,7 +84,7 @@ class GoalViewsCoverageTests(TestCase):
     def test_goal_list_with_completed_and_active(self):
         """Test goal list shows both completed and active goals"""
         # Create active goal
-        active_goal = Goal.objects.create(
+        _active_goal = Goal.objects.create(
             user=self.user,
             title='Active Goal',
             category='strength',
@@ -94,7 +94,7 @@ class GoalViewsCoverageTests(TestCase):
         )
 
         # Create completed goal
-        completed_goal = Goal.objects.create(
+        _completed_goal = Goal.objects.create(
             user=self.user,
             title='Completed Goal',
             category='endurance',

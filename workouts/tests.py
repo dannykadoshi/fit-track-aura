@@ -51,7 +51,7 @@ class ExerciseModelTest(TestCase):
 
     def test_exercise_name_is_stored_correctly(self):
         """Test that exercise name is stored correctly"""
-        exercise = Exercise.objects.create(name='Squats', category='strength')
+        _exercise = Exercise.objects.create(name='Squats', category='strength')
         retrieved = Exercise.objects.get(name='Squats')
         self.assertEqual(retrieved.name, 'Squats')
         self.assertEqual(retrieved.category, 'strength')
@@ -92,7 +92,7 @@ class WorkoutViewTest(TestCase):
         """Test that users can only see their own workouts"""
         # Create workout for test user
         self.client.login(username='testuser', password='testpass123')
-        workout1 = Workout.objects.create(
+        _workout1 = Workout.objects.create(
             user=self.user,
             title='My Workout',
             date=date.today()
@@ -103,7 +103,7 @@ class WorkoutViewTest(TestCase):
             username='otheruser',
             password='testpass123'
         )
-        workout2 = Workout.objects.create(
+        _workout2 = Workout.objects.create(
             user=other_user,
             title='Other Workout',
             date=date.today()
@@ -155,7 +155,7 @@ class WorkoutDeleteTest(TestCase):
     def test_user_cannot_delete_other_users_workout(self):
         """Test users can't delete workouts they don't own"""
         # Create another user
-        other_user = User.objects.create_user(
+        _other_user = User.objects.create_user(
             username='otheruser',
             password='testpass123'
         )
