@@ -113,7 +113,7 @@
         <!-- Stat 1 - Workouts This Month -->
         <div class="stat-card">
             <div class="d-flex justify-content-between align-items-center mb-3">
-                <div class="stat-icon">��️‍♂️</div>
+                <div class="stat-icon">🏋️‍♂️</div>
                 <span class="text-success fw-semibold">This Month</span>
             </div>
             <h3 class="fw-bold mb-1">{{ workouts_this_month }}</h3>
@@ -374,17 +374,17 @@
                 <h4 class="fw-bold text-white mb-3">📱 Share Your Progress</h4>
                 <p class="text-muted mb-3">Let others know about your fitness journey this month!</p>
                 <div class="d-flex gap-2 justify-content-center flex-wrap">
-                    <a href="https://twitter.com/intent/tweet?text=📊 This month on FitTrack Aura: {{ workouts_this_month }} workouts, {{ total_time }} minutes! 💪 %23fitnessjourney" 
+                    <a href="https://twitter.com/intent/tweet?text=📊 This month on FitTrack Aura: {{ workouts_this_month }} workouts, {{ total_time }} minutes! 💪 %23fitnessjourney&url=https://fit-track-aura.onrender.com" 
                        target="_blank" 
                        class="btn btn-outline-light btn-sm">
                         🐦 Share on X
                     </a>
-                    <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}" 
+                    <a href="https://www.facebook.com/sharer/sharer.php?u=https://fit-track-aura.onrender.com" 
                        target="_blank" 
                        class="btn btn-outline-light btn-sm">
                         📘 Facebook
                     </a>
-                    <a href="https://wa.me/?text=📊 This month I completed {{ workouts_this_month }} workouts on FitTrack Aura! {{ total_time }} minutes of training!" 
+                    <a href="https://wa.me/?text=📊 This month I completed {{ workouts_this_month }} workouts on FitTrack Aura! {{ total_time }} minutes of training! Check it out: https://fit-track-aura.onrender.com" 
                        target="_blank" 
                        class="btn btn-outline-light btn-sm">
                         💬 WhatsApp
@@ -393,7 +393,6 @@
             </div>
         </div>
     </div>
-</div>
 
 {% block extra_js %}
 {% if weekly_total > 0 %}

@@ -63,17 +63,17 @@
                 <h4 class="fw-bold text-white mb-3">📱 Share This Workout</h4>
                 <p class="text-muted small mb-3">Celebrate your achievement with friends!</p>
                 <div class="d-flex gap-2 flex-wrap">
-                    <a href="https://twitter.com/intent/tweet?text=💪 Just completed '{{ workout.title }}' - {{ workout.duration }}min of training! %23fitness %23workout" 
+                    <a href="https://twitter.com/intent/tweet?text=💪 Just completed '{{ workout.title }}' - {{ workout.duration }}min of training! %23fitness %23workout&url=https://fit-track-aura.onrender.com" 
                        target="_blank" 
                        class="btn btn-outline-light btn-sm">
                         🐦 Share on X
                     </a>
-                    <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}" 
+                    <a href="https://www.facebook.com/sharer/sharer.php?u=https://fit-track-aura.onrender.com" 
                        target="_blank" 
                        class="btn btn-outline-light btn-sm">
                         📘 Facebook
                     </a>
-                    <a href="https://wa.me/?text=💪 Just completed '{{ workout.title }}' on FitTrack Aura! {{ workout.duration }}min of training done!" 
+                    <a href="https://wa.me/?text=💪 Just completed '{{ workout.title }}' on FitTrack Aura! {{ workout.duration }}min of training done! Check out FitTrack Aura: https://fit-track-aura.onrender.com" 
                        target="_blank" 
                        class="btn btn-outline-light btn-sm">
                         💬 WhatsApp
