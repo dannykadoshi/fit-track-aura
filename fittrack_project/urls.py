@@ -4,11 +4,15 @@ from django.conf import settings
 from django.conf.urls.static import static
 from workouts import views as workout_views
 from goals import views as goal_views
+from fittrack_project import views as project_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
     path('', include('users.urls')),
+
+    # PWA Manifest
+    path('manifest.json', project_views.manifest, name='manifest'),
 
     # Workouts View
     path('', workout_views.home, name='home'),

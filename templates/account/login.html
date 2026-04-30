@@ -92,14 +92,19 @@
                     <!-- Password Field -->
                     <div class="mb-4">
                         <label for="id_password" class="form-label">Password</label>
-                        <input 
-                            type="password" 
-                            name="password" 
-                            class="form-control form-control-lg" 
-                            id="id_password"
-                            placeholder="Enter your password"
-                            required
-                        >
+                        <div class="input-group">
+                            <input 
+                                type="password" 
+                                name="password" 
+                                class="form-control form-control-lg password-field" 
+                                id="id_password"
+                                placeholder="Enter your password"
+                                required
+                            >
+                            <button class="btn btn-outline-secondary toggle-password" type="button" data-target="id_password">
+                                👁️
+                            </button>
+                        </div>
                         {% if form.password.errors %}
                             <div class="text-danger small mt-1">{{ form.password.errors }}</div>
                         {% endif %}

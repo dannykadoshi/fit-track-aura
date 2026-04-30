@@ -1,0 +1,58 @@
+{
+  "name": "FitTrack Aura",
+  "short_name": "FitTrack",
+  "description": "Track your fitness journey with FitTrack Aura. Set goals, log workouts, and earn badges.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "theme_color": "#a855f7",
+  "background_color": "#1a1a1a",
+  "icons": [
+    {
+      "src": "/static/images/favicon-16x16.png",
+      "sizes": "16x16",
+      "type": "image/png"
+    },
+    {
+      "src": "/static/images/favicon-32x32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "/static/images/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "/static/images/fittrack-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/static/images/og-image.png",
+      "type": "image/png",
+      "sizes": "1200x630"
+    }
+  ],
+  "categories": ["fitness", "health"],
+  "shortcuts": [
+    {
+      "name": "Log Workout",
+      "short_name": "Log Workout",
+      "description": "Quickly log a new workout",
+      "url": "/workouts/create/",
+      "icons": []
+    },
+    {
+      "name": "View Goals",
+      "short_name": "Goals",
+      "description": "View your fitness goals",
+      "url": "/goals/",
+      "icons": []
+    }
+  ]
+}

@@ -104,14 +104,19 @@
                     <!-- Password Field -->
                     <div class="mb-4">
                         <label for="id_password1" class="form-label">Password</label>
-                        <input 
-                            type="password" 
-                            name="password1" 
-                            class="form-control form-control-lg" 
-                            id="id_password1"
-                            placeholder="Create a strong password"
-                            required
-                        >
+                        <div class="input-group">
+                            <input 
+                                type="password" 
+                                name="password1" 
+                                class="form-control form-control-lg password-field" 
+                                id="id_password1"
+                                placeholder="Create a strong password"
+                                required
+                            >
+                            <button class="btn btn-outline-secondary toggle-password" type="button" data-target="id_password1">
+                                👁️
+                            </button>
+                        </div>
                         <ul class="helptext">
                             <li>Your password can't be too similar to your other personal information.</li>
                             <li>Your password must contain at least 8 characters.</li>
@@ -126,14 +131,19 @@
                     <!-- Password Confirmation Field -->
                     <div class="mb-4">
                         <label for="id_password2" class="form-label">Confirm Password</label>
-                        <input 
-                            type="password" 
-                            name="password2" 
-                            class="form-control form-control-lg" 
-                            id="id_password2"
-                            placeholder="Confirm your password"
-                            required
-                        >
+                        <div class="input-group">
+                            <input 
+                                type="password" 
+                                name="password2" 
+                                class="form-control form-control-lg password-field" 
+                                id="id_password2"
+                                placeholder="Confirm your password"
+                                required
+                            >
+                            <button class="btn btn-outline-secondary toggle-password" type="button" data-target="id_password2">
+                                👁️
+                            </button>
+                        </div>
                         {% if form.password2.errors %}
                             <div class="text-danger small mt-1">{{ form.password2.errors }}</div>
                         {% endif %}
